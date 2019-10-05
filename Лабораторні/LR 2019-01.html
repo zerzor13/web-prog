@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Лабораторна робота № 1</title>
+	<style type="text/css">
+		h1{
+			text-align: center;
+			font-size: 16pt;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+		h2{
+			text-align: center;
+			font-size: 14pt;
+			font-weight: bold;
+		}
+		p, li{
+			font-size: 14pt;
+		}
+		body{
+			padding-left: 15%;
+			padding-right: 15%;
+		}
+		.paper{
+			max-width: 210mm;
+		}
+	</style>
+</head>
+<body>
+	<div class="paper">
+		<h1>Інструментальні засоби візуального програмування. Лабораторна робота № 1 </h1>
+		<h2>Підготовка до роботи web-серверу та запуск сценаріїв</h2>
+		<h2>Мета роботи</h2>
+		<p>Навчитись встановлювати та налаштовувати пакет програм XAMPP, а також перевіряти корректність його роботи</p>
+		<h2>Обладнання</h2>
+		<p>Персональний комп'ютер. Пакет програм XAMPP. Текстовий редактор Sublime Text 3 або IDE NetBeans. Web-браузер Chrome, Firefox, Opera</p>
+		<h2>Хід роботи</h2>
+		<ol>
+			<li>Завантажити та встановити пакет програм web-розробника XAMPP</li>
+			<li>Викликати панель керування xampp-control.exe</li>
+			<li>Впевнитись, що web-сервер Apache запущений</li>
+			<li>Перейти за адресою <code>http://127.0.0.1/</code> або <code>http://localhost/</code> та впевнитись, що сторінка вітання XAMPP завантажилась</li>
+			<li>Очистити зміст каталогу <code>C:\xampp\htdocs\</code></li>
+			<li>Створити файл <code>index.php</code> в середині каталогу <code>C:\xampp\htdocs\</code></li>
+			<li>
+				<p>У файл <code>index.php</code> помістити наступні рядки:</p>
+				<p>
+					<code>
+					&lt;?php<br>
+					phpinfo();<br>
+					?&gt;<br>
+					</code>
+				</p>
+			</li>
+			<li>Перейти за адресою <code>http://127.0.0.1/</code> або <code>http://localhost/</code> та впевнитись, що сторінка інформації про PHP та web-сервер завантажилася корректно</li>
+			<li>Profit! Вітаю! Ви створили перший сценарій на PHP</li>
+
+		</ol>
+		<h2>Контрольні питання</h2>
+		<ol>
+			<li>Що таке web-сервер?</li>
+			<li>Які програмні продукти подібні до Apache ви знаєте?</li>
+			<li>Для чого необхідно вкахувати <code>http://</code> перед адресою сайту?</li>
+
+		</ol>
+	</div>
+</body>
+</html>
