@@ -41,7 +41,7 @@
 			<li>Впевнитись, що файл є валідним, використавши валідатор HTML-коду <code>https://validator.w3.org/</code>. За необхідності, виправити помилки та зауваження</li>
 			<li>В каталогу <code>C:\xampp\htdocs\</code> створити файли з іменем <code>index.php</code></li>
 			<li>
-				<p>Відкрити <code>index.html</code> та змінити його наступним чином:</p>
+				<p>Відкрити <code>index.php</code> та змінити його наступним чином:</p>
 				<p>
 					<code>
 						<xmp>
@@ -52,16 +52,67 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
-		<h1>Тестова сторінка. ЛР3</h1>
-		<p>Текст текст текст текст текст 
-		текст текст текст текст текст текст 
-		текст текст текст текст текст текст 
-		текст текст текст текст текст текст</p>
-		<time>
-			<?php
-			echo date("Y-m-d H:i:s");
-			?>
-		</time>
+		
+		<h1>Тестова сторінка. ЛР4</h1>
+		<h2>Виведення парних чисел for</h2>
+		<?php
+		for($i=0; $i<=100; $i++){
+			if ($i%2==0) echo $i."<br>\n";
+			}
+		?>
+		<h2>Виведення парних чисел while</h2>
+		<?php
+		$i=0;
+		while($i<=100{
+			if ($i%2==0) echo $i."<br>\n";
+			$i++;
+			}
+		?>
+			<time>
+				<?php
+				echo date("Y-m-d H:i:s");
+				?>
+			</time>
+	</body>
+</html>
+						</xmp>
+					</code>
+				</p>
+				<p>Зберегти файл</p>
+			</li>
+			<li>Перейти за адресою <code>http://127.0.0.1/index.php</code> або <code>http://localhost/index.php</code> та впевнитись, що завантажилася ваша HTML-сторінка</li>
+			<li>Проаналізувати код і змінити його таким чином, щоб були виведені непарні числа <strong>В РЯДОК</strong></li>
+			
+			<li>
+				<p>Відкрити <code>index.php</code> та змінити його наступним чином:</p>
+				<p>
+					<code>
+						<xmp>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		
+		<h1>Тестова сторінка. ЛР4</h1>
+		<h2>Створення асоціативного масиву</h2>
+		<?php
+		$arNumbers=array();
+		for($i=0; $i<=100; $i++){
+			$key='k'.$i;
+			$arNumbers[$key]=$i;
+			}
+
+		var_dump($arNumbers);
+		?>
+		
+			<time>
+				<?php
+				echo date("Y-m-d H:i:s");
+				?>
+			</time>
 	</body>
 </html>
 						</xmp>
@@ -69,14 +120,122 @@
 				</p>
 				<p>Зберегти файл та оновити вкладку у браузері</p>
 			</li>
-			<li>Перейти за адресою <code>http://127.0.0.1/index.php</code> або <code>http://localhost/index.php</code> та впевнитись, що завантажилася ваша HTML-сторінка</li>
+			<li>В браузері переглянути код сторінки за допомогою клавіш <code>Ctrl+U</code>. Впевнитись, що надруковано весь зміст асоціативного масиву, разом із асоціативними ключами</li>
+			<li>
+				<p>Відкрити <code>index.php</code> та змінити його наступним чином:</p>
+				<p>
+					<code>
+						<xmp>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		
+		<h1>Тестова сторінка. ЛР4</h1>
+		<h2>Сортування методом "бульбашки". Вкладені цикли</h2>
+		<p>
+		<?php
+		$arNumbers=array();
+		for($i=0; $i<=100; $i++){
 			
-			
+			$arNumbers[]=rand(0,100);
+			echo $arNumbers[$i]." ";
+			}
+		?>
+		</p>
+		<p>
+		<?php
+		
+		for($i=0; $i<=100; $i++)
+			for($j=0; $j<=99; $j++){
+				if ($arNumbers[$j]>$arNumbers[$j+1]){
+					$tmp=$arNumbers[$j];
+					$arNumbers[$j]=$arNumbers[$j+1];
+					$arNumbers[$j+1]=$tmp;
+				}
+			}
+
+		foreach($arNumbers as $item){
+			echo $item." ";
+			}
+		?>
+		</p>
+			<time>
+				<?php
+				echo date("Y-m-d H:i:s");
+				?>
+			</time>
+	</body>
+</html>
+						</xmp>
+					</code>
+				</p>
+				<p>Зберегти файл та оновити вкладку у браузері. Впевнитись, що масив відсортовано</p>
+			</li>
+			<li>
+				<p>Відкрити <code>index.php</code> та змінити його наступним чином:</p>
+				<p>
+					<code>
+						<xmp>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<!-- Програма сортування масиву -->
+		<h1>Тестова сторінка. ЛР4</h1>
+		<h2>Баготовимірні масиви</h2>
+		<p>
+		<?php
+		$arPeople=array();
+		$arPerson=array(
+				"name"=>"Ivan",
+				"surname"=>"Kostenko",
+				"age"=>20,
+				"student"=>true
+				);
+		$arPeople[]=$arPerson;
+		$arPerson=array(
+				"name"=>"Ruslan",
+				"surname"=>"Kostenko",
+				"age"=>12,
+				"student"=>false
+				);
+		$arPeople[]=$arPerson;
+		$arPerson=array(
+				"name"=>"Petro",
+				"surname"=>"Ilchenko",
+				"age"=>18,
+				"student"=>true
+				);
+		$arPeople[]=$arPerson;
+
+		var_dump($arPerson);
+		?>
+		</p>
+		
+			<time>
+				<?php
+				echo date("Y-m-d H:i:s");
+				?>
+			</time>
+	</body>
+</html>
+						</xmp>
+					</code>
+				</p>
+				<p>Зберегти файл та оновити вкладку у браузері. Впевнитись, що масив виведено на екран</p>
+			</li>
+
 			<li><p>Виконати індивідуальне завдання</p> 
 				<ol>
-					<li>У змінні РНР помістити ваші прізвище, ім'я, дату народження</li>
-					<li>Вивести в HTML інформацію зі змінних двома способами: з використанням <code>echo</code> та конструкції <code><xmp><?= ?></xmp></code> </li>
-					<li>Використовуючи функцію date() вивести дату народження у трьох форматах: ДД.ММ.РРРР, РРРР-ММ-ДД, ДД місяць РРРР</li>
+					<li>Модифікувати останню програму, таким чином, щоб дані з масиву було виведено в таблицю. Використати для цього цикл foreach()</li>
+					<li>Створити двовимірний асоціативний масив, що описує товари магазину. Вивести перелік товарів у таблицю</li>
 				</ol>
 			</li>
 			<li>Впевнитись, що всі вихідні HTML-сторінки є валідними, використавши валідатор HTML-коду <code>https://validator.w3.org/</code>. За необхідності, виправити помилки та зауваження</li>
@@ -84,9 +243,9 @@
 		</ol>
 		<h2>Контрольні питання</h2>
 		<ol>
-			<li>Яким чином РНР розрізняє статичний HTML та виконуваний PHP?</li>
-			<li>Яким чином можна вивести значення змінної?</li>
-			<li>Які аргументи можна задати для функції date()?</li>
+			<li>Які види циклів існують в PHP?</li>
+			<li>Які два варіанти використання foreach() ви знаєте?</li>
+			<li>Як додати в масив елемент з асоціативним ключем?</li>
 
 		</ol>
 	</div>
