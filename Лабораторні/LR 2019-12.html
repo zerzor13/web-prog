@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Лабораторна робота № 12</title>
+		<meta charset="utf-8">
+	<style type="text/css">
+		h1{
+			text-align: center;
+			font-size: 16pt;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+		h2{
+			text-align: center;
+			font-size: 14pt;
+			font-weight: bold;
+		}
+		p, li{
+			font-size: 14pt;
+		}
+		body{
+			padding-left: 15%;
+			padding-right: 15%;
+		}
+		.paper{
+			max-width: 210mm;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="paper">
+			<h1>Інструментальні засоби візуального програмування. Лабораторна робота № 12 </h1>
+			<h2>Читання та збереження даних в таблицях MySQL</h2>
+			<h2>Мета роботи</h2>
+			<p>Вивчити основи баз даних і навчитися їх створювати в СУБД MySQL</p>
+			<h2>Обладнання</h2>
+			<p>Персональний комп'ютер. Пакет програм XAMPP. Текстовий редактор Sublime Text 3 або IDE NetBeans. Web-браузер Chrome, Firefox, Opera</p>
+			<h2>Хід роботи</h2>
+			<ol>
+				<li>Сервер MySQL підтримує як інструкції SQL, так і службові команди MySQL, призначені для адміністрування і використання таблиць в базах даних MySQL.</li>
+				<li>Мова структурованих запитів SQL (Structure Query Language) дозволяє виконувати різні операції з базами даних:
+				<ul type="disc">
+<li>створювати бази даних і таблиці;</li>
+<li>додавати інформацію в таблиці;</li>
+<li>видаляти інформацію;</li>
+<li>модифікувати інформацію;</li>
+<li>отримувати потрібні дані.</li>
+</ul>		
+				</li>
+				<li><p>Команда <strong>CREATE DATABASE</strong> створює нову базу даних:</p>
+				<code>
+				<xmp>
+				CREATE DATABASE [IF NOT EXISTS] db_name;
+				</xmp>
+				</code>
+				<p>Тут db_name є ім'ям створюваної бази даних. Не обов'язкова ключова фраза <code>IF NOT EXISTS</code> повідомляє, що базу даних слід створювати, тільки якщо бази з таким ім'ям немає, що дозволяє запобігти завершення запиту помилкою. Особливо це актуально при використанні SQL в РНР-скриптах</p>
+			</li>
+			<li><p>Для видалення бази даних використовується команда <strong>DROP DATABASE</strong>. Синтаксис:</p>
+			<code>
+				<xmp>
+				DROP DATABASE database_name;
+				</xmp>
+				</code>
+			<p>де database_name - задає ім'я бази даних, яку необхідно видалити.</p>
+			</li>
+			<li><strong>Завдання 1.</strong> Запустіть web-сервер Apache та СУБД MySQL у вікні прикладки XAMPP Control Panel.</li>
+		<li>Відкрийте браузер і в адресному рядку введіть наступну адресу: <code>http://localhost/phpmyadmin/</code></li>
+	<li>Створіть базу даних, яка зберігає повідомлення форуму. Для створення бази даних в phpMyAdmin необхідно ввести ім'я бази даних, вибрати кодування і натиснути кнопку створити</li>
+<li>Зробити створену базу даних активною, вибравши її ім'я в списку баз даних. Перейти на вкладку SQL. Всі подальші завдання будуть виконуватися шляхом введення SQL команд</li>
+<li><p>Команда CREATE TABLE створює нову таблицю в обраній базі даних. У найпростішому випадку команда має наступний синтаксис:</p>
+<code>
+				<xmp>
+				CREATE TABLE table_name(column_name1 type, column_name2 type,...) [table_options];
+				</xmp>
+				</code><p>table_name - ім'я нової таблиці; column_name - імена колонок (полів); type - визначає тип створюваної колонки; table_options - необов'язкова вказівка типу таблиці, наприклад TYPE = MyISAM.</p></li>
+<li><p><strong>Приклад 1.</strong> Створення таблиці телефонних номерів друзів, яка буде складатися з трьох стовпців: ПІБ, адреса і телефон:</p>
+<code>
+				<xmp>
+				CREATE TABLE tel_numb(fio text, address text, tel text);
+				</xmp>
+				</code>
+				
+</li>
+<li>До типу даних можна додати модифікатори, які задають його властивості і ті операції, які можна (або, навпаки, заборонено) виконувати з відповідними стовпцями.
+Not null - означає, що поле не може містити невизначене значення, тобто поле обов'язково має бути ініційоване при вставці нового запису в таблицю (якщо не задано значення за замовчуванням).</li>
+
+<li><p><strong>Приклад 2.</strong> Для таблиці з телефонами потрібно вказати, що поле fio та tel не може мати невизначене значення:</p>
+<code>
+				<xmp>
+				CREATE TABLE tel_numb(fio text NOT NULL, address text, tel text NOT NULL);
+				</xmp>
+				</code>
+</li>
+<li><p><strong>Приклад 3.</strong> Primary key - відображає, що поле є первинним ключем, тобто ідентифікатором запису, на який можна посилатися.</p>
+<code>
+				<xmp>
+				CREATE TABLE tel_numb(fio text, address text, tel text, PRIMARY KEY (fio));
+				</xmp>
+				</code>
+</li>
+<li><p><strong>Приклад 4.</strong> Auto_increment - при вставці нового запису поле отримає унікальне значення, так що в таблиці ніколи не будуть існувати два поля з однаковими номерами.</p>
+<code>
+				<xmp>
+				CREATE TABLE tel_numb(id int AUTO_INCREMENT, fio text, tel text);
+				</xmp>
+				</code>
+</li>
+<li><p><strong>Приклад 5.</strong> Default - задає значення за замовчуванням для поля, яке буде використано, якщо при вставці запису для цього поля не було явно зазначено значення.</p>
+<code>
+				<xmp>
+				CREATE TABLE tel_numb(fio text, address text DEFAULT 'Не вказано', tel text)
+				</xmp>
+				</code>
+</li>
+<li><strong>Завдання 2.</strong> Створити першу таблицю бази даних forum, яка називається authors і містить різні дані про зареєстрованих відвідувачів форуму:  <i>ім'я (name), пароль (passw), email (email), web-адреса сайту відвідувача (url), відомості про відвідувача (about), рядок, що містить шлях до файлу фотографії відвідувача (photo), останній час відвідування форуму (lasttime), статус користувача - є він модератором, адміністратором або звичайним відвідувачем (statususer). Крім перерахованих полів в таблиці є поле id_author, що є первинним ключем таблиці.</i>
+<code>
+				<xmp>
+				CREATE TABLE authors (
+id_author INT(6) NOT NULL AUTO_INCREMENT,
+name TINYTEXT,
+passw TINYTEXT,
+email TINYTEXT,
+url TINYTEXT,
+about TINYTEXT,
+photo TINYTEXT,
+last_time DATETIME DEFAULT NULL,
+themes INT(10) DEFAULT NULL,
+statususer INT(2) DEFAULT NULL,
+PRIMARY KEY (id_author)
+)
+				</xmp>
+				</code>
+
+</li>
+<li><p><strong>Завдання 3.</strong> Створити другу таблицю, яка містить дані про розділи форуму і називається forums. У таблиці forums присутні наступні поля: <i>первинний ключ (id_forum), назва розділу (name), правила форуму (rule), короткий опис форуму (logo), порядковий номер (pos), прапор, який приймає значення 1, якщо форум прихований, і 0, якщо загальнодоступний (hide).</i></p>
+<code>
+				<xmp>
+				CREATE TABLE forums (
+id_forum INT(6) NOT NULL AUTO_INCREMENT,
+name TINYTEXT,
+rule TEXT,
+logo TEXT,
+pos INT(6) DEFAULT NULL,
+hide TINYINT(1) DEFAULT NULL,
+PRIMARY KEY (id_forum)
+)
+				</xmp>
+				</code>
+</li>
+<li><p><strong>Завдання 4.</strong> Створити таблицю themes, що містить список тем. У таблиці присутні наступні поля: <i>первинний ключ (id_theme); назва теми (name); автор теми (author); зовнішній ключ до таблиці authors (id_author); прапор, що приймає значення 1, якщо тема прихована, і 0, якщо тема відображається (hide); час додавання теми (time); зовнішній ключ до таблиці форумів (id_forum), щоб визначити, до якого розділу форуму стосується ця тема.</i></p><p>У таблиці themes нормалізація проведена частково, вона містить два зовнішніх ключа: id_author і id_forum - для таблиць відвідувачів і списку форумів, в той же час в ній дублюється ім'я автора author, присутнє в таблиці відвідувачів authors під ім'ям name. Цей випадок є прикладом денормалізації, призначеної для того, щоб не запитувати кожного разу імена з таблиці authors при виведенні списку тем і їх авторів і забезпечити прийнятну швидкість роботи форуму.</p>
+<code>
+				<xmp>
+				CREATE TABLE themes (
+id_theme INT(11) NOT NULL AUTO_INCREMENT,
+name TEXT,
+author TEXT,
+id_author INT(6) DEFAULT NULL,
+hide TINYINT(1) DEFAULT NULL,
+time DATETIME DEFAULT NULL,
+id_forum TINYINT(2) DEFAULT NULL,
+PRIMARY KEY (id_theme)
+)
+				</xmp>
+				</code></li>
+<li><p><strong>Завдання 5.</strong> Створити таблицю posts, в якій зберігаються повідомлення відвідувачів. У таблиці присутні наступні поля: <i>первинний ключ (id_post); текст повідомлення (name); необов'язкове посилання на ресурс, яке автор повідомлення може ввести при додаванні повідомлення (url); шлях до файлу, що буде приєднано до повідомлення (file); ім'я автора (author); зовнішній ключ до таблиці authors (id_author); прапор (hide), що приймає значення 1, якщо повідомлення зазначено як приховане, і 0, якщо воно відображається, - необхідний для моделювання; час додавання повідомлення (time); повідомлення, відповіддю на яке є дане повідомлення (parent_post), це поле дорівнює 0, якщо дане повідомлення - перший по цій темі; зовнішній ключ до таблиці тем (id_theme), для того щоб визначити, до якої теми відноситься повідомлення.</i></p>
+<code>
+				<xmp>
+				CREATE TABLE posts (
+id_post INT(11) NOT NULL AUTO_INCREMENT,
+name TEXT,
+url TINYTEXT,
+file TINYTEXT,
+author TINYTEXT,
+id_author INT(6) DEFAULT NULL,
+hide TINYINT(1) DEFAULT NULL,
+time DATETIME DEFAULT NULL,
+parent_post INT(11) DEFAULT NULL,
+id_theme int(11) DEFAULT NULL,
+PRIMARY KEY (id_post)
+)
+				</xmp>
+				</code></li>
+<li>Команда <code>SHOW TABLES</code> призначена для перегляду переліку таблиць в поточній базі даних.</li>
+<li><p><strong>Завдання 6.</strong> Переконайтеся, що всі таблиці успішно створені, виконавши команду <code>SHOW TABLES</code>.</p></li>
+<li><p>Команда <code>DESCRIBE</code> показує структуру створених таблиць і має наступний синтаксис:</p>
+<code>
+				<xmp>
+				DESCRIBE table_name
+				</xmp>
+				</code><p>де table_name - ім'я таблиці, структура якої запитується.
+Команда <code>DESCRIBE</code> не входить в стандарт SQL і є внутрішньою командою СУБД MySQL.</p>
+</li>
+<li><p><strong>Приклад 6.</strong> Перегляд структури таблиці tel_numb з виконанням команди:</p><code>
+				<xmp>
+				DESCRIBE tel_numb;
+				</xmp>
+				</code>
+</li>
+<li><p><strong>Завдання 7.</strong> Перевірте правильність створення таблиць, переглянувши структуру кожної таблиці (виконувати кожну команду необхідно окремо):</p>
+<code>
+				<xmp>
+				DESCRIBE authors;
+DESCRIBE forums;
+DESCRIBE posts;
+DESCRIBE themes;
+				</xmp>
+				</code>
+</li>
+
+
+
+
+<li><p>Виконати індивідуальне завдання</p>
+<ol>
+<li></li>
+<li></li>
+</ol>
+</li>
+<li>Впевніться, що всі вихідні HTML-сторінки є валідними, використавши валідатор HTML-коду <code>https://validator.w3.org/</code>. За необхідності, виправити помилки та зауваження</li>
+</ol>
+<h2>Контрольні питання</h2>
+<ol>
+<li></li>
+<li></li>
+<li></li>
+</ol>
+</div>
+</body>
+</html>
