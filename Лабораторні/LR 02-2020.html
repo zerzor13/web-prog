@@ -22,22 +22,22 @@
 			<li>
 				<p>Відкрити <code>.htaccess</code> та записати туди наступні налаштування серверу:</p>
 				<p>
-					<code>
-						ScriptInterpreterSource Registry-Strict <br>
-						AddHandler cgi-script .bat <br>
-						Options +ExecCGI +FollowSymlinks <br>
-					</code>
+					<pre>
+ScriptInterpreterSource Registry-Strict 
+AddHandler cgi-script .bat 
+Options +ExecCGI +FollowSymlinks 
+					</pre>
 				</p>
 				<p>Зберегти файл</p>
 			</li>
 			<li><p>Відкрити <code>index.bat</code> та записати туди наступний код інтерпритатору командного рядка:</p>
 				<p>
-					<code>
-						@echo off <br>
-						echo Content-Type: text/plain <br>
-						echo. <br>
-						dir
-					</code>
+					<pre>
+@echo off 
+echo Content-Type: text/plain 
+echo. 
+dir
+					</pre>
 				</p>
 				<p>Зберегти файл</p>
 			</li>
@@ -46,9 +46,9 @@
 			<li>
 				<p>Відкрити <code>.htaccess</code> та додати туди наступні налаштування серверу:</p>
 				<p>
-					<code>
-						AddHandler cgi-script .exe
-					</code>
+					<pre>
+AddHandler cgi-script .exe
+					</pre>
 				</p>
 				<p>Зберегти файл</p>
 			</li>
@@ -56,29 +56,29 @@
 			<li>
 				<p>Написати наступну програму</p>
 				<p>
-					<code>
-						program Project1; <br>
+					<pre>
+program Project1; 
 
-						{$APPTYPE CONSOLE} <br>
+{$APPTYPE CONSOLE} 
 
-						{$R *.res} <br>
+{$R *.res} 
 
-						uses <br>
-						System.SysUtils; <br>
+uses 
+System.SysUtils; 
 
-						begin <br>
-						try <br>
-						{ TODO -oUser -cConsole Main : Insert code here } <br>
-						Write('Content-Type: text/plain'); <br>
-						Writeln(''); <br>
-						Writeln(''); <br>
-						Write('hello world!'); <br>
-						except <br>
-						on E: Exception do <br>
-						Writeln(E.ClassName, ': ', E.Message); <br>
-						end; <br>
-						end. <br>
-					</code>
+begin 
+try 
+    { TODO -oUser -cConsole Main : Insert code here } 
+    Write('Content-Type: text/plain'); 
+    Writeln(''); 
+    Writeln(''); 
+    Write('hello world!'); 
+except 
+    on E: Exception do 
+    Writeln(E.ClassName, ': ', E.Message); 
+end; 
+end. 
+					</pre>
 				</p>
 				<p>Зберегти проект та зкомпілювати виконуваний файл <code>project1.exe</code></p>
 			</li>
