@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<<<<<<< HEAD
 	<head>
     <title>ІЗВП Лабораторна робота № 15</title>
     <meta charset="utf-8">
@@ -482,5 +483,836 @@ $comments = $stmt->fetchAll();
 <li>За допомогою якого оператора можна виконати сортування результатів запиту вибірки?</li>
 </ol>
 </div>
+=======
+<head>
+	<title></title>
+</head>
+<body>
+
+<h2>Работа с изображениями на PHP с использованием GD(лаб 13)</h2>
+<h2>Что такое GD?</h2>
+<p>PHP может сделать гораздо больше, чем просто отправлять HTML-сообщения посетителям. Например, он имеет возможность манипулировать изображениями. Не только это, но вы также можете создавать свои собственные изображения с нуля, а затем либо сохранять их, либо подавать их пользователям.</p>
+<p>PHP может удовлетворить практически все ваши основные потребности в управлении изображениями, используя <a href="https://php.net/manual/en/book.image.php" rel="external" target="_blank">библиотеку GD</a> - сокращение для Graphic Draw. </p>
+<h3>Установка</h3>
+<p>Если вы работаете в Windows, вы можете включить файл <strong>php_gd2.dll</strong> в качестве расширения в <strong>php.ini</strong>. Если вы используете что-то вроде XAMPP, вы найдете файл <strong>php_gd2.dll</strong> в каталоге <strong>xampp\php\ext</strong>. Вы также можете проверить, установлена ли GD в вашей системе, с помощью функции <code class="inline">phpinfo();</code>. Если вы просмотрите полученный результат, вы найдете что-то похожее на следующее.</p>
+<img src="https://cms-assets.tutsplus.com/uploads/users/1251/posts/31701/image/php_gd_xampp.png"> <p> Вы также можете посетить страницу <a href="http://php.net/manual/en/image.requirements.php" rel="external" target="_blank">требований</a> и <a href="http://php.net/manual/en/image.installation.php" rel="external" target="_blank">установки</a>, чтобы узнать больше об установке.</p>
+<h2>Создание изображений с помощью PHP GD</h2>
+<p>Первым шагом к манипулированию изображениями с помощью PHP является загрузка их в память в качестве ресурса изображения. Этого можно добиться с помощью различных функций для разных форматов. Все эти функции имеют очень похожие имена, поэтому их легко запомнить.</p>
+<h4>Создание нового изображения</h4>
+<p>Функция <code class="inline">imagecreatetruecolor()</code> окажется полезной, если у вас нет исходного источника изображения, которое вы хотите изменять. Она принимает два целочисленных параметра: ширину и высоту. Она вернет ресурс изображения, если все пойдет по плану. Возвращаемый ресурс изображения в основном представляет собой черное изображение с заданной шириной и высотой.</p>
+<h4>Загрузка файла изображения</h4>
+<p>Если вы планируете работать с изображениями, которые уже хранятся где-то, вам пригодится использование таких функций, как <code class="inline">imagecreatefromjpeg()</code>, <code class="inline">imagecreatefrompng()</code> и <code class="inline">imagecreatefromgif()</code>. Они создадут ресурс изображения со всеми данными из загруженного файла изображения. Эти функции принимают единственный параметр, который указывает местоположение загружаемого изображения, как URL-адрес или путь к файлу.</p>
+<h4>Создание изображения из строки</h4>
+<p>Библиотека GD также позволяет создавать изображения из строки, используя функцию <code class="inline">imagecreatefromstring()</code> в PHP. Помните, что вам нужно будет использовать <code class="inline">base64_decode()</code> для данной строки перед <code class="inline">imagecreatefromstring()</code>. Функция может автоматически определять, является ли тип изображения JPG, PNG, GIF или другим поддерживаемым форматом.</p>
+<h2>Вращение, масштабирование, обрезка и переворот изображения</h2>
+<p>Некоторые общие операции, которые вы можете выполнять на ресурсе изображения, - это вращение, масштабирование, обрезка и переворот.</p>
+<h4>Вращение</h4>
+<p>Вы можете повернуть изображение, которое вы уже загрузили в скрипт, используя функцию <code class="inline">imagerotate()</code>. Она будет вращать изображение под заданным углом, используя центр изображения в качестве центра вращения. Угол представлен как значение с плавающей точкой, и PHP считает, что это значение угла вращения. Иногда повернутое изображение будет иметь разные размеры по сравнению с исходной версией. Это означает, что после поворота вы получите некоторую открытую область. Третий параметр функции <code class="inline">imagerotate()</code> может использоваться для задания цвета фона пустой области после вращения.</p>
+<h4>Масштабирование</h4>
+<p>Очень просто масштабировать изображение с помощью библиотеки GD. Вам просто нужно передать ресурс изображения, а также ширину и высоту в функцию <code class="inline">imagescale()</code>. Если вы опустите высоту, GD будет масштабировать изображение до указанной ширины, сохраняя соотношение сторон. Вы также можете указать режим масштабирования изображения. Его можно установить в <code class="inline">IMG_NEAREST_NEIGHBOUR</code>, <code class="inline">IMG_BILINEAR_FIXED</code>, <code class="inline">IMG_BICUBIC</code> и т.д. Важная вещь, которую вам нужно запомнить, это то, что эта функция возвращает новый источник масштабированного изображения вместо того, чтобы изменять исходный.</p>
+<h4>Обрезка</h4>
+<p>Вы можете обрезать любой ресурс изображения с помощью функции <code class="inline">imagecrop()</code> в GD. Первый параметр - исходный ресурс изображения, а второй параметр - ассоциативный массив с ключами <code class="inline">x</code>, <code class="inline">y</code>, <code class="inline">width</code> и <code class="inline">height</code>, определяющий размеры позиции окна обрезки.</p>
+<img src="https://cms-assets.tutsplus.com/uploads/users/1251/posts/31701/image/rotated_cropped_b.jpg">
+<p>Изображение бабочки выше было обрезано с использованием следующего кода:</p>
+<pre class="brush: php noskimlinks noskimwords">$im_php = imagecreatefromjpeg('path/to/image');
+$size = min(imagesx($im_php), imagesy($im_php));
+$im_php = imagecrop($im_php, ['x' =&gt; $size*0.4, 'y' =&gt; 0, 'width' =&gt; $size, 'height' =&gt; $size]);
+$im_php = imagescale($im_php, 300);</pre>
+<p>В основном, мы сохраняем длину самой маленькой стороны в переменной <code class="inline">$size</code>. Затем эта переменная используется для определения границы нашего прямоугольника обрезки. Наконец, изображение уменьшено таким образом, что оно составляет всего 300 пикселей в ширину и длину. Это дает нам квадратное изображение.<br></p>
+<h4>Переворот изображений</h4>
+<p>Изображения можно перевернуть горизонтально, вертикально или в обоих направлениях с помощью функции <code class="inline">imageflip()</code>. Она принимает ресурс изображения, который вы хотите перевернуть, в качестве первого параметра, и режим переворота в качестве второго параметра. Режим переворота может быть установлен на <code class="inline">IMG_FLIP_HORIZONTAL</code>, <code class="inline">IMG_FLIP_VERTICAL</code> или <code class="inline">IMG_FLIP_BOTH</code>.</p>
+<img src="https://cms-assets.tutsplus.com/uploads/users/1251/posts/31701/image/image_flipped.jpg"><p>Верхнее левое изображение на приведенном выше рисунке является оригиналом. Верхнее правое изображение было создано с помощью <code class="inline">IMG_FLIP_HORIZONTAL</code>, нижнее левое изображение было создано с использованием <code class="inline">IMG_FLIP_VERTICAL</code>, а нижнее правое изображение - с помощью <code class="inline">IMG_FLIP_BOTH</code>. (<a href="https://pixabay.com/en/crow-bird-raven-blackbird-animal-3604685/" rel="external" target="_blank">Изображение вороны от Pixabay</a>.)<br></p>
+<h2>Применение фильтров к изображению</h2>
+<p>GD также имеет очень полезную функцию <code class="inline">imagefilter()</code>, которая может применять фильтры на разных ресурсах изображений, загружаемых с использованием функций из предыдущих изображений. Эта функция может принимать различные параметры в зависимости от применяемого фильтра.<br></p>
+<p>Для начала укажите ресурс изображения и имя фильтра, который вы хотите применить. Вы можете установить его на один из <a href="http://php.net/manual/en/function.imagefilter.php" target="_self">12 предопределенных типов фильтров, упомянутых в документах</a>. </p>
+<ul>
+<li> <code class="inline">IMG_FILTER_NEGATE</code>: обращает (меняет как в негативе) цвета на изображении</li> <li> <code class="inline">IMG_FILTER_GRAYSCALE</code>: удаляет цвет из изображения</li> <li> <code class="inline">IMG_FILTER_BRIGHTNESS</code>: делает изображение ярче или темнее</li> <li> <code class="inline">IMG_FILTER_CONTRAST</code>: увеличивает контрастность изображения </li> <li> <code class="inline">IMG_FILTER_COLORIZE</code>: оттеняет изображение в выбранный цвет</li> <li> <code class="inline">IMG_FILTER_EDGEDETECT</code>: выделяет края изображения</li> <li> <code class="inline">IMG_FILTER_EMBOSS</code>: похоже на обнаружение краев, но придает каждому краю приподнятый вид</li> <li> <code class="inline">IMG_FILTER_GAUSSIAN_BLUR</code>: размывает изображение с использованием метода Гаусса</li> <li> <code class="inline">IMG_FILTER_SELECTIVE_BLUR</code>: размывает изображение с помощью выборочного метода</li> <li> <code class="inline">IMG_FILTER_MEAN_REMOVAL</code>: эффект создания стилизованного изображения</li> <li> <code class="inline">IMG_FILTER_SMOOTH</code>: сглаживает зубчатые края изображения</li> <li> <code class="inline">IMG_FILTER_PIXELATE</code>: делает изображение пикселизированным </li> </ul>
+<p>Некоторые фильтры, такие как <code class="inline">NEGATE</code>, <code class="inline">GRAYSCALE</code>, <code class="inline">EDGE_DETECT</code> и <code class="inline">EMBOSS</code>, не нуждаются в дополнительных данных. Другие фильтры, такие как <code class="inline">BRIGHTNESS</code>, <code class="inline">CONTRAST</code> и <code class="inline">SMOOTH</code>, могут принимать дополнительный параметр, который определяет количество яркости, контрастности или гладкости конечного изображения. Параметр <code class="inline">PIXELATE</code> позволяет указать два дополнительных параметра: размер блока, а также режим пикселизации. Наконец, фильтр <code class="inline">COLORIZE</code> принимает четыре параметра, которые определяют значения для red, green и blue компонентов, а также альфа-канала.<br></p>
+<img alt="" data-src="https://cms-assets.tutsplus.com/uploads/users/1251/posts/31701/image/filters_php.jpg"><p>Изображение в левом верхнем углу является оригиналом. Верхнее правое изображение было создано с использованием фильтра <code class="inline">COLORIZE</code>, нижний левый был создан с использованием фильтра <code class="inline">GRAYSCALE</code>, а изображение в правом нижнем углу было создано с использованием фильтра <code class="inline">BRIGHTNESS</code>. (Это <a href="https://pixabay.com/en/white-ling-butterfly-insect-3598577/" rel="external" target="_blank">изображение бабочки было найдено в Pixabay</a>.)<br></p>
+<h2>Другие полезные функции для работы с изображениями</h2>
+<p>Вы также должны знать о некоторых других общих функциях GD, которые могут быть полезны время от времени.</p>
+<h4>Получение размеров изображения</h4>
+<p>Вы можете определить ширину и высоту ресурса изображения с помощью функций <code class="inline">imagesx()</code> и <code class="inline">imagesy()</code>.</p>
+<p>Другая функция, называемая <code class="inline">getimagesize()</code>, также может использоваться для получения ширины и высоты изображения вместе с его типом. Эта функция возвращает массив с элементами, определяющими ширину, высоту и формат изображения. Первые два элемента массива описывают ширину и высоту, а третий элемент содержит константу, определяющую формат файла: один из <code class="inline">IMAGETYPE_PNG</code>, <code class="inline">IMAGETYPE_GIF</code> и т.д.</p>
+<h4>Сохранение изображения</h4>
+<p>После того, как вы внесете все необходимые изменения в изображение, вы, скорее всего, захотите либо вывести его в браузер, либо сохранить его как файл. В любом случае вам придется использовать одну из функций вывода GD, таких как <a href="http://php.net/manual/en/function.imagejpeg.php" rel="external" target="_blank"><code class="inline">imagejepg()</code></a>, <a href="http://php.net/manual/en/function.imagepng.php" rel="external" target="_blank"><code class="inline">imagepng()</code></a> или <a href="http://php.net/manual/en/function.imagegif.php" rel="external" target="_blank"><code class="inline">imagegif()</code></a>. Вы передадите свой ресурс изображения одной из этих функций вывода, и если вы хотите сохранить изображение в файл, вы также укажете имя файла. Вы также можете управлять качеством выходного изображения с помощью третьего необязательного параметра в зависимости от типа изображения. <br></p>
+<h2>Изменение размера всех изображений в каталоге</h2>
+<p>Давайте применим на практике полученные нами знания, чтобы сделать что-нибудь. В этом разделе мы изменим размер всех изображений JPEG в определенном каталоге на ширину 640 пикселей. Высота будет рассчитываться автоматически в зависимости от размеров исходного изображения.</p>
+<p>Мы сохраним измененные изображения в новой папке под названием <strong>Resized</strong>. Все исходные изображения в этом случае имеют одинаковые размеры, но код будет работать правильно и с изображениями, имеющими разные размеры и пропорции.</p>
+<pre class="brush: php noskimlinks noskimwords">$directory = 'Nature/';
+$images = glob($directory."*.jpg");
+
+foreach($images as $image) {
+    $im_php = imagecreatefromjpeg($image);
+    $im_php = imagescale($im_php, 640);
+    $new_height = imagesy($im_php);
+    $new_name = str_replace('-1920x1080', '-640x'.$new_height, basename($image)); 
+    imagejpeg($im_php, $directory.'Resized/'.$new_name);
+}</pre>
+<p>В приведенном выше коде мы начнем с использования функции <code class="inline">glob()</code>, чтобы найти все изображения с расширением <strong>.jpg</strong> в каталоге под названием <strong>Nature</strong>. Файлы изображений хранятся в массиве, и мы поочередно перебираем их.</p>
+<p>Поскольку все изображения, которые мы хотим изменить, являются JPEG, мы используем функцию <code class="inline">imagecreatefromjpeg()</code>, чтобы загрузить их в скрипт. Затем используется функция <code class="inline">imagescale()</code> для изменения размера изображения до определенной ширины - 640 пикселей в нашем случае. Мы не указали фиксированную высоту, чтобы высота была рассчитана автоматически.</p>
+<p>К каждому из исходных файлов изображений было добавлено <strong>-1920x1080</strong> к их имени файла, чтобы указать его размеры. Мы используем <code class="inline">str_replace()</code> в исходном имени файла и заменяем <strong>-1920X1080</strong> на новый размер изображения.</p>
+<p>Наконец, мы сохраняем измененные изображения в папке с именем <strong>Resize</strong> с новыми именами файлов. Вы также можете передать третий параметр функции <code class="inline">imagejpeg()</code>, чтобы установить качество сохраненного файла изображения. Если третий параметр опущен, изображения сохраняются с качеством по умолчанию 75.</p>
+<h2>Применение оттенков серого и контрастных фильтров для каждого изображения в каталоге<br>
+</h2>
+<p>На этот раз мы будем применять два разных фильтра для каждого изображения в нашем каталоге и сохранять конечный результат в другом каталоге без внесения каких-либо изменений в имя файла. Давайте погрузимся в код, и я позже объясню, что делает каждая функция.</p>
+<pre class="brush: plain noskimlinks noskimwords">$directory = 'Nature/';
+$images = glob($directory."*.jpg");
+
+foreach($images as $image) {
+    $im_php = imagecreatefromjpeg($image);
+    imagefilter($im_php, IMG_FILTER_GRAYSCALE);
+    imagefilter($im_php, IMG_FILTER_CONTRAST, -25);
+    $new_name = basename($image); 
+    imagejpeg($im_php, $directory.'Grayscale/'.$new_name);
+}</pre>
+<p>Как вы можете видеть, мы загружаем изображения из каталога <strong>Nature</strong> так же, как и в предыдущем примере. Однако на этот раз мы будем использовать функцию <code class="inline">imagefilter()</code> для применения фильтров на загруженном ресурсе изображения. </p>
+<p>Обратите внимание, что <code class="inline">imagefilter()</code> изменяет исходное изображение и возвращает <code class="inline">TRUE</code> или <code class="inline">FALSE</code> в зависимости от успеха или провала операции. Это отличается от функции <code class="inline">imagescale()</code>, которую мы использовали в предыдущем разделе, которая вернула масштабированный ресурс изображения.</p>
+<p>Еще одна важная вещь, которую следует иметь в виду, заключается в том, что контрастный фильтр принимает значения от -100 до 100. Отрицательные значения подразумевают большую контрастность, а положительные значения означают меньший контраст. Это противоположно тому, что могут ожидать некоторые люди! Значение 0 оставляет изображение неизменным.</p>
+<p>С другой стороны, фильтр яркости имеет минимальный и максимальный пределы -255 и 255. Отрицательное значение в этом случае подразумевает минимальную яркость, а положительное значение означает максимальную яркость.</p>
+<p>Мы получаем имя файла из пути файла, используя функцию <code class="inline">basename()</code>, а затем сохраняем изображение с помощью функции <code class="inline">imagejpeg()</code>.</p>
+<ul class="chunklist chunklist_book"><h4><li>Функции GD и функции для работы с изображениями</a><h4><ul class="chunklist chunklist_book chunklist_children"><li><a href="function.gd-info.php">gd_info</a> — Вывод информации о текущей установленной GD библиотеке</li><li><a href="function.getimagesize.php">getimagesize</a> — Получение размера изображения</li><li><a href="function.getimagesizefromstring.php">getimagesizefromstring</a> — Получение размера изображения из строки данных</li><li><a href="function.image-type-to-extension.php">image_type_to_extension</a> — Получение расширения файла для типа изображения</li><li><a href="function.image-type-to-mime-type.php">image_type_to_mime_type</a> — Получение Mime-типа для типа изображения, возвращаемого 
+   функциями getimagesize, exif_read_data, exif_thumbnail, exif_imagetype</li><li><a href="function.image2wbmp.php">image2wbmp</a> — Выводит изображение в браузер или пишет в файл</li><li><a href="function.imageaffine.php">imageaffine</a> — Вернуть изображение, содержащее аффинно-преобразованное изображение src, используя дополнительную область ограничения</li><li><a href="function.imageaffinematrixconcat.php">imageaffinematrixconcat</a> — Конкатенирует две аффинные матрицы преобразования</li><li><a href="function.imageaffinematrixget.php">imageaffinematrixget</a> — Получает матрицу аффинного преобразования</li><li><a href="function.imagealphablending.php">imagealphablending</a> — Задание режима сопряжения цветов для изображения</li><li><a href="function.imageantialias.php">imageantialias</a> — Требуется ли применять функции сглаживания или нет</li><li><a href="function.imagearc.php">imagearc</a> — Рисование дуги</li><li><a href="function.imagebmp.php">imagebmp</a> — Вывести BMP-изображение в браузер или файл</li><li><a href="function.imagechar.php">imagechar</a> — Рисование символа по горизонтали</li><li><a href="function.imagecharup.php">imagecharup</a> — Рисование символа вертикально</li><li><a href="function.imagecolorallocate.php">imagecolorallocate</a> — Создание цвета для изображения</li><li><a href="function.imagecolorallocatealpha.php">imagecolorallocatealpha</a> — Создание цвета для изображения</li><li><a href="function.imagecolorat.php">imagecolorat</a> — Получение индекса цвета пиксела</li><li><a href="function.imagecolorclosest.php">imagecolorclosest</a> — Получение индекса цвета ближайшего к заданному</li><li><a href="function.imagecolorclosestalpha.php">imagecolorclosestalpha</a> — Получение индекса цвета ближайшего к заданному с учетом прозрачности</li><li><a href="function.imagecolorclosesthwb.php">imagecolorclosesthwb</a> — Получение индекса цвета, имеющего заданный тон, белизну и затемнение</li><li><a href="function.imagecolordeallocate.php">imagecolordeallocate</a> — Разрыв ассоциации переменной с цветом для заданного изображения</li><li><a href="function.imagecolorexact.php">imagecolorexact</a> — Получение индекса заданного цвета</li><li><a href="function.imagecolorexactalpha.php">imagecolorexactalpha</a> — Получение индекса заданного цвета и альфа компонента</li><li><a href="function.imagecolormatch.php">imagecolormatch</a> — Делает цвета палитровой версии изображения более соответствующими
+   truecolor версии</li><li><a href="function.imagecolorresolve.php">imagecolorresolve</a> — Получает идентификатор конкретного цвета или его ближайший аналог</li><li><a href="function.imagecolorresolvealpha.php">imagecolorresolvealpha</a> — Получает идентификатор конкретного цвета и альфа компонента
+  или его ближайший аналог</li><li><a href="function.imagecolorset.php">imagecolorset</a> — Установка набора цветов для заданного индекса палитры</li><li><a href="function.imagecolorsforindex.php">imagecolorsforindex</a> — Получение цветов, соответствующих индексу</li><li><a href="function.imagecolorstotal.php">imagecolorstotal</a> — Определение количества цветов в палитре изображения</li><li><a href="function.imagecolortransparent.php">imagecolortransparent</a> — Определяет цвет как прозрачный</li><li><a href="function.imageconvolution.php">imageconvolution</a> — Наложение искривляющей матрицы 3х3, используя коэффициент и смещение</li><li><a href="function.imagecopy.php">imagecopy</a> — Копирование части изображения</li><li><a href="function.imagecopymerge.php">imagecopymerge</a> — Копирует часть изображения с наложением</li><li><a href="function.imagecopymergegray.php">imagecopymergegray</a> — Копирует часть изображения с наложением в градациях серого</li><li><a href="function.imagecopyresampled.php">imagecopyresampled</a> — Копирование и изменение размера изображения с ресемплированием</li><li><a href="function.imagecopyresized.php">imagecopyresized</a> — Копирование и изменение размера части изображения</li><li><a href="function.imagecreate.php">imagecreate</a> — Создание нового палитрового изображения</li><li><a href="function.imagecreatefrombmp.php">imagecreatefrombmp</a> — Создает новое изображение из файла или URL</li><li><a href="function.imagecreatefromgd2.php">imagecreatefromgd2</a> — Создание нового изображения на основе GD2 или URL</li><li><a href="function.imagecreatefromgd2part.php">imagecreatefromgd2part</a> — Создание нового изображения на основе части GD2 файла или URL</li><li><a href="function.imagecreatefromgd.php">imagecreatefromgd</a> — Создание нового изображения на основе GD файла или URL</li><li><a href="function.imagecreatefromgif.php">imagecreatefromgif</a> — Создает новое изображение из файла или URL</li><li><a href="function.imagecreatefromjpeg.php">imagecreatefromjpeg</a> — Создает новое изображение из файла или URL</li><li><a href="function.imagecreatefrompng.php">imagecreatefrompng</a> — Создает новое изображение из файла или URL</li><li><a href="function.imagecreatefromstring.php">imagecreatefromstring</a> — Создание нового изображения из потока представленного строкой</li><li><a href="function.imagecreatefromwbmp.php">imagecreatefromwbmp</a> — Создает новое изображение из файла или URL</li><li><a href="function.imagecreatefromwebp.php">imagecreatefromwebp</a> — Создает новое изображение из файла или URL</li><li><a href="function.imagecreatefromxbm.php">imagecreatefromxbm</a> — Создает новое изображение из файла или URL</li><li><a href="function.imagecreatefromxpm.php">imagecreatefromxpm</a> — Создает новое изображение из файла или URL</li><li><a href="function.imagecreatetruecolor.php">imagecreatetruecolor</a> — Создание нового полноцветного изображения</li><li><a href="function.imagecrop.php">imagecrop</a> — Обрезать изображение до заданного прямоугольника</li><li><a href="function.imagecropauto.php">imagecropauto</a> — Обрезает изображение автоматически, используя один из доступных режимов</li><li><a href="function.imagedashedline.php">imagedashedline</a> — Рисование пунктирной линии</li><li><a href="function.imagedestroy.php">imagedestroy</a> — Уничтожение изображения</li><li><a href="function.imageellipse.php">imageellipse</a> — Рисование эллипса</li><li><a href="function.imagefill.php">imagefill</a> — Заливка</li><li><a href="function.imagefilledarc.php">imagefilledarc</a> — Рисование и заливка дуги</li><li><a href="function.imagefilledellipse.php">imagefilledellipse</a> — Рисование закрашенного эллипса</li><li><a href="function.imagefilledpolygon.php">imagefilledpolygon</a> — Рисование закрашенного многоугольника</li><li><a href="function.imagefilledrectangle.php">imagefilledrectangle</a> — Рисование закрашенного прямоугольника</li><li><a href="function.imagefilltoborder.php">imagefilltoborder</a> — Заливка цветом</li><li><a href="function.imagefilter.php">imagefilter</a> — Применяет фильтр к изображению</li><li><a href="function.imageflip.php">imageflip</a> — Переворачивает изображение, используя выбранный режим</li><li><a href="function.imagefontheight.php">imagefontheight</a> — Получение высоты шрифта</li><li><a href="function.imagefontwidth.php">imagefontwidth</a> — Получение ширины шрифта</li><li><a href="function.imageftbbox.php">imageftbbox</a> — Определение границ текста выводимого шрифтом freetype2</li><li><a href="function.imagefttext.php">imagefttext</a> — Нанесение текста на изображение, используя шрифты FreeType 2</li><li><a href="function.imagegammacorrect.php">imagegammacorrect</a> — Применение гамма коррекции к GD изображению</li><li><a href="function.imagegd2.php">imagegd2</a> — Вывод GD2 изображения в браузер или файл</li><li><a href="function.imagegd.php">imagegd</a> — Вывод GD-изображения в браузер или в файл</li><li><a href="function.imagegetclip.php">imagegetclip</a> — Получить отсекающий прямоугольник</li><li><a href="function.imagegetinterpolation.php">imagegetinterpolation</a> — Get the interpolation method</li><li><a href="function.imagegif.php">imagegif</a> — Выводит изображение в браузер или пишет в файл</li><li><a href="function.imagegrabscreen.php">imagegrabscreen</a> — Захватывает изображение с экрана</li><li><a href="function.imagegrabwindow.php">imagegrabwindow</a> — Захватывает изображение окна</li><li><a href="function.imageinterlace.php">imageinterlace</a> — Включение или выключение интерлейсинга</li><li><a href="function.imageistruecolor.php">imageistruecolor</a> — Определяет, является ли изображение полноцветным</li><li><a href="function.imagejpeg.php">imagejpeg</a> — Выводит изображение в браузер или пишет в файл</li><li><a href="function.imagelayereffect.php">imagelayereffect</a> — Установка флага альфа сопряжения для использования эффектов наложения изображений</li><li><a href="function.imageline.php">imageline</a> — Рисование линии</li><li><a href="function.imageloadfont.php">imageloadfont</a> — Загрузка шрифта</li><li><a href="function.imageopenpolygon.php">imageopenpolygon</a> — Рисует открытый полигон</li><li><a href="function.imagepalettecopy.php">imagepalettecopy</a> — Копирование палитры из одного изображения в другое</li><li><a href="function.imagepalettetotruecolor.php">imagepalettetotruecolor</a> — Преобразует изображение на основе палитры в настоящий цвет</li><li><a href="function.imagepng.php">imagepng</a> — Вывод PNG изображения в браузер или файл</li><li><a href="function.imagepolygon.php">imagepolygon</a> — Рисование многоугольника</li><li><a href="function.imagerectangle.php">imagerectangle</a> — Рисование прямоугольника</li><li><a href="function.imageresolution.php">imageresolution</a> — Получить или установить разрешение изображения</li><li><a href="function.imagerotate.php">imagerotate</a> — Поворот изображения с заданным углом</li><li><a href="function.imagesavealpha.php">imagesavealpha</a> — Сохранять ли полную информацию альфа-канала при сохранении изображений PNG</li><li><a href="function.imagescale.php">imagescale</a> — Масштабировать изображение по заданной ширине и высоте</li><li><a href="function.imagesetbrush.php">imagesetbrush</a> — Установка изображения (кисти), посредством которого будут рисоваться линии</li><li><a href="function.imagesetclip.php">imagesetclip</a> — Установите прямоугольник ограничения</li><li><a href="function.imagesetinterpolation.php">imagesetinterpolation</a> — Устанавливает метод интерполяции</li><li><a href="function.imagesetpixel.php">imagesetpixel</a> — Рисование точки</li><li><a href="function.imagesetstyle.php">imagesetstyle</a> — Установка стиля рисования линий</li><li><a href="function.imagesetthickness.php">imagesetthickness</a> — Установка толщины линий</li><li><a href="function.imagesettile.php">imagesettile</a> — Установка изображения, которое будет использовано в качестве элемента мозаичной
+   заливки</li><li><a href="function.imagestring.php">imagestring</a> — Рисование строки текста горизонтально</li><li><a href="function.imagestringup.php">imagestringup</a> — Рисование строки текста вертикально</li><li><a href="function.imagesx.php">imagesx</a> — Получение ширины изображения</li><li><a href="function.imagesy.php">imagesy</a> — Получение высоты изображения</li><li><a href="function.imagetruecolortopalette.php">imagetruecolortopalette</a> — Преобразование полноцветного изображения в палитровое</li><li><a href="function.imagettfbbox.php">imagettfbbox</a> — Получение параметров рамки обрамляющей текст написанный TrueType шрифтом</li><li><a href="function.imagettftext.php">imagettftext</a> — Рисование текста на изображении шрифтом TrueType</li><li><a href="function.imagetypes.php">imagetypes</a> — Возвращает список типов изображений, поддерживаемых PHP сборкой</li><li><a href="function.imagewbmp.php">imagewbmp</a> — Выводит изображение в браузер или пишет в файл</li><li><a href="function.imagewebp.php">imagewebp</a> — Вывод изображения WebP в браузер или файл</li><li><a href="function.imagexbm.php">imagexbm</a> — Вывод XBM изображения в браузер или файл</li><li><a href="function.iptcembed.php">iptcembed</a> — Встраивание двоичных IPTC данных в JPEG изображение</li><li><a href="function.iptcparse.php">iptcparse</a> — Разбор двоичных IPTC данных на отдельные теги</li><li><a href="function.jpeg2wbmp.php">jpeg2wbmp</a> — Конвертирует изображение из формата JPEG в WBMP</li><li><a href="function.png2wbmp.php">png2wbmp</a> — Преобразование PNG файла в WBMP</li></ul></li></ul>
+
+
+<section id="link-otkrytie-izobrazheniya">
+
+								<div class="view_anchor">
+						
+						<h4>Обработка изображений в PHP</h4>
+						<h4>Открытие изображения</h4> 
+					</div>
+					<p>Итак, есть исходное изображение PNG 400x400px:</p>
+
+<p style="text-align: center;"><img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut.png" style="width: 300px; height: 300px;"></p>
+
+<p>С помощью функции <code class="code-attr">getimagesize()</code> получим ширину, высоту и тип, далее откроем его функциями в зависимости от типа:</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6366">$filename = __DIR__ . '/donut.png';
+
+$info   = getimagesize($filename);
+$width  = $info[0];
+$height = $info[1];
+$type   = $info[2];
+
+switch ($type) { 
+	case 1: 
+		$img = imageCreateFromGif($filename);
+		imageSaveAlpha($img, true);
+		break;					
+	case 2: 
+		$img = imageCreateFromJpeg($filename);
+		break;
+	case 3: 
+		$img = imageCreateFromPng($filename); 
+		imageSaveAlpha($img, true);
+		break;
+}</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6366" download></a>
+					<a class="block_code-copy" data-id="6366" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		</section>			
+			<section id="link-izmenenie-razmera-izobrazheniya-resize">
+
+								<div class="view_anchor">
+						<noindex><i class="view_anchor-num">2</i></noindex>
+						<h2>Изменение размера изображения (resize)</h2> 
+					</div>
+					<p>Приведенный код уменьшает или увеличивает изображение не искажая его пропорции.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6658">// Размеры новой фотки.
+$w = 200;
+$h = 0;
+
+if (empty($w)) {
+	$w = ceil($h / ($height / $width));
+}
+if (empty($h)) {
+	$h = ceil($w / ($width / $height));
+}
+
+$tmp = imageCreateTrueColor($w, $h);
+if ($type == 1 || $type == 3) {
+	imagealphablending($tmp, true); 
+	imageSaveAlpha($tmp, true);
+	$transparent = imagecolorallocatealpha($tmp, 0, 0, 0, 127); 
+	imagefill($tmp, 0, 0, $transparent); 
+	imagecolortransparent($tmp, $transparent);    
+}   
+
+$tw = ceil($h / ($height / $width));
+$th = ceil($w / ($width / $height));
+if ($tw &lt; $w) {
+	imageCopyResampled($tmp, $img, ceil(($w - $tw) / 2), 0, 0, 0, $tw, $h, $width, $height);        
+} else {
+	imageCopyResampled($tmp, $img, 0, ceil(($h - $th) / 2), 0, 0, $w, $th, $width, $height);    
+}            
+
+$img = $tmp;</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6658" download></a>
+					<a class="block_code-copy" data-id="6658" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<h4 id="title-6659">Результат</h4><table class="tb-3">
+	<tbody>
+		<tr>
+			<td><code class="code-value">$w = 200;<br>
+			$h = 0;</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-resize-200x0.png" style="width: 200px; height: 200px;"></td>
+			<td><code class="code-value">$w = 200;<br>
+			$h = 100;</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-resize-200x100.png" style="width: 200px; height: 100px;"></td>
+			<td><code class="code-value">$w = 100;<br>
+			$h = 200;</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-resize-100x200.png" style="width: 100px; height: 200px;"></td>
+		</tr>
+	</tbody>
+</table>
+</section>			
+			<section id="link-obrezat-izobrazhenie-crop">
+
+								<div class="view_anchor">
+						<noindex><i class="view_anchor-num">3</i></noindex>
+						<h2>Обрезать изображение (crop)</h2> 
+					</div>
+					<p>Пример вырезает из исходного изображения часть размером <code class="code-attr">$w</code> на <code class="code-attr">$h</code>. <br>
+<code class="code-attr">$x</code> и <code class="code-attr">$y</code> задают начальные координаты в пикселях или процентах.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6661">$w = 200;
+$h = 200;
+
+$x = '100%';
+$y = '100%';
+
+if (strpos($x, '%') !== false) {
+	$x = intval($x);
+	$x = ceil(($width * $x / 100) - ($w / 100 * $x));
+}
+if (strpos($y, '%') !== false) {
+	$y = intval($y);
+	$y = ceil(($height * $y / 100) - ($h / 100 * $y));
+}
+
+$tmp = imageCreateTrueColor($w, $h);
+if ($type == 1 || $type == 3) {
+	imagealphablending($tmp, true); 
+	imageSaveAlpha($tmp, true);
+	$transparent = imagecolorallocatealpha($tmp, 0, 0, 0, 127); 
+	imagefill($tmp, 0, 0, $transparent); 
+	imagecolortransparent($tmp, $transparent);    
+}
+
+imageCopyResampled($tmp, $img, 0, 0, $x, $y, $width, $height, $width, $height);
+$img = $tmp;</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6661" download></a>
+					<a class="block_code-copy" data-id="6661" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<h4 id="title-6663">Результат</h4><table class="tb-3">
+	<tbody>
+		<tr>
+			<td><code class="code-value">$x = 0;<br>
+			$y = 0;</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-crop-0-0.png" style="width: 200px; height: 200px;"></td>
+			<td><code class="code-value">$x = &#39;50%&#39;;<br>
+			$y = &#39;0%&#39;;</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-crop-50-0.png" style="width: 200px; height: 200px;"></td>
+			<td><code class="code-value">$x = &#39;100%&#39;;<br>
+			$y = &#39;0%&#39;;</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-crop-100-0.png" style="width: 200px; height: 200px;"></td>
+		</tr>
+	</tbody>
+</table>
+</section>			
+			<section id="link-povorot-izobrazheniya">
+
+								<div class="view_anchor">
+						<noindex><i class="view_anchor-num">4</i></noindex>
+						<h2>Поворот изображения</h2> 
+					</div>
+					<p>Функция <code class="code-attr">imagerotate()</code> поворачивает изображение на заданный угол против часовой стрелки, отрицательный угол меняет направление поворота.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6670">// Поворот против часовой стрелки на 45&deg;.
+$transparent = imagecolorallocatealpha($img, 0, 0, 0, 127); 
+$img = imagerotate($img, 45, $transparent);
+
+// Поворот по часовой стрелки на 90&deg;
+$transparent = imagecolorallocatealpha($img, 0, 0, 0, 127); 
+$img = imagerotate($img, -90, $transparent);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6670" download></a>
+					<a class="block_code-copy" data-id="6670" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<p>Поворот на не ровный угол увеличит ширину и высоту фото:</p>
+
+<p style="text-align: center;"><img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-rotate.png" style="width: 300px; height: 301px;"></p>
+</section>			
+			<section id="link-zerkalnoe-otrazhenie">
+
+								<div class="view_anchor">
+						<noindex><i class="view_anchor-num">5</i></noindex>
+						<h2>Зеркальное отражение</h2> 
+					</div>
+							<div class="block_code">
+			<pre><code class="php" id="bcode-6673">imageflip($img, IMG_FLIP_HORIZONTAL);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6673" download></a>
+					<a class="block_code-copy" data-id="6673" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<p><code class="code-attr">Imageflip()</code> зеркалит изображение, могут быть следующие параметры:</p>
+
+<table class="tbl">
+	<colgroup>
+		<col>
+		<col>
+	</colgroup>
+	<tbody>
+		<tr>
+			<td><code class="code-select">IMG_FLIP_HORIZONTAL</code></td>
+			<td>По горизонтали</td>
+		</tr>
+		<tr>
+			<td><code class="code-select">IMG_FLIP_VERTICAL</code></td>
+			<td>По вертикали</td>
+		</tr>
+		<tr>
+			<td><code class="code-select">IMG_FLIP_BOTH</code></td>
+			<td>По горизонтали и вертикали</td>
+		</tr>
+	</tbody>
+</table>
+		<div class="banner">
+			<!-- Yandex.RTB R-A-278660-17 -->
+			<div id="yandex_rtb_R-A-278660-17"></div>
+			<script type="text/javascript">
+				(function(w, d, n, s, t) {
+					w[n] = w[n] || [];
+					w[n].push(function() {
+						Ya.Context.AdvManager.render({
+							blockId: "R-A-278660-17",
+							renderTo: "yandex_rtb_R-A-278660-17",
+							async: true
+						});
+					});
+					t = d.getElementsByTagName("script")[0];
+					s = d.createElement("script");
+					s.type = "text/javascript";
+					s.src = "//an.yandex.ru/system/context.js";
+					s.async = true;
+					t.parentNode.insertBefore(s, t);
+				})(this, this.document, "yandexContextAsyncCallbacks");
+			</script>
+		</div>
+		</section>			
+			<section id="link-nalozhenie-vodyanogo-znaka-watermark">
+
+								<div class="view_anchor">
+						<noindex><i class="view_anchor-num">6</i></noindex>
+						<h2>Наложение водяного знака (watermark)</h2> 
+					</div>
+					<p>Для защиты на картинки наносят копирайт, например, данный скрип накладывает картинку watermark.png на основное изображение:</p>
+
+<p style="text-align: center;"><img alt="" src="https://snipp.ru/uploads/images/watermark.png"></p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6677">$watermark = __DIR__ . '/watermark.png';
+
+$x = '50%';
+$y = '50%';
+
+$info = getimagesize($watermark);
+switch ($info[2]) { 
+	case 1: 
+		$tmp = imageCreateFromGif($watermark);
+		break;					
+	case 2: 
+		$tmp = imageCreateFromJpeg($watermark);
+		break;
+	case 3: 
+		$tmp = imageCreateFromPng($watermark); 
+		break;
+}
+
+if (strpos($x, '%') !== false) {
+	$x = intval($x);
+	$x = ceil(($width * $x / 100) - ($info[0] / 100 * $x));
+}
+if (strpos($y, '%') !== false) {
+	$y = intval($y);
+	$y = ceil(($height * $y / 100) - ($info[1] / 100 * $y));
+}
+
+imagecopy($img, $tmp, $x, $y, 0, 0, $info[0], $info[1]); 
+imagedestroy($tmp);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6677" download></a>
+					<a class="block_code-copy" data-id="6677" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<h4 id="title-6678">Результат</h4><table class="tb-3">
+	<tbody>
+		<tr>
+			<td><code class="code-value">$x = &#39;50%&#39;;<br>
+			$y = &#39;50%&#39;;</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-watermark-50-50.png" style="width: 200px; height: 200px;"></td>
+			<td><code class="code-value">$x = &#39;100%&#39;;<br>
+			$y = &#39;0%&#39;;</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-watermark-100-0.png" style="width: 200px; height: 200px;"></td>
+			<td><code class="code-value">$x = &#39;100%&#39;;<br>
+			$y = &#39;100%&#39;;</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-watermark-100-100.png" style="width: 200px; height: 200px;"></td>
+		</tr>
+	</tbody>
+</table>
+</section>			
+			<section id="link-dobavlenie-fona">
+
+								<div class="view_anchor">
+						<noindex><i class="view_anchor-num">7</i></noindex>
+						<h2>Добавление фона</h2> 
+					</div>
+					<p>Актуально для PNG с прозрачностью. Скрипт вставит на задний фон картинку с положением <code class="code-attr">$x</code> и <code class="code-attr">$y</code>. Размер основного изображения не изменится.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6690">$file = __DIR__ . '/donut_bg.jpg';
+
+// Положение фона.
+$x = '50%';
+$y = '50%';
+
+$info = getimagesize($file);
+switch ($info[2]) { 
+	case 1: 
+		$bg = imageCreateFromGif($file);
+		break;					
+	case 2: 
+		$bg = imageCreateFromJpeg($file);
+		break;
+	case 3: 
+		$bg = imageCreateFromPng($file); 
+		break;
+}
+
+if (strpos($x, '%') !== false) {
+	$x = intval($x);
+	$x = ceil(($info[0] * $x / 100) - ($width / 100 * $x));
+}
+if (strpos($y, '%') !== false) {
+	$y = intval($y);
+	$y = ceil(($info[1] * $y / 100) - ($height / 100 * $y));
+}
+
+$tmp = imageCreateTrueColor($width, $height);
+imagecopy($tmp, $bg, 0, 0, $x, $y, $width, $height); 
+imagedestroy($bg);
+
+imagecopy($tmp, $img, 0, 0, 0, 0, $width, $height); 
+$img = $tmp;</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6690" download></a>
+					<a class="block_code-copy" data-id="6690" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<table class="tb-2">
+	<tbody>
+		<tr>
+			<td>Фон<br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-bg.jpg" style="width: 300px; height: 188px;"></td>
+			<td>Результат<br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-bg-result.png" style="width: 300px; height: 300px;"></td>
+		</tr>
+	</tbody>
+</table>
+</section>			
+			<section id="link-filtry">
+
+								<div class="view_anchor">
+						<noindex><i class="view_anchor-num">8</i></noindex>
+						<h2>Фильтры</h2> 
+					</div>
+							<div class="block_code">
+			<pre><code class="php" id="bcode-6731">imagefilter($img, $filtertype, $arg1, $arg2);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6731" download></a>
+					<a class="block_code-copy" data-id="6731" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<p>Функция <code class="code-attr">imagefilter()</code> применяет фильтр к изображению.<br>
+В параметре <code class="code-attr">$filtertype</code> указывается константа применяемого фильтра, а в следующих его настройки.</p>
+<h3>IMG_FILTER_NEGATE</h3>
+
+<p>Инвертирует цвета изображения.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6695">imagefilter($img, IMG_FILTER_NEGATE);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6695" download></a>
+					<a class="block_code-copy" data-id="6695" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<p style="text-align: center;"><img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_negate.png" style="width: 150px; height: 150px;"></p>
+<h3>IMG_FILTER_GRAYSCALE</h3>
+
+<p>Преобразует цвета изображения в градации серого.<br>
+ </p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6698">imagefilter($img, IMG_FILTER_GRAYSCALE);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6698" download></a>
+					<a class="block_code-copy" data-id="6698" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<p style="text-align: center;"><img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_grayscale.png" style="width: 150px; height: 150px;"></p>
+<h3>IMG_FILTER_COLORIZE</h3>
+
+<p>Преобразует цвета изображения в градации заданного цвета в формате RGB.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6701">// Красный
+imagefilter($img, IMG_FILTER_COLORIZE, 0, 240, 120);
+
+// Синий
+imagefilter($img, IMG_FILTER_COLORIZE, 150, 240, 120);
+
+// Зеленый
+imagefilter($img, IMG_FILTER_COLORIZE, 90, 240, 90);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6701" download></a>
+					<a class="block_code-copy" data-id="6701" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<table class="tb-3">
+	<tbody>
+		<tr>
+			<td><code class="code-value">0, 240, 120</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_colorize-1.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">150, 240, 120</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_colorize-2.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">90, 240, 90</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_colorize-3.png" style="width: 150px; height: 150px;"></td>
+		</tr>
+	</tbody>
+</table>
+<h3>IMG_FILTER_BRIGHTNESS</h3>
+
+<p>Изменяет яркость изображения, диапазон от -255 до 255.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6704">imagefilter($img, IMG_FILTER_BRIGHTNESS, 127);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6704" download></a>
+					<a class="block_code-copy" data-id="6704" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<table class="tb-4">
+	<tbody>
+		<tr>
+			<td><code class="code-value">-200</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_brightness-200.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">-100</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_brightness-100.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">100</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_brightness%2B100.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">200</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_brightness%2B200.png" style="width: 150px; height: 150px;"></td>
+		</tr>
+	</tbody>
+</table>
+<h3>IMG_FILTER_CONTRAST</h3>
+
+<p>Изменяет контрастность изображения. Уровень может быть от -100 до 100.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6730">imagefilter($img, IMG_FILTER_CONTRAST, 100);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6730" download></a>
+					<a class="block_code-copy" data-id="6730" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<table class="tb-4">
+	<tbody>
+		<tr>
+			<td><code class="code-value">-100</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_contrast-100.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">-50</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_contrast-50.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">50</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_contrast%2B50.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">100</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_contrast%2B100.png" style="width: 150px; height: 150px;"></td>
+		</tr>
+	</tbody>
+</table>
+<h3>IMG_FILTER_EDGEDETECT</h3>
+
+<p>Использует определение границ для их подсветки.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6709">imagefilter($img, IMG_FILTER_EDGEDETECT);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6709" download></a>
+					<a class="block_code-copy" data-id="6709" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<p style="text-align: center;"><img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_edgedetect.png" style="width: 150px; height: 150px;"></p>
+<h3>IMG_FILTER_EMBOSS</h3>
+
+<p>Добавляет рельеф.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6712">imagefilter($img, IMG_FILTER_EMBOSS);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6712" download></a>
+					<a class="block_code-copy" data-id="6712" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<p style="text-align: center;"><img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_emboss.png" style="width: 150px; height: 150px;"></p>
+<h3>IMG_FILTER_GAUSSIAN_BLUR</h3>
+
+<p>Размывает изображение по методу Гаусса.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6715">imagefilter($img, IMG_FILTER_GAUSSIAN_BLUR);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6715" download></a>
+					<a class="block_code-copy" data-id="6715" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<p style="text-align: center;"><img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_gaussian_blur.png" style="width: 150px; height: 150px;"></p>
+<h3>IMG_FILTER_SELECTIVE_BLUR</h3>
+
+<p>Как и <code class="code-attr">IMG_FILTER_GAUSSIAN_BLUR</code> размывает изображение.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6718">imagefilter($img, IMG_FILTER_SELECTIVE_BLUR);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6718" download></a>
+					<a class="block_code-copy" data-id="6718" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<h3>IMG_FILTER_MEAN_REMOVAL</h3>
+
+<p>Делает эффект &laquo;эскиза&raquo;.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6720">imagefilter($img, IMG_FILTER_MEAN_REMOVAL);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6720" download></a>
+					<a class="block_code-copy" data-id="6720" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<p style="text-align: center;"><img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_mean_removal.png" style="width: 150px; height: 150px;"></p>
+<h3>IMG_FILTER_SMOOTH</h3>
+
+<p>Делает границы более плавными, а изображение менее четким. Диапазон значений не ограничен, но наиболее заметные изменения происходят от 0 до -8.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6723">imagefilter($img, IMG_FILTER_SMOOTH, -2);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6723" download></a>
+					<a class="block_code-copy" data-id="6723" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<table class="tb-4">
+	<tbody>
+		<tr>
+			<td><code class="code-value">0</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_smooth-0.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">-2</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_smooth-2.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">-4</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_smooth-4.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">-6</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_smooth-6.png" style="width: 150px; height: 150px;"></td>
+		</tr>
+	</tbody>
+</table>
+<h3>IMG_FILTER_PIXELATE</h3>
+
+<p>Применяет эффект пикселирования.</p>
+
+<p><code class="code-attr">arg1</code> &ndash; задает размера блока в пикселях.<br>
+<code class="code-attr">arg2</code> &ndash; включает усовершенствованный эффект пикселирования.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6726">imagefilter($img, IMG_FILTER_PIXELATE, 2, true);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6726" download></a>
+					<a class="block_code-copy" data-id="6726" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<table class="tb-4">
+	<tbody>
+		<tr>
+			<td><code class="code-value">2</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_pixelate-2.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">3</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_pixelate-3.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">4</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_pixelate-4.png" style="width: 150px; height: 150px;"></td>
+			<td><code class="code-value">5</code><br>
+			<img alt="" class="shadow" src="https://snipp.ru/uploads/images/donut-img_filter_pixelate-5.png" style="width: 150px; height: 150px;"></td>
+		</tr>
+	</tbody>
+</table>
+</section>			
+			<section id="link-sohranenie">
+
+								<div class="view_anchor">
+						<noindex><i class="view_anchor-num">9</i></noindex>
+						<h2>Сохранение</h2> 
+					</div>
+					<h3>Вывод изображения в браузер</h3>
+
+<p>До вызова функции <code class="code-attr">header()</code> скрипт ничего не должен выводить (<code class="code-attr">echo</code>, <code class="code-attr">?&gt;...&lt;?php</code>), иначе картинка будет битой.</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6684">switch ($type) {
+	case 1: 
+		header('Content-Type: image/gif'); 
+		imageGif($img);
+		break;			
+	case 2: 
+		header('Content-Type: image/jpeg');
+		imageJpeg($img, null, 100);
+		break;			
+	case 3: 
+		header('Content-Type: image/x-png');
+		imagePng($img);
+		break;
+}
+
+imagedestroy($img);
+exit();</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6684" download></a>
+					<a class="block_code-copy" data-id="6684" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<p>Чтобы браузер отдал фото на скачивание, в начало кода нужно добавить заголовок:</p>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6729">header('Content-Disposition: Attachment;filename=' . basename($src)); </code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6729" download></a>
+					<a class="block_code-copy" data-id="6729" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<h3>Сохранение изображения в файл на сервере</h3>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6686">switch ($type) {
+	case 1:
+		imageGif($img, $src);
+		break;			
+	case 2:
+		imageJpeg($img, $src, 100);
+		break;			
+	case 3:
+		imagePng($img, $src);
+		break;
+}
+
+imagedestroy($img);</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6686" download></a>
+					<a class="block_code-copy" data-id="6686" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		<h3>Вывод в браузер и сохранение в файл</h3>
+		<div class="block_code">
+			<pre><code class="php" id="bcode-6688">switch ($type) {
+	case 1:
+		header('Content-Type: image/gif'); 
+		imageGif($img, $src);
+		break;			
+	case 2:
+		header('Content-Type: image/jpeg');
+		imageJpeg($img, $src, 100);
+		break;			
+	case 3:
+		header('Content-Type: image/x-png');
+		imagePng($img, $src);
+		break;
+}
+
+imagedestroy($img);
+readfile($src);
+exit();</code></pre>
+						<noindex>
+				<div class="block_code-panel">
+					<span class="block_code-name">PHP</span>
+					<a class="block_code-download" title="Сохранить" href="https://snipp.ru/download/code/6688" download></a>
+					<a class="block_code-copy" data-id="6688" title="Скопировать" href="#" onclick="return false;"></a>		
+				</div>
+			</noindex>
+					</div>
+		</section>							</div>							
+							
+					
+					
+>>>>>>> ac7f4cb54fd444c1252159f237427855f7b990a5
 </body>
 </html>
