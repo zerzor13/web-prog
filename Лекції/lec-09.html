@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Інструментальні засоби візуального програмування. Лекція №9 </title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body>
+	<div class="paper">
+		<div id="colontitle">Інструментальні засоби візуального програмування. Лекція №9 </div>
+		<h1>Об'єктно-орієнтоване програмування ч.2</h1>
+
+<h2>Модифікатори доступу</h2>
+<p>
+Модифікатори доступу - це, по суті, інтерпретація інкапсуляції в ООП. Нагадую, що інкапсуляція - це механізм приховування реалізації об'єкта. І для реалізації інкапсуляції існують модифікатори доступу в PHP.
+</p>
+<p>У PHP є три модифікатори доступу:</p>
+
+<ol>
+	<li>Public</li>
+	<li>Protected</li>
+	<li>Private</li>
+</ol>
+
+<p>
+Почнемо з модифікаторів доступу <strong>public.</strong> Даний модифікатор означає, що властивість, метод або конструктор будуть доступні для всіх об'єктів, які їх використовують.
+</p>
+<p>
+Модифікатор доступу <strong>protected</strong> означає, що даний елемент об'єкта може бути використаний в самому об'єкті, а також у його дочірніх.
+</p>
+<p>
+І, нарешті, модифікатор доступу <strong>private</strong> означає, що даний елемент об'єкта може бути використаний тільки в самому об'єкті і ніде більше.
+</p>
+
+<h2>Область видимості властивостей</h2>
+
+<p>
+Властивості класу повинні бути визначені через модифікатори public, private, або protected.
+</p>
+<p>
+<strong>Приклад 1</strong>. Оголошення властивості класу
+</p>
+
+<pre>
+&lt;? Php 
+/* 
+Визначення MyClass 
+*/ 
+class MyClass 
+{ 
+public $public = 'Загальний'; 
+protected $protected = 'Захищений'; 
+private $private = 'Закритий'; 
+
+function printHello () 
+{ 
+echo $this-&gt; public; 
+echo $this-&gt; protected; 
+echo $this-&gt; private; 
+} 
+} 
+
+$obj = new MyClass (); 
+echo $obj-&gt; public; / / Працює 
+echo $obj-&gt; protected; / / Невиправна помилка 
+echo $obj-&gt; private; / / Невиправна помилка 
+$obj-&gt; printHello (); / / Виводить Загальний, Захищений і Закритий 
+
+/* 
+Визначення MyClass2 
+*/ 
+class MyClass2 extends MyClass 
+{ 
+// Ми можемо перевизначити public і protected методи, але не private 
+protected $protected = 'Захищений2'; 
+
+function printHello () 
+{ 
+echo $this-&gt; public; 
+echo $this-&gt; protected; 
+echo $this-&gt; private; 
+} 
+}
+
+$obj2 = new MyClass2 (); 
+echo $obj2-&gt; public; // Працює 
+echo $obj2-&gt; private; // Невизначений 
+echo $obj2-&gt; protected; // Невиправна помилка 
+$obj2-&gt; printHello (); // Виводить Загальний, Захищений2 і Закритий 
+?&gt;
+</pre>
+
+<p>
+<strong>Зауваження</strong>: Метод оголошення змінної через ключове слово var, прийнятий в PHP 4, досі підтримується з метою сумісності (як синонім ключового слова public). У версіях PHP 5 нижче 5.1.3 таке використання виводить попередження E_STRICT.
+</p>
+
+<h2>Область видимості методу</h2>
+
+<p>
+Методи класу повинні бути визначені через модифікатори public, private, або protected. Методи, де визначення модифікатора відсутня, визначаються як public.
+</p>
+
+<p>
+<strong>Приклад 2</strong> Оголошення методу
+</p>
+
+<pre>
+&lt;? Php 
+/* 
+Визначення MyClass 
+*/ 
+class MyClass 
+{ 
+// Оголошення загальнодоступного конструктора 
+public function __construct () {} 
+
+// Оголошення загальнодоступного методу 
+public function MyPublic () {} 
+
+// Оголошення захищеного методу 
+protected function MyProtected () {} 
+
+// Оголошення закритого методу 
+private function MyPrivate () {} 
+
+// Це загальнодоступний метод 
+function Foo () 
+{ 
+$this-&gt; MyPublic (); $this-&gt; MyProtected (); 
+$this-&gt; MyPrivate (); 
+} 
+} 
+
+$myclass = new MyClass; 
+$myclass-&gt; MyPublic (); // Працює 
+$myclass-&gt; MyProtected (); // Помилка 
+$myclass-&gt; MyPrivate (); // Помилка 
+$myclass-&gt; Foo (); // Працює загальний, захищений і закритий 
+
+/* 
+Визначення MyClass2 
+*/ 
+class MyClass2 extends MyClass 
+{ 
+// Це загальнодоступний метод 
+function Foo2 () 
+{ 
+$this-&gt; MyPublic (); 
+$this-&gt; MyProtected (); 
+$this-&gt; MyPrivate (); // Невиправна помилка 
+} 
+} 
+
+$myclass2 = new MyClass2; 
+$myclass2-&gt; MyPublic (); // Працює 
+$myclass2-&gt; Foo2 (); // Працює загальний і захищений, закритий не працює 
+
+class Bar 
+{ 
+public function test () { 
+$this-&gt; testPrivate (); 
+$this-&gt; testPublic (); 
+} 
+
+public function testPublic () { 
+echo "Bar:: testPublic \ n"; 
+} 
+
+private function testPrivate () { 
+echo "Bar:: testPrivate \ n"; 
+} 
+} 
+
+class Foo extends Bar 
+{ 
+public function testPublic () { 
+echo "Foo:: testPublic \ n"; 
+} 
+
+private function testPrivate () { 
+echo "Foo:: testPrivate \ n"; 
+} 
+} 
+
+$myFoo = new foo (); 
+$myFoo-&gt; test (); // Bar:: testPrivate 
+?&gt;
+</pre>
+
+<h2>Статичні методи і властивості</h2>
+
+<p>
+Статичні методи класу можуть бути викликані безпосередньо у класі, а не через один із його об'єктів. Відповідно, покажчик $this в статичних методах недоступний.
+</p>
+<p>
+Фактично, оголошення класу зі статичними методами є, більшою мірою, методом угруповання функцій і загальних для них констант і змінних.
+</p>
+<p>
+Застосування такого підходу гарантує, що всі класи доступу до бази даних будуть реалізовувати один інтерфейс, зменшується вірогідність конфліктності імен, спрощується існування декількох версій класу доступу до бази і т.д.
+</p>
+
+<pre>
+&lt;? Php 
+class MyClass { 
+static function helloWorld () { 
+print "Hello, world"; 
+} 
+} 
+MyClass:: helloWorld (); 
+?&gt;
+</pre>
+
+<p>Загальне використання статичних методів показано на прикладі:</p>
+
+<pre>
+&lt;? Php 
+class Singleton { 
+static private $instance = NULL; 
+
+private function __construct () { 
+} 
+
+static public function getInstance () { 
+if (self:: $instance == NULL) { 
+self:: $instance = new Singleton (); 
+} 
+return self:: $instance; 
+} 
+} 
+?&gt;
+</pre>
+
+<h2>Подвійна двокрапка</h2>
+<p>
+Використовуючи цю лексему, програміст може звертатися до констант, статичних або перевантажених властивостей або методів класу.
+</p>
+<p>
+При зверненні до цих елементів ззовні класу, програміст повинен використовувати ім'я цього класу.
+</p>
+<p>
+<strong>Приклад 1</strong> Використання :: поза оголошення класу
+</p>
+
+<pre>
+&lt;? Php 
+class MyClass { 
+const CONST_VALUE = 'Значення константи'; 
+} 
+echo MyClass:: CONST_VALUE; 
+?&gt;
+</pre>
+
+<p>
+Для звернення до властивостей і методів в оголошенні класу використовуються ключові слова self і parent.
+</p>
+<p>
+<strong>Приклад 2</strong> Використання :: в оголошенні класу
+</p>
+
+<pre>
+&lt;? Php 
+class OtherClass extends MyClass { 
+public static $my_static = 'статична змінна';
+
+public static function doubleColon () { 
+echo parent:: CONST_VALUE. "\ N"; 
+echo self:: $my_static. "\ N"; 
+} 
+} 
+
+OtherClass:: doubleColon (); 
+?&gt;
+</pre>
+
+<p>
+Коли дочірній клас перевантажує методи, оголошені в класі-батьку, PHP не буде здійснювати автоматичний виклик методів, що належать класу-батькові. Цей функціонал покладається на метод, перевантаження в дочірньому класі. Це правило поширюється на конструктори і деструктори, перевантажені та методи.
+</p>
+<p>
+<strong>Приклад 3</strong> Звернення до методу в батьківському класі
+</p>
+
+<pre>
+&lt;? Php 
+class MyClass { 
+
+protected function myFunc () { 
+echo "MyClass:: myFunc () \ n"; 
+} 
+} 
+
+class OtherClass extends MyClass { 
+
+/* Перезапис батьківського визначення * / 
+public function myFunc () { 
+
+/* Але виклик батьківської функції все-рівно відбувається */ 
+parent:: myFunc (); 
+echo "OtherClass:: myFunc () \ n"; 
+} 
+} 
+
+$Class = new OtherClass (); 
+$Class-&gt; myFunc (); 
+?&gt;
+</pre>
+
+<h2>Оператор instanceof</h2>
+
+<p>
+Підтримка перевірки залежності від інших об'єктів. Функцією is_a (), яка міститься в PHP 4, користуватися тепер не рекомендується.</p>
+
+<pre>
+&lt;?Php 
+if ($obj instance of Circle) { 
+print '$obj is a Circle'; 
+}
+?&gt;
+</pre>
+
+<h2>Фінальні методи і класи</h2>
+
+<h3>Метод final</h3>
+
+<p>
+Ключове слово final дозволяє вам позначати методи, щоб наслідуючий клас не міг перевантажити їх. Розмістивши перед оголошенням методів або властивостей класу ключове слово final, ви можете запобігти їх перевизначення в дочірніх класах, наприклад:
+</p>
+
+<pre>
+&lt;? Php 
+class BaseClass { 
+public function test () { 
+echo "Викликаний метод BaseClass:: test () \n"; 
+} 
+
+final public function moreTesting () { 
+echo "Викликаний метод BaseClass:: moreTesting () \n"; 
+} 
+} 
+
+class ChildClass extends BaseClass { 
+public function moreTesting () { 
+echo "Викликаний метод ChildClass:: moreTesting () \ n"; 
+} 
+} 
+// Виконання закінчується фатальною помилкою: 
+// Неможливо перезаписати фінальний метод BaseClass:: moreTesting () 
+// (Метод BaseClass:: moretesting () не може бути перевизначений) 
+?&gt;
+</pre>
+
+<h2>Класи, помічені як final</h2>
+
+<p>Після оголошення класу final він не може бути успадкований. Наступний приклад викличе помилку:</p>
+
+<pre>
+&lt;? Php 
+final class FinalClass { 
+} 
+
+class BogusClass extends FinalClass { 
+}
+?&gt;
+</pre>
+
+<h2>Абстрактні класи та методи</h2>
+<h3>Абстрактні класи</h3>
+
+<p>
+PHP 5 підтримує визначення абстрактних класів і методів. Створювати екземпляр класу, який був оголошений абстрактним, не можна. Клас, в якому оголошено хоча б один абстрактний метод, повинен також бути оголошений абстрактним. Методи, оголошені як абстрактні, несуть, по суті, лише описовий зміст і не можуть включати будь-який функціонал. Клас може бути оголошений як абстрактний за допомогою використання ключового слова abstract, для виключення з обробки. Однак, ви можете наслідувати абстрактні класи. Практичний приклад:
+</p>
+
+<pre>
+&lt;? Php 
+abstract class AbstractClass { 
+/* Даний метод повинен бути визначений в дочірньому класі */ 
+abstract protected function getValue (); 
+/* Загальний метод */ 
+public function print () { 
+print $this-&gt; getValue (); 
+} 
+} 
+class ConcreteClass1 extends AbstractClass { 
+protected function getValue () { 
+return "ConcreteClass1"; 
+} 
+} 
+class ConcreteClass2 extends AbstractClass { 
+protected function getValue () { 
+return "ConcreteClass2"; 
+} 
+} 
+$Class1 = new ConcreteClass1; 
+$Class1-&gt; print (); 
+$Class2 = new ConcreteClass2; 
+$Class2-&gt; print ();
+?&gt;
+</pre>
+
+<h3>Абстрактні методи</h3>
+
+<p>
+Метод може бути оголошений як abstract, таким чином відклавши його визначення спадкоємним класом. Клас, який включає абстрактні методи, повинен бути оголошений як abstract.
+</p>
+
+<pre>
+&lt;? Php 
+abstract class MyBaseClass { 
+abstract function display (); 
+}
+?&gt;
+</pre>
+
+<h2>Абстрактні методи</h2>
+
+<p>
+У PHP 5 з'явилася така чудова можливість ООП, як інтерфейс класів. Інтерфейс визначає методи, які повинен містити клас. Всі методи, визначені у інтерфейсі повинні бути реалізовані. Інтерфейс створюється за допомогою ключового слова interface. Всі методи в інтерфейсі повинні бути публічними.
+</p>
+
+<pre>
+interface CanWalk { 
+public function walk (); 
+}
+</pre>
+
+<p>
+Клас може реалізовувати декілька інтерфейсів. Перерахування інтерфейсів виконується після ключового слова implements:
+</p>
+
+<pre>
+class Bird implements walk, run, fly { 
+public function walk () { 
+echo "Walk!"; 
+} 
+public function run () { 
+echo "Run!"; 
+} 
+public function fly () { 
+echo "Fly!"; 
+} 
+}
+</pre>
+
+<p>
+<strong>Інтерфейс</strong> - це семантична і синтаксична конструкція в коді програми, яка використовується для послуг, що надаються класом чи компонентом. Інтерфейс визначає межу взаємодії між класами або компонентами, специфікуючи певну абстракцію, яку здійснює сторона. На відміну від багатьох інших видів інтерфейсів, інтерфейс в ООП є строго формалізованим елементом об'єктно-орієнтованої мови і широко використовується кодом програми.
+</p>
+<p>
+Таким чином, з одного боку, <strong>інтерфейс </strong>- це контракт, який зобов'язується виконати клас, який реалізує його, з іншого боку, <strong>інтерфейс</strong> - це тип даних, тому що його опис досить чітко визначає властивості об'єктів, щоб нарівні з класом типізувати змінні. Слід, однак, підкреслити, що інтерфейс не є повноцінним типом даних, так як він задає тільки зовнішню поведінку об'єктів. Внутрішню структуру і реалізацію заданого інтерфейсом поведінку забезпечує клас, який реалізує інтерфейс; саме тому «прикладів інтерфейсу» в чистому вигляді не буває, і будь-яка змінна типу «інтерфейс» містить екземпляри конкретних класів.
+</p>
+
+<h2>Інтерфейси та абстрактні класи</h2>
+
+<p>
+Можна помітити, що інтерфейс, з точки зору реалізації - це просто чистий абстрактний клас, тобто клас, в якому не визначено нічого, крім абстрактних методів. Якщо мова програмування підтримує множинне успадкування і абстрактні методи (як, наприклад, C + +), то необхідність у введенні в синтаксис мови, окремого поняття «інтерфейс» не виникає. Дані сутності описуються за допомогою абстрактних класів і успадковуються класами для реалізації абстрактних методів.
+</p>
+<p>
+Однак підтримка множинного спадкоємства в повному обсязі досить складна і викликає безліч проблем, як на рівні реалізації мови, так і на рівні архітектури додатків. Введення поняття інтерфейсів є компромісом, що дозволяє отримати багато переваг множинного спадкування (зокрема, можливість зручно визначати логічно пов'язані набори методів у вигляді сутностей, подібних класам, допускати спадкування і реалізацію), не реалізовуючи його в повному обсязі і не стикаючись, таким чином, з більшістю викликаних ним труднощів.
+</p>
+
+<h2>Магічні методи</h2>
+
+<p>
+Методи __construct, __destruct (див. Конструктори і деструктори), __call, __callStatic, __get, __set, __isset, __unset, __sleep, __wakeup, __toString, __set_state і __clone зарезервовані для "магічних" методів в PHP. Не варто називати свої методи цими іменами, якщо ви не хочете використовувати їх "магічну" функціональність.
+</p>
+<p>
+<strong>Застереження</strong>
+</p>
+<p>
+PHP залишає за собою право на всі методи, що починаються з __, вважати "магічними". Не рекомендується використовувати імена методів з __ у PHP, якщо ви не бажаєте використовувати відповідний "магічний" функціонал.
+</p>
+
+<h2>__call</h2>
+
+<p>
+З PHP5 ви можете реалізувати в класі спеціальний метод __call (), як метод для "вилову" всіх нереалізованих у даному класі методів. Метод __call (якщо він визначений) викликається при спробі викликати недоступний або неіснуючий метод.
+</p>
+
+<pre>
+&lt;? Php 
+class foo { 
+
+function __call ($name, $arguments) { 
+print ("Викликали? Я - $ name!"); 
+} 
+} 
+
+$X = new foo (); 
+$ X-&gt; doStuff (); 
+$ X-&gt; fancy_stuff ();
+?&gt;
+</pre>
+
+<p>
+Цей спеціальний метод може бути використаний для реалізації перевантаження методів: ви можете досліджувати отримані аргументи і залежно від результату викликати підходящий для даного випадку закритий метод, наприклад:
+</p>
+
+<pre>
+&lt;? Php 
+class Magic { 
+
+function __call ($name, $arguments) { 
+if ($name == 'foo') { 
+if (is_int ($arguments [0])) $this-&gt; foo_for_int ($arguments [0]); 
+if (is_string ($arguments [0])) $this-&gt; foo_for_string ($arguments [0]); 
+} 
+} 
+
+private function foo_for_int ($x) { 
+print ("о, дивіться, ціле число!"); 
+}
+
+private function foo_for_string ($x) { 
+print ("о, дивіться, рядок!"); 
+} 
+} 
+
+$X = new Magic (); 
+$X-&gt; foo (3); 
+$X-&gt; foo ("3"); 
+?&gt;
+</pre>
+
+<h2>__set і __get</h2>
+
+<p>
+Але це ще не все, тепер ви можете визначити методи __set і __get для пошуку всіх спроб зміни або доступу до невизначених (або недоступних) змінних.
+</p>
+
+<pre>
+&lt;? Php 
+class foo { 
+
+function __set ($name, $val) { 
+print ("Привіт, ви спробували привласнити значення $val змінній $name"); 
+} 
+
+function __get ($name) { 
+print ("Привіт, ви намагалися звернутися до $name"); 
+} 
+} 
+
+$X = new foo (); 
+$X-&gt; bar = 3; 
+print ($x-&gt; winky_winky); 
+?&gt;
+</pre>
+
+<h2>__sleep і __wakeup</h2>
+
+<p>
+Функція <strong>serialize ()</strong> перевіряє, чи присутній у вашому класі метод з "магічним" іменем __sleep. Він може очистити об'єкт, буде повернутий масив з іменами всіх змінних об'єкта, який повинен бути серіалізований. Якщо метод нічого не повертає крім NULL, то це означає, що об'єкт серіалізований і видається попередження E_NOTICE.
+</p>
+<p>
+Зазвичай <strong>__sleep</strong> використовується для передачі очікуваних даних або для виконання звичайних завдань їх очищення. Також, цей метод можна виконувати в тих випадках, коли ви не хочете зберігати дуже великі об'єкти повністю.
+</p>
+<p>
+З іншого боку, функція <strong>unserialize ()</strong> перевіряє наявність методу з "магічним" іменем <strong>__wakeup</strong>. Якщо такий є, то він може відтворити всі ресурси об'єкта, які той має.
+</p>
+<p>
+Зазвичай <strong>__wakeup</strong> використовується для відновлення будь-яких з'єднань з базою даних, які могли бути втрачені під час операції серіалізації та виконання інших операцій повторної ініціалізації.
+</p>
+
+<p>
+<strong>Приклад № 1</strong> Sleep і wakeup
+</p>
+
+<pre>
+&lt;? Php 
+class Connection { 
+protected $link; 
+private $server, $username, $password, $db; 
+
+public function __construct ($ server, $ username, $ password, $ db) 
+{ 
+$this-&gt; server = $server; 
+$this-&gt; username = $username; 
+$this-&gt; password = $password; 
+$this-&gt; db = $db; <br />$this-&gt; connect(); 
+} 
+
+private function connect () 
+{ 
+$this-&gt; link = mysql_connect ($this-&gt; server, $this-&gt; username, $this-&gt; password); 
+mysql_select_db ($this-&gt; db, $this-&gt; link); 
+} 
+
+public function __sleep () 
+{ 
+return array ('server', 'username', 'password', 'db'); 
+} 
+
+public function __wakeup () 
+{ 
+$this-&gt; connect (); 
+} 
+} 
+?&gt;
+</pre>
+
+<h2>__toString</h2>
+
+<p>
+Метод __toString дозволяє класу вирішувати самостійно, як він повинен реагувати при перетворенні в рядок.
+</p>
+<p>
+<strong>Приклад № 2</strong> Простий приклад
+</p>
+
+<pre>
+&lt;? Php 
+// Декларування простого класу 
+class TestClass 
+{ 
+public $foo; 
+
+public function __construct ($foo) { 
+$this-&gt; foo = $foo; 
+} 
+
+public function __toString () { 
+return $this-&gt; foo; 
+} 
+} 
+
+$class = new TestClass ('Привіт'); 
+echo $class; 
+?&gt;
+</pre>
+
+<p>Результат виконання цього прикладу:</p>
+<p>Привіт</p>
+<p>Раніше, до PHP 5.2.0, метод __toString викликався тільки безпосередньо в поєднанні з функціями echo () або print (). Починаючи з PHP 5.2.0, він викликається в будь-якому рядковому контексті (наприклад, у printf () з модифікатором %s), але не в контекстах інших типів (наприклад, з %d модифікатором). Починаючи з PHP 5.2.0, перетворення об'єкта в рядок за відсутності методу __toString викликає помилку E_RECOVERABLE_ERROR.</p>
+
+<h2>__invoke</h2>
+
+<p>Метод __invoke викликається при спробі використовувати змінну-об'єкт як функцію.</p>
+<p><u>Зауваження</u>: Доступно тільки з версії PHP 5.3.0.</p>
+<p><strong>Приклад № 3</strong> Using __invoke</p>
+
+<pre>
+&lt;? Php 
+class CallableClass { 
+function __invoke ($x) { 
+var_dump ($x); 
+} 
+} 
+$obj = new CallableClass; 
+$obj (5); 
+var_dump (is_callable ($obj)); 
+?&gt;
+</pre>
+
+<p>Результат виконання цього прикладу:</p>
+<p>int (5)</p> 
+<p>bool (true)</p>
+
+<h2>__set_state</h2>
+
+<p>Цей статичний метод викликається для тих класів, які експортуються функцією <strong>var_export ()</strong> починаючи з PHP 5.1.0.</p>
+<p>Параметр цього методу повинен містити масив, що складається з експортованих властивостей у вигляді array ('property' =&gt; value, ...).</p>
+
+<p><strong>Приклад № 4</strong> Використання __set_state (починаючи з PHP 5.1.0)</p>
+
+<pre>
+&lt;? Php 
+class A 
+{ 
+public $var1; 
+public $var2; 
+
+public static function __set_state ($an_array) / / З PHP 5.1.0 
+{ 
+$obj = new A; 
+$obj-&gt; var1 = $ an_array ['var1']; 
+$obj-&gt; var2 = $ an_array ['var2']; 
+return $obj; 
+} 
+}
+
+$a = new A; 
+$a-&gt; var1 = 5; 
+$a-&gt; var2 = 'foo'; 
+
+eval ('$b ='. var_export ($a, true).';');
+// $ b = A:: __set_state (array) 
+// 'var1' =&gt; 5, 
+// 'var2' =&gt; 'foo', 
+//)); 
+var_dump ($ b); 
+?&gt;
+</pre>
+
+<p>Результат виконання цього прикладу:</p>
+<pre>
+object (A) # 2 (2) { 
+["Var1"] =&gt; 
+int (5) 
+["Var2"] =&gt; 
+string (3) "foo" 
+}
+</pre>
+
+<h2>Функції для роботи з класами та об'єктами</h2>
+
+<p>У РНР існує кілька стандартних функцій для роботи з класами та об'єктами. Розглянемо деякі функції для роботи з класами та об'єктами в контексті PHP5.</p>
+<p><strong>get_class_methods ()</strong></p>
+<p>Функція get_class_methods () повертає масив імен методів класу із заданим ім'ям. Синтаксис функції get_class_methods ():</p>
+<p>array get_class_methods (string імя_класса)</p>
+<p>Простий приклад використання get_class_methods () - Отримання списку методів класу:</p>
+
+<pre>
+&lt;? Php
+... 
+class Airplane extends Vehicle { 
+public $wingspan; 
+function setWingSpan ($wingspan) { 
+$this-&gt; wingspan = $wingspan; 
+} 
+
+function getWingSpan () { 
+return $ this-&gt; wingspan; 
+} 
+} 
+
+$cls_methods = get_class_methods (Airplane); 
+// Масив $ cls_methods містить імена всіх методів, 
+// Оголошених в класах "Airplane" і "Vehicle" 
+?&gt;
+</pre>
+
+<p>Як видно з лістингу, функція get_class_methods () дозволяє легко отримати інформацію про всі методи, підтримуваних класом.</p>
+<p><strong>get_class_vars ()</strong></p>
+<p>Функція get_class_vars () повертає масив імен атрибутів класу із заданим ім'ям. Синтаксис функції get_class_vars ():</p>
+<p>array get_class_vars (string імя_класса)</p>
+<p>Приклад використання функції get_class_vars () - отримання списку атрибутів (властивостей) класу:</p>
+
+<pre>
+&lt;? Php 
+class Vehicle { 
+public $model; 
+public $ urrent_speed; 
+} 
+
+class Airplane extends Vehicle { 
+public $Swingspan; 
+} 
+
+$a_class = "Airplane"; 
+$attribs = get_class_vars ($a_class); 
+// $ Attribs = array ("wingspan", "model", "current_speed") 
+?&gt;
+</pre>
+
+<p>У розглянутому прикладі масив $attribs заповнюється іменами всіх атрибутів класу Airplane.</p>
+<p><strong>get_object_vars ()</strong></p>
+<p>Функція <strong>get_object_vars ()</strong> повертає асоціативний масив з інформацією про всі атрибути об'єкту із заданим ім'ям. Синтаксис функції get_object_vars ():</p>
+<p>array get_object_vars (object ім’я_об’єкта)</p>
+<p>Приклад використання функції get_object_vars () - отримання інформації про змінні об'єкта:</p>
+
+<pre>
+&lt;? Php 
+class Vehicle { 
+public $wheels; 
+} 
+
+class Land extends Vehicle { 
+public $engine; 
+}
+
+class car extends Land { 
+var $doors; 
+function car ($ doors, $ eng, $ wheels) { 
+$this-&gt; doors = $doors; 
+$this-&gt; engine = $eng; 
+$this-&gt; wheels = $wheels; 
+} 
+
+function get_wheels () { 
+return $this-&gt; wheels; 
+} 
+} 
+
+$toyota = new car (2,400,4); 
+$vars = get_object_vars ($toyota); 
+while (list ($key, $value) = each ($vars)): 
+print "$key ==&gt; $value"; 
+endwhile; 
+// Вихідні дані: 
+// Wheels ==&gt; 4 
+// Engine ==&gt; 400 
+// Doors ==&gt; 2 
+?&gt;
+</pre>
+
+<p>Функція <strong>get_object_vars ()</strong> дозволяє швидко отримати всю інформацію про атрибути конкретного об'єкта та їх значеннях у вигляді асоціативного масиву.</p>
+<p><strong>method_exists ()</strong></p>
+<p>Функція <strong>method_exists ()</strong> перевіряє, чи підтримується об'єктом метод із заданим ім'ям. Якщо метод підтримується, функція повертає TRUE, в іншому випадку повертається FALSE. Синтаксис функції method_exists ():</p>
+<p>bool method_exists (object ім’я_об’єкта. string імя_метода)</p>
+<p>Приклад використання методу method_exists () - перевірка підтримки методу об'єктом:</p>
+
+<pre>
+&lt;? Php 
+class Vehicle { 
+// ... 
+} 
+
+class Land extends Vehicle { 
+public $fourWheel; 
+function setFourWheelDrive () { 
+$this-&gt; fourWeel = 1; 
+} 
+
+} 
+// Створити об'єкт з ім'ям $ саr 
+$car = new Land; 
+// Якщо метод "fourWheelDrive" підтримується класом "Land" 
+// Або "Vehicle", виклик method_exists повертає TRUE; 
+// У протилежному випадку повертається FALSE. 
+// У даному прикладі method_exists () повертає TRUE. 
+if (method_exists ($ car, "setfourWheelDrive")): 
+print "Автомобіль з 4-ма ведучими колесами"; 
+else: 
+print "Автомобіль з 2-ма ведучими колесами";
+endif; 
+?&gt;
+</pre>
+
+<p>У розглянутому прикладі функція method_exists () перевіряє, чи підтримується об'єктом $car метод з ім'ям setFourWheelDrive (). Якщо метод підтримується, функція повертає логічну істину і фрагмент виводить відповідне повідомлення. В іншому випадку повертається FALSE і виводиться інше повідомлення.</p>
+<p><strong>get_class ()</strong></p>
+<p>Функція get_class () повертає ім'я класу, до якого належить об'єкт із заданим ім'ям. Синтаксис функції get_class ():</p>
+<p>string get_class (object ім’я_об’єкта);</p>
+<p>Приклад використання get_class () - отримання імені класу:</p>
+
+<pre>
+&lt;? Php 
+class Vehicle { 
+} 
+
+class Land extends Vehicle { 
+}
+
+// Створюємо об'єкт з ім'ям $саr: 
+$car = new Land; 
+// Змінній $ class_a присвоюється рядок "Land": 
+$class_a = get_class ($car); 
+echo $class_a; 
+?&gt;
+</pre>
+
+<p>У розглянутому прикладі змінної $class_a присвоюється ім'я класу, на основі якого був створений об'єкт $саr.</p>
+<p><strong>get_parent_class ()</strong></p>
+<p>Функція get_parent_class () повертає ім'я батьківського класу (якщо він є) для об'єкту із заданим ім'ям. Синтаксис функції get_parent_dass ():</p>
+<p>string get_parent_class (object ім’я_об’єкта);</p>
+<p>Приклад отримання імені батьківського класу функцією get_parent_class ():</p>
+
+<pre>
+&lt;? Php 
+class Vehicle { 
+//... 
+} 
+
+class Land extends Vehicle { 
+//... 
+} 
+
+// Створюємо об'єкт з ім'ям $ саr: 
+$саr = new Land; 
+// Змінній $parent присвоюється рядок "Vehicle": 
+$parent = get_parent_class ($ car); 
+?&gt;
+</pre>
+
+<p>При виклику get_parent_class () змінній $parent буде присвоєний рядок "Vehicle".</p>
+<p><strong>is_subclass_of ()</strong></p>
+<p>Функція <strong>is_subclass_of ()</strong> перевіряє, чи був об'єкт створений на базі класу, що має батьківський клас із заданим ім'ям. Функція повертає TRUE, якщо перевірка дає позитивний результат, і FALSE в іншому випадку. Синтаксис функції is_subclass_of ():</p>
+<p><strong>bool is_subclass_of (object об'єкт, string імя_класса)</strong></p>
+<p>Приклад використання функції is_subdass_of ():</p>
+
+<pre>
+&lt;? Php 
+class Vehicle { 
+//... 
+} 
+
+class Land extends Vehicle { 
+//... 
+} 
+$auto = new Land; 
+// Змінній $is_subclass присвоюється TRUE 
+$is_subclass = is_subclass_of ($auto, "Vehicle"); 
+?&gt;
+</pre>
+
+<p>У розглянутому прикладі змінншй $is_subclass () присвоюється ознака того, чи належить об'єкт $auto до підкласу батьківського класу Vehicle. У наведеному фрагменті $auto відноситься до класу Vehicle; отже $is_subclass () буде присвоєно значення TRUE.</p>
+<p><strong>get_declared_classes ()</strong></p>
+<p>Функція get_declared_classes () повертає масив з іменами всіх визначених класів. Синтаксис функції get_declared_classes ():</p>
+<p>array get_declared_classes ()</p>
+<p>Приклад отримання списку класів функцією get_declared_classes ():</p>
+
+<pre>
+&lt;? Php 
+class Vehicle { 
+//... 
+} 
+
+class Land extends Vehicle { 
+//... 
+} 
+$declared_classes = get_declared_classes (); 
+// $declared_classes = array ("Vehicle", "Land")
+?&gt;
+</pre>
+
+<p>Ми розглянули лише деякі основні функції, призначені для роботи з класами та об'єктами PHP. Для ознайомлення з повним переліком таких функцій зверніться до довідника функцій PHP.</p>
+
+<h2>Обробка винятків</h2>
+
+<p>
+Модель винятків <strong>(exceptions)</strong> в PHP 5 простіша, ніж в інших мовах програмування. Виняток можна згенерувати (як кажуть, "викинути") за допомогою оператора throw, і можна перехопити (або, як кажуть, "піймати") оператором catch. Код, що викидає виключення, повинен бути оточений блоком try, для того щоб можна було перехопити виняток. Кожен блок try повинен мати як мінімум один відповідний блок catch. Так само можна використовувати кілька блоків catch, що перехоплюють різні класи винятків. Нормальне виконання буде продовжено за останнім блоком catch. Винятки так само можуть бути згенерованими (або перегереровані - тобто викинуті знову) оператором throw всередині блоку catch.
+</p>
+
+<p>При генерації виключення, код який слідує нижче оператора throw виконаний не буде, а PHP зробить спробу знайти перший блок catch, що перехоплює виключення даного класу. Якщо виключення не буде перехоплено, PHP видасть повідомлення про помилку: "Uncaught Exception ..." (неперехоплений виняток), якщо звичайно не був визначений обробник помилок за допомогою функції set_exception_handler ().</p>
+<p><strong>Приклад № 1</strong> Викид винятків</p>
+
+<pre>
+&lt;? Php 
+function inverse ($x) { 
+if (!$x) { 
+throw new Exception ('Поділ на нуль.'); 
+} 
+else return 1 / $x; 
+} 
+
+try { 
+echo inverse (5). "\n"; 
+echo inverse (0). "\n"; 
+} Catch (Exception $e) { 
+echo 'Викинуто виняток:', $e-&gt; getMessage (), "\ n"; 
+}
+
+// Продовження виконання 
+echo 'Hello World'; 
+?&gt;
+</pre>
+
+<p>Результат виконання цього прикладу:</p>
+<p>0.2 </p>
+<p>Викинуто виняток: Поділ на нуль. </p>
+<p>Hello World</p>
+
+<h2>Спадкування винятків</h2>
+
+<p>Обробник винятків користувача повинен бути визначений, як клас, що розширює вбудований клас Exception. Нижче наведено методи і властивості класу Exception, доступні дочірнім класам.</p>
+<p><strong>Приклад № 1</strong> Вбудований клас Exception</p>
+
+<pre>
+&lt;? Php 
+class Exception 
+{ 
+protected $message = 'Unknown exception'; // повідомлення 
+protected $code = 0; // Код винятку, визначається користувачем 
+protected $file; // файл у якому було викинуто виключення 
+protected $line; // рядок у якому було викинуто виключення 
+
+function __construct ($message = null, $code = 0); 
+
+final function getMessage (); // Повертає повідомлення виключення 
+final function getCode (); // Код винятку 
+final function getFile (); // Файл, де викинуто виняток 
+final function getLine (); // Рядок, що викинув виключення 
+final function getTrace (); // Масив backtrace () 
+final function getTraceAsString (); // Зворотнє трасування, як рядок
+
+function __toString (); /* повинен повернути форматований рядок,для відображення */
+}
+?&gt;
+</pre>
+
+<p>Якщо клас, успадкований від Exception перевизначає конструктор, необхідно викликати в конструкторі parent:: __construct (), щоб бути впевненим, що всі дані будуть доступні. Метод __toString () може бути перевизначений, що б забезпечити потрібний вивід, коли об'єкт перетворюється в рядок.</p>
+<p><strong>Приклад № 2</strong> Успадкування класу Exception</p>
+
+<pre>
+&lt;? Php 
+/* Визначимо свій клас винятку*/ 
+class MyException extends Exception 
+{ 
+// Перевизначивши виняток так, що параметр message стане обов'язковим 
+public function __construct ($ message, $ code = 0) { 
+// Якийсь код 
+
+parent:: __construct ($message, $code); 
+} 
+
+// Перевизначаємо рядкове подання об'єкта. 
+public function __toString () { 
+return __CLASS__. ": [{$ This-&gt; code}]: {$ this-&gt; message} \ n"; 
+} 
+
+public function customFunction () { 
+echo "Ми можемо визначати нові методи в успадкованому класі \n"; 
+} 
+} 
+
+/* Створимо клас для тестування винятку */ 
+class TestException 
+{ 
+public $var;
+
+const THROW_NONE = 0; 
+const THROW_CUSTOM = 1; 
+const THROW_DEFAULT = 2; 
+
+function __construct ($avalue = self:: THROW_NONE) { 
+
+switch ($avalue) { 
+case self:: THROW_CUSTOM: 
+// Генеруємо власне виключення 
+throw new MyException ('1 - неправильний параметр ', 5); 
+break;
+
+case self:: THROW_DEFAULT: 
+// Генеруємо вбудований виняток 
+throw new Exception ('2 - неприпустимий параметр ', 6); 
+break; 
+
+default: 
+// Ніяких винятків, об'єкт буде створений. 
+$tHIS-&gt; var = $avalue; 
+break; 
+} 
+} 
+}
+
+
+ // Приклад 1 
+ try { 
+ $o = new TestException (TestException:: THROW_CUSTOM); 
+} Catch (MyException $e) {// Буде перехоплено 
+echo "Злови власне, перевизначене виключення \ n", $ e; 
+$e-&gt; customFunction (); 
+} Catch (Exception $e) {// Буде пропущено. 
+echo "Злови вбудоване виключення \n", $e; 
+} 
+
+// Звідси буде продовжено виконання програми 
+var_dump ($o); 
+echo "\n\n"; 
+
+// Приклад 2 
+try { 
+$o = new TestException (TestException:: THROW_DEFAULT); 
+} Catch (MyException $ e) {// Тип винятку не співпаде 
+echo "Злови перевизначене виключення \n", $e; 
+$e-&gt; customFunction (); 
+} Catch (Exception $e) {// Буде перехоплено 
+echo "перехоплено вбудоване виключення \n", $e; 
+} 
+
+// Звідси буде продовжено виконання програми 
+var_dump ($o); 
+echo "\n\n"; 
+
+// Приклад 3 
+try { 
+$o = new TestException (TestException:: THROW_CUSTOM); 
+} Catch (Exception $e) {// Буде перехоплено. 
+echo "Злови вбудоване виключення \n", $e; 
+} 
+
+// Продовження виконання програми 
+var_dump ($o); 
+echo "\n\n"; 
+
+// Приклад 4 
+try { 
+$o = new TestException (); 
+} Catch (Exception $e) {// Буде пропущено, тому що виняток не викинеться 
+echo "Злови вбудоване виключення \n", $e; 
+} 
+
+// Продовження виконання програми 
+var_dump ($o); 
+echo "\n\n";
+?&gt;
+</pre>
+
+
+
+		</div>
+	</body>
+	</html>
