@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>ІЗВП Лабораторна робота № 10</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div class="paper">
+		<div id="colontitle">Інструментальні засоби візуального програмування. Лабораторна робота № 10</div>
+		<h1>Лабораторна робота № 10</h1>
+			<h2>Збереження даних в форматі XML</h2>
+			<h2>Мета роботи</h2>
+			<p>Ознайомитися з основами роботи XML-розширення DOM та навчитися зберігати дані в XML файл</p>
+			<h2>Обладнання</h2>
+			<p>Персональний комп'ютер. Пакет програм XAMPP. Текстовий редактор Sublime Text 3 або IDE NetBeans. Web-браузер Chrome, Firefox, Opera</p>
+			<h2>Хід роботи</h2>
+			<ol>
+				<li>Впевнитись, що пакет XAMPP встановлено та web-сервер Apache запущений</li>
+				<li>Перейти до каталогу <code>C:\xampp\htdocs\</code> та очистити його</li>
+				<li><p>Робота з DOM здійснюється в об'єктно-орієнтованому стилі, який ми почали вивчати на попередніх лабораторних роботах. Для початку роботи з ним потрібно створити об'єкт domDocument. На практиці це виглядає так:</p>
+				<code>
+				<xmp>
+				$dom_xml = new DomDocument;
+				</xmp>
+				</code>
+			</li>
+			<li><p>При створенні нового об'єкта domDocument викликається конструктор <br><code>DOMDocument => __construct</code>, що має два необов'язкових аргумента, які вказують на версію документа і його кодування.</p>
+			<code>
+			<xmp>
+			__construct ([string version [, string encoding]])
+			</xmp>
+			</code>
+		</li>
+		<li><p>Після створення нового об'єкта domDocument необхідно завантажити дані. Здійснюється це за допомогою методів <code>DOMDocument->load()</code> і <code>DOMDocuмент->loadXML()</code>. В першому випадку дані завантажуються з файлу, а в другому з рядка. На практиці це виглядає так:</p>
+		<code>
+		<xmp>
+		//Завантаження даних з файлу з явним зазначенням екземпляра класу
+		$dom_xml = new DomDocument;
+		$dom_xml->load('file.xml');
+
+		//Завантаження даних з файлу без явного зазначення екземпляра класу
+		$dom_xml=DomDocument::load('file.xml');
+
+		//Завантаження даних з рядка з явним зазначенням екземпляра класу
+		$dom_xml = new DomDocument;
+		$dom_xml->loadXML('<car><model>volvo</model></car>');
+
+		//Завантаження даних з рядка без явного зазначення екземпляра класу
+		$dom_xml = DomDocument::lоаdХМL('<car><model>volvo</model></car>');
+		</xmp>
+		</code>
+	</li>
+	<li><p>Після того як дані завантажені здійснюється їх розбір. Здійснити це можна за допомогою методу <code>DomDocument->getElementsByTagName()</code>. Цей метод повертає колекцію об'єктів DOMNode.</p>
+	<p>Виконайте приклад та зверніть увагу на результат</p>
+	<code>
+	<xmp>
+	<?php
+	$dom_xml= new DomDocument();
+	$dom_xml->loadXML('<car><model>Volvo</model><model>Lada</model></car>');
+	// Записуємо назву моделі у змінну
+	$mod=$dom_xml->getElementsByTagName("model");
+	// Відображення даних
+	foreach ($mod as $element)
+	{
+		echo $element->nodeValue." ".$element->nodeName." ".'<br />';
+	}
+	?>
+	</xmp>
+	</code>
+</li>
+<li><p>Збереження xml даних в файл здійснюється за допомогою методу <code>save()</code></p>
+<code>
+<xmp>
+<?php
+$dom_xml= new DomDocument();
+$dom_xml->loadXML('<car><model>ЗИЛ-130</model><model>ВАЗ</model></car>');
+$path="auto.xml";
+echo $dom_xml->save($path);
+?>
+</xmp>
+</code>
+<p>Впевніться, що в результаті роботи цього коду буде повернуто число 73 (кількість символів) і створений файл auto.xml з наступним вмістом:</p>
+<code><xmp><?xml version="1.0"?>
+<car><model>ЗИЛ-130</model><model>ВАЗ</model></car></xmp></code>
+</li>
+<li><p>Виконати індивідуальне завдання</p>
+<ol>
+<li>Створіть файл book.xml, який буде містити інформацію про книгу, зробіть розбір xml та виведіть цю інформацію</li>
+<li>Змініть попередній xml, завантажте його з рядка та збережіть у файл</li>
+</ol>
+</li>
+<li>Впевніться, що всі вихідні HTML-сторінки є валідними, використавши валідатор HTML-коду <code>https://validator.w3.org/</code>. За необхідності, виправити помилки та зауваження</li>
+<li>Для кожного етапу роботи зробити знімки екрану та додати їх у звіт з описом кожного скіншота</li>
+			<li>Додати програмний код завдання для самомтійного виконання</li>
+			<li>Дати відповіді на контрольні запитання</li>
+			<li>Зберегти звіт у форматі PDF</li>
+</ol>
+<h2>Контрольні питання</h2>
+<ol>
+<li>Який об`єкт необхідно створити для роботи з DOM?</li>
+<li>Що повертають функції <code>DOMDocument->load()</code> і <code>DOMDocuмент->loadXML()</code>?</li>
+<li>За допомогою якого методу можна зберегти xml-дані в файл?</li>
+</ol>
+</div>
+</body>
+</html>
