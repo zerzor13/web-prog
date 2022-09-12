@@ -27,41 +27,41 @@
     * перейти до розділу «Базы данных» (рис. 1);
     * у полі «Создать базу данных» додати назву нової бази, обрати кодування `utf-8 general ci` для коректного відображення даних та підтвердити кнопкою «Создать».
 
-        ![](img/11-001.png)
+![](img/11-001.png)
 
-        Керування базами даних
+Керування базами даних
 
 8.  Після натискання кнопки «Создать» база з новим ім’ям додається до списку баз даних на панелі ліворуч і до таблиці на центральному полі. Нова база даних обирається натисканням по її назві. Відкриється розділ створення та редагування таблиць
 
-    ![](img/11-002.png)
+![](img/11-002.png)
 
-    Створення таблиці
+Створення таблиці
 
 9.  Створення та редагування таблиць:
     * назву таблиці необхідно додати до поля «Имя» та ввести кількість стовпців таблиці;
     * у розділі редагування полів таблиці (рис. 3) додаються для кожного поля: назва, тип даних, розмір (якщо необхідно) та інші атрибути, такі як первинний ключ або авто-інкремент;
 
-        ![](img/11-003.png)
+![](img/11-003.png)
 
-        Редагування полів таблиці
+Редагування полів таблиці
 
     * таблиця з новим ім’ям додається до списку таблиць на панелі ліворуч. Якщо її відмітити, то на центральному полі з’являється структура даної таблиці, яку можна відредагувати
 
-        ![](img/11-004.png)
+![](img/11-004.png)
 
-        Редагування структури таблиці
+Редагування структури таблиці
 
     * для додавання нового елементу до таблиці необхідно перейти на вкладку «Вставить». Заповніть усі поля (окрім поля id, воно буде заповнюватися автоматично);
 
-        ![](img/11-005.png)
+![](img/11-005.png)
 
-        Додавання елемента у таблицю
+Додавання елемента у таблицю
 
     * на вкладці «Обзор» можна переглянути новий елемент, доданий до таблиці
 
-        ![](img/11-006.png)
+![](img/11-006.png)
 
-        Огляд таблиці
+Огляд таблиці
 
 10. **Завдання 1.** Запустіть web-сервер Apache та СУБД MySQL у вікні прикладки XAMPP Control Panel.
 11. Відкрийте браузер і в адресному рядку введіть наступну адресу: `http://localhost/phpmyadmin/`
@@ -86,54 +86,98 @@ DROP DATABASE database_name;
 16. Команда CREATE TABLE створює нову таблицю в обраній базі даних. У найпростішому випадку команда має наступний синтаксис:
 
 ```sql
-CREATE TABLE table_name(column_name1 type, column_name2 type,...) [table_options];
+CREATE TABLE table_name(
+    column_name1 type, 
+    column_name2 type,...) [table_options];
 ```
 
-    table\_name - ім'я нової таблиці; column\_name - імена колонок (полів); type - визначає тип створюваної колонки; table_options - необов'язкова вказівка типу таблиці, наприклад TYPE = MyISAM.
+table\_name - ім'я нової таблиці; column\_name - імена колонок (полів); type - визначає тип створюваної колонки; table_options - необов'язкова вказівка типу таблиці, наприклад TYPE = MyISAM.
 
 17. **Приклад 1.** Створення таблиці телефонних номерів друзів, яка буде складатися з трьох стовпців: ПІБ, адреса і телефон:
 
 ```sql
-CREATE TABLE tel_numb(fio text, address text, tel text);
+CREATE TABLE tel_numb(
+    fio text, 
+    address text, 
+    tel text);
 ```
 18. До типу даних можна додати модифікатори, які задають його властивості і ті операції, які можна (або, навпаки, заборонено) виконувати з відповідними стовпцями. Not null - означає, що поле не може містити невизначене значення, тобто поле обов'язково має бути ініційоване при вставці нового запису в таблицю (якщо не задано значення за замовчуванням).
 19. **Приклад 2.** Для таблиці з телефонами потрібно вказати, що поле fio та tel не може мати невизначене значення:
 
 ```sql
-CREATE TABLE tel_numb(fio text NOT NULL, address text, tel text NOT NULL);
+CREATE TABLE tel_numb(
+    fio text NOT NULL, 
+    address text, 
+    tel text NOT NULL);
 ```
 20. **Приклад 3.** Primary key - відображає, що поле є первинним ключем, тобто ідентифікатором запису, на який можна посилатися.
 
 ```sql
-CREATE TABLE tel_numb(fio text, address text, tel text, PRIMARY KEY (fio));
+CREATE TABLE tel_numb(
+    fio text, 
+    address text, 
+    tel text, 
+    PRIMARY KEY (fio));
 ```
 21. **Приклад 4.** Auto_increment - при вставці нового запису поле отримає унікальне значення, так що в таблиці ніколи не будуть існувати два поля з однаковими номерами.
 
 ```sql
-CREATE TABLE tel_numb(id int AUTO_INCREMENT, fio text, tel text);
+CREATE TABLE tel_numb(
+    id int AUTO_INCREMENT, 
+    fio text, 
+    tel text);
 ```
 22. **Приклад 5.** Default - задає значення за замовчуванням для поля, яке буде використано, якщо при вставці запису для цього поля не було явно зазначено значення.
 
 ```sql
-CREATE TABLE tel_numb(fio text, address text DEFAULT 'Не вказано', tel text)
+CREATE TABLE tel_numb(
+    fio text, 
+    address text DEFAULT 'Не вказано', 
+    tel text)
 ```
 23. **Завдання 2.** Створити першу таблицю бази даних forum, яка називається authors і містить різні дані про зареєстрованих відвідувачів форуму: ім'я (name), пароль (passw), email (email), web-адреса сайту відвідувача (url), відомості про відвідувача (about), рядок, що містить шлях до файлу фотографії відвідувача (photo), останній час відвідування форуму (lasttime), статус користувача - є він модератором, адміністратором або звичайним відвідувачем (statususer). Крім перерахованих полів в таблиці є поле id_author, що є первинним ключем таблиці._ `CREATE TABLE authors ( id_author INT(6) NOT NULL AUTO_INCREMENT, name TINYTEXT, passw TINYTEXT, email TINYTEXT, url TINYTEXT, about TINYTEXT, photo TINYTEXT, last_time DATETIME DEFAULT NULL, themes INT(10) DEFAULT NULL, statususer INT(2) DEFAULT NULL, PRIMARY KEY (id_author) )`
 24. **Завдання 3.** Створити другу таблицю, яка містить дані про розділи форуму і називається forums. У таблиці forums присутні наступні поля: первинний ключ (`id_forum`), назва розділу (`name`), правила форуму (`rule`), короткий опис форуму (`logo`), порядковий номер (`pos`), прапор, який приймає значення 1, якщо форум прихований, і 0, якщо загальнодоступний (`hide`).
 
 ```sql
-CREATE TABLE forums ( id_forum INT(6) NOT NULL AUTO_INCREMENT, name TINYTEXT, rule TEXT, logo TEXT, pos INT(6) DEFAULT NULL, hide TINYINT(1) DEFAULT NULL, PRIMARY KEY (id_forum) )
+CREATE TABLE forums (
+    id_forum INT(6) NOT NULL AUTO_INCREMENT, 
+    name TINYTEXT, 
+    rule TEXT, 
+    logo TEXT, 
+    pos INT(6) DEFAULT NULL, 
+    hide TINYINT(1) DEFAULT NULL, 
+    PRIMARY KEY (id_forum) )
 ```
 25. **Завдання 4.** Створити таблицю themes, що містить список тем. У таблиці присутні наступні поля: первинний ключ (id\_theme); назва теми (name); автор теми (author); зовнішній ключ до таблиці authors (id\_author); прапор, що приймає значення 1, якщо тема прихована, і 0, якщо тема відображається (hide); час додавання теми (time); зовнішній ключ до таблиці форумів (id_forum), щоб визначити, до якого розділу форуму стосується ця тема.
 
 У таблиці themes нормалізація проведена частково, вона містить два зовнішніх ключа: id\_author і id\_forum - для таблиць відвідувачів і списку форумів, в той же час в ній дублюється ім'я автора author, присутнє в таблиці відвідувачів authors під ім'ям name. Цей випадок є прикладом денормалізації, призначеної для того, щоб не запитувати кожного разу імена з таблиці authors при виведенні списку тем і їх авторів і забезпечити прийнятну швидкість роботи форуму.
 
 ```sql
-CREATE TABLE themes ( id_theme INT(11) NOT NULL AUTO_INCREMENT, name TEXT, author TEXT, id_author INT(6) DEFAULT NULL, hide TINYINT(1) DEFAULT NULL, time DATETIME DEFAULT NULL, id_forum TINYINT(2) DEFAULT NULL, PRIMARY KEY (id_theme) )
+CREATE TABLE themes ( 
+    id_theme INT(11) NOT NULL AUTO_INCREMENT, 
+    name TEXT, 
+    author TEXT, 
+    id_author INT(6) DEFAULT NULL, 
+    hide TINYINT(1) DEFAULT NULL, 
+    time DATETIME DEFAULT NULL, 
+    id_forum TINYINT(2) DEFAULT NULL, 
+    PRIMARY KEY (id_theme) )
 ```
 26. **Завдання 5.** Створити таблицю posts, в якій зберігаються повідомлення відвідувачів. У таблиці присутні наступні поля: первинний ключ (id\_post); текст повідомлення (name); необов'язкове посилання на ресурс, яке автор повідомлення може ввести при додаванні повідомлення (url); шлях до файлу, що буде приєднано до повідомлення (file); ім'я автора (author); зовнішній ключ до таблиці authors (id\_author); прапор (hide), що приймає значення 1, якщо повідомлення зазначено як приховане, і 0, якщо воно відображається, - необхідний для моделювання; час додавання повідомлення (time); повідомлення, відповіддю на яке є дане повідомлення (parent\_post), це поле дорівнює 0, якщо дане повідомлення - перший по цій темі; зовнішній ключ до таблиці тем (id\_theme), для того щоб визначити, до якої теми відноситься повідомлення.
 
 ```sql
-CREATE TABLE posts ( id_post INT(11) NOT NULL AUTO_INCREMENT, name TEXT, url TINYTEXT, file TINYTEXT, author TINYTEXT, id_author INT(6) DEFAULT NULL, hide TINYINT(1) DEFAULT NULL, time DATETIME DEFAULT NULL, parent_post INT(11) DEFAULT NULL, id_theme int(11) DEFAULT NULL, PRIMARY KEY (id_post) )
+CREATE TABLE posts ( 
+    id_post INT(11) NOT NULL AUTO_INCREMENT, 
+    name TEXT, 
+    url TINYTEXT, 
+    file TINYTEXT, 
+    author TINYTEXT, 
+    id_author INT(6) DEFAULT NULL, 
+    hide TINYINT(1) DEFAULT NULL, 
+    time DATETIME DEFAULT NULL, 
+    parent_post INT(11) DEFAULT NULL, 
+    id_theme int(11) DEFAULT NULL, 
+    PRIMARY KEY (id_post) )
 ```
 27. Команда `SHOW TABLES` призначена для перегляду переліку таблиць в поточній базі даних.
 28. **Завдання 6.** Переконайтеся, що всі таблиці успішно створені, виконавши команду `SHOW TABLES`.
@@ -144,7 +188,7 @@ CREATE TABLE posts ( id_post INT(11) NOT NULL AUTO_INCREMENT, name TEXT, url TIN
 DESCRIBE table_name
 ```
 
-    де table_name - ім'я таблиці, структура якої запитується. Команда `DESCRIBE` не входить в стандарт SQL і є внутрішньою командою СУБД MySQL.
+де table_name - ім'я таблиці, структура якої запитується. Команда `DESCRIBE` не входить в стандарт SQL і є внутрішньою командою СУБД MySQL.
 
 30. **Приклад 6.** Перегляд структури таблиці tel_numb з виконанням команди:
 
@@ -154,7 +198,10 @@ DESCRIBE tel_numb;
 31. **Завдання 7.** Перевірте правильність створення таблиць, переглянувши структуру кожної таблиці (виконувати кожну команду необхідно окремо):
 
 ```sql
-DESCRIBE authors; DESCRIBE forums; DESCRIBE posts; DESCRIBE themes;
+DESCRIBE authors; 
+DESCRIBE forums; 
+DESCRIBE posts; 
+DESCRIBE themes;
 ```
 32. Для кожного етапу роботи зробити знімки екрану та додати їх у звіт з описом кожного скіншота
 33. Додати програмний код завдання для самомтійного виконання
