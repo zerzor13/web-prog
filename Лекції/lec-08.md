@@ -92,10 +92,10 @@ A.C.D.f2()
 
 ```php
 <?php
-class MyClass 
-{ 
-// Методи класу
-} 
+class MyClass
+{
+    // Методи класу
+}
 ?>
 ```
 Після створення класу, новий клас може бути створено та збережено у змінній за допомогою ключового слова new:
@@ -109,13 +109,13 @@ var_dump($Ob);
 ```
 Давайте зараз спробуємо з'єднати весь перерахований вище код і додати його до вашого test.php на вашому локальному сервері.
 ```php
-<?php 
-class MyClass 
-{ 
-// Методи класу
+<?php
+class MyClass
+{
+    // Методи класу
 }
-$Obj = new MyClass; 
-var_dump($obj); 
+$Obj = new MyClass();
+var_dump($obj);
 ?>
 ```
 Завантажте сторінку в браузері за адресою [http://localhost/test.php](http://localhost/test.php) На дисплеї має висвітитися це:
@@ -129,12 +129,12 @@ object (MyClass) # 1 (0) {}
 Щоб додати до класу властивості, потрібно переробити наш клас приблизно так:
 
 ```php
-<?php 
-class MyClass 
-{ 
-public $prop1 = "I'm a class property!"; 
-} 
-$Obj = new MyClass; 
+<?php
+class MyClass
+{
+    public $prop1 = "I'm a class property!";
+}
+$Obj = new MyClass();
 var_dump($obj);
 ?>
 ```
@@ -151,13 +151,13 @@ echo $obj->prop1;
 
 Давайте змінимо test.php замінивши попередній код на цей:
 ```php
-<?php 
-class MyClass 
-{ 
-public $prop1 = "I'm a class property!"; 
-} 
-$Obj = new MyClass; 
-echo $obj->prop1; // Output the property 
+<?php
+class MyClass
+{
+    public $prop1 = "I'm a class property!";
+}
+$Obj = new MyClass();
+echo $obj->prop1; // Output the property
 ?>
 ```
 Тепер в браузері ми побачимо:
@@ -171,32 +171,34 @@ I'm a class property!
 
 **Приклад 1** змінна $this в об'єктно-орієнтованій мові
 ```php
-<?php 
-class a 
-function foo() 
-if (isset($this)) { 
-echo '$this визначена ('; 
-echo get\_class($this); 
-echo ") \\ n"; 
-} Else { 
-echo "\\ $this не визначена. \\ n"; 
-} 
-} 
-} 
+<?php
+class a
+{
+    function foo()
+    {
+        if (isset($this)) {
+            echo '$this визначена (';
+            echo get_class($this);
+            echo ") \\ n";
+        } else {
+            echo "\\ $this не визначена. \\ n";
+        }
+    }
+}
 
-class b 
-{ 
-function bar() 
-{ 
-a::foo(); 
-} 
-} 
+class b
+{
+    function bar()
+    {
+        a::foo();
+    }
+}
 
-$a = new a(); 
-$a->foo(); 
-a::foo(); 
-$b = new b(); 
-$b->bar(); 
+$a = new a();
+$a->foo();
+a::foo();
+$b = new b();
+$b->bar();
 b::bar();
 ?>
 ```
@@ -216,25 +218,25 @@ $this не визначена.
 
 Наприклад, для створення методів, які будуть встановлювати і отримувати значення властивостей класу $prop1, додайте наступні рядки до вашого коду:
 ```php
-<?php 
+<?php
 class MyClass
-{ 
-public $prop1 = "I'm a class property!"; 
-
-public function setProperty($newval) 
 {
-$this->prop1 = $newval;
-} 
+    public $prop1 = "I'm a class property!";
 
-public function getProperty() 
-{ 
-return $this->prop1. ""; 
-} 
-} 
+    public function setProperty($newval)
+    {
+        $this->prop1 = $newval;
+    }
 
-$Obj = new MyClass; 
+    public function getProperty()
+    {
+        return $this->prop1 . "";
+    }
+}
 
-echo $obj->prop1; 
+$Obj = new MyClass();
+
+echo $obj->prop1;
 ?>
 ```
 **Примітка:**
@@ -245,26 +247,26 @@ echo $obj->prop1;
 
 Тепер давайте спробуємо скористатися написаним вище класом шляхом модифікації файлу test.php:
 ```php
-<?php 
-class MyClass 
-{ 
-public $prop1 = "Я властивість класу!"; 
+<?php
+class MyClass
+{
+    public $prop1 = "Я властивість класу!";
 
-public function setProperty($newval) 
-{ 
-$this->prop1 = $newval; 
-} 
+    public function setProperty($newval)
+    {
+        $this->prop1 = $newval;
+    }
 
-public function getProperty() 
-{ 
-return $this->prop1. ""; 
-} 
-} 
+    public function getProperty()
+    {
+        return $this->prop1 . "";
+    }
+}
 
-$obj = new MyClass; 
-echo $obj->getProperty(); // Дізнаємось значення властивості 
-$obj->setProperty ("Я НОВА властивість класу!"); // Встановлюємо нове 
-echo $obj->getProperty(); // Зчитуємо значення ще раз 
+$obj = new MyClass();
+echo $obj->getProperty(); // Дізнаємось значення властивості
+$obj->setProperty("Я НОВА властивість класу!"); // Встановлюємо нове
+echo $obj->getProperty(); // Зчитуємо значення ще раз
 ?>
 ```
 У браузері ви побачите:
@@ -275,37 +277,37 @@ echo $obj->getProperty(); // Зчитуємо значення ще раз
 ```
 Справжню силу ООП можна побачити при створенні декількох об'єктів одного і того ж класу.
 ```php
-<?php 
+<?php
 class MyClass
-{ 
-public $prop1 = "Я властивість класу!"; 
+{
+    public $prop1 = "Я властивість класу!";
 
-public function setProperty($newval) 
-{ 
-$this->prop1 = $newval; 
+    public function setProperty($newval)
+    {
+        $this->prop1 = $newval;
+    }
+
+    public function getProperty()
+    {
+        return $this->prop1 . "";
+    }
 }
 
-public function getProperty() 
-{ 
-return $this->prop1. ""; 
-} 
-}
+// Створюємо два об’єкти
+$obj = new MyClass();
+$obj2 = new MyClass();
 
-// Створюємо два об’єкти 
-$obj = new MyClass; 
-$obj2 = new MyClass; 
-
-// Дізнаємося значення $prop1 з обох об’єктів 
-echo $obj->getProperty(); 
+// Дізнаємося значення $prop1 з обох об’єктів
+echo $obj->getProperty();
 echo $obj2->getProperty();
 
-// Встановлюємо нові значення 
-$Obj->setProperty ("Я нове значення!"); 
-$Obj2->setProperty ("Я друге значення!");
+// Встановлюємо нові значення
+$Obj->setProperty("Я нове значення!");
+$Obj2->setProperty("Я друге значення!");
 
-// Виводимо $prop1 значення 
+// Виводимо $prop1 значення
 echo $obj->getProperty();
-echo $obj2->getProperty(); 
+echo $obj2->getProperty();
 ?>
 ```
 Після заміни вмісту файлу test.php ми побачимо:
@@ -318,45 +320,44 @@ echo $obj2->getProperty();
 
 Я друге значення!
 ```
-Використання конструкторів і деструкторів
------------------------------------------
+## Використання конструкторів і деструкторів
 
 До таких методів відноситься метод `__construct()`, що дозволяє задати будь-які дії при створенні об'єкта, і метод `__destruct()`, що дозволяє задати дії при видаленні об'єкта (наприклад: розірвати з'єднання з базою даних). Для наочності, візьмемо приклад:
 ```php
 <?php
-class MyClass 
+class MyClass
 {
-public $prop1 = "Я властивість класу!";
+    public $prop1 = "Я властивість класу!";
 
-public function __construct()
-{ 
-echo 'Клас "', __CLASS__, '" було створено!'; 
+    public function __construct()
+    {
+        echo 'Клас "', __CLASS__, '" було створено!';
+    }
+
+    public function __destruct()
+    {
+        echo 'Клас "', __CLASS__, '" було знищено.';
+    }
+
+    public function setProperty($newval)
+    {
+        $this->prop1 = $newval;
+    }
+
+    public function getProperty()
+    {
+        return $this->prop1 . "";
+    }
 }
 
-public function __destruct() 
-{ 
-echo 'Клас "', __CLASS__, '" було знищено.'; 
-} 
+// Створення нового об'єкта
+$obj = new MyClass();
 
-public function setProperty($newval) 
-{ 
-$this->prop1 = $newval; 
-} 
+// Отримуємо значення $prop1
+echo $obj->getProperty();
 
-public function getProperty() 
-{ 
-return $this->prop1. ""; 
-} 
-} 
-
-// Створення нового об'єкта 
-$obj = new MyClass; 
-
-// Отримуємо значення $prop1 
-echo $obj->getProperty(); 
-
-// Виводимо повідомлення про закінчення файлу 
-echo "End of file."; 
+// Виводимо повідомлення про закінчення файлу
+echo "End of file.";
 ?>
 ```
 Після виконання даного коду ми побачимо наступний результат:
@@ -379,43 +380,43 @@ echo "End of file.";
 
 **Невеликий приклад:**
 ```php
-<?php 
-class MyClass 
-{ 
-public $prop1 = "Я властивість класу!"; 
+<?php
+class MyClass
+{
+    public $prop1 = "Я властивість класу!";
 
-public function __construct() 
-{ 
-echo 'Клас "', __CLASS__, '" було створено!'; 
-} 
+    public function __construct()
+    {
+        echo 'Клас "', __CLASS__, '" було створено!';
+    }
 
-public function __destruct() 
-{ 
-echo 'Клас "', __CLASS__, '" було знищено.'; 
-} 
+    public function __destruct()
+    {
+        echo 'Клас "', __CLASS__, '" було знищено.';
+    }
 
-public function setProperty($newval) 
-{ 
-$this->prop1 = $newval; 
-} 
+    public function setProperty($newval)
+    {
+        $this->prop1 = $newval;
+    }
 
-public function getProperty() 
-{ 
-return $this->prop1. ""; 
-} 
-} 
+    public function getProperty()
+    {
+        return $this->prop1 . "";
+    }
+}
 
-// Створення об'єкта 
-$bj = new MyClass; 
+// Створення об'єкта
+$bj = new MyClass();
 
-// Отримання значення $prop1 
-echo $obj->getProperty(); 
+// Отримання значення $prop1
+echo $obj->getProperty();
 
-// Знищуємо об'єкт \[/ b\] 
-unset($obj); 
+// Знищуємо об'єкт \[/ b\]
+unset($obj);
 
-// Висновок повідомлення про закінчення файлу 
-echo "Кінець файлу."; 
+// Висновок повідомлення про закінчення файлу
+echo "Кінець файлу.";
 ?>
 ```
 Результат виконання скрипта буде наступним:
@@ -437,113 +438,113 @@ echo "Кінець файлу.";
 
 Говорячи простими словами спадкування, це такий механізм, який дозволяє розширювати клас за рахунок методів іншого класу. Для того, щоб додати методи і властивості іншого класу, необхідно скористатися словом extends. Наприклад, щоб створити другий клас, який розширює MyClass і додає методи, ви повинні додати наступні рядки в наш тестовий файл:
 ```php
-<?php 
-class MyClass 
-{ 
-public $prop1 = "Я властивість класу!"; 
+<?php
+class MyClass
+{
+    public $prop1 = "Я властивість класу!";
 
-public function __construct() 
-{ 
-echo 'Клас "', __CLASS__, '" було створено!'; 
-} 
+    public function __construct()
+    {
+        echo 'Клас "', __CLASS__, '" було створено!';
+    }
 
-public function __destruct() 
-{ 
-echo 'Клас "', __CLASS__, '" було знищено.'; 
-} 
+    public function __destruct()
+    {
+        echo 'Клас "', __CLASS__, '" було знищено.';
+    }
 
-public function __toString() 
-{ 
-echo "Використовуємо метод toString:"; 
-return $this->getProperty(); 
-} 
+    public function __toString()
+    {
+        echo "Використовуємо метод toString:";
+        return $this->getProperty();
+    }
 
-public function setProperty($newval) 
-{ 
-$this->prop1 = $newval; 
-} 
+    public function setProperty($newval)
+    {
+        $this->prop1 = $newval;
+    }
 
-public function getProperty() 
-{ 
-return $this->prop1. "";
-} 
-} 
+    public function getProperty()
+    {
+        return $this->prop1 . "";
+    }
+}
 
-class MyOtherClass extends MyClass 
-{ 
-public function newMethod() 
-{ 
-echo "Із нового методу з". __CLASS__. "."; 
-} 
-} 
+class MyOtherClass extends MyClass
+{
+    public function newMethod()
+    {
+        echo "Із нового методу з" . __CLASS__ . ".";
+    }
+}
 
-// Створення об'єкта 
-$newobj = new MyOtherClass; 
+// Створення об'єкта
+$newobj = new MyOtherClass();
 
-// Виводимо об'єкт 
-echo $newobj->newMethod(); 
+// Виводимо об'єкт
+echo $newobj->newMethod();
 
-// Використання методу батьківського класу 
-echo $newobj->getProperty(); 
+// Використання методу батьківського класу
+echo $newobj->getProperty();
 ?>
 ```
 ## Заміна успадкованих методів і властивостей
 
 Для того, щоб замінити успадкований метод батьківського класу в новому класі, необхідно просто замінити цей метод в новому класі. При цьому необхідно використовувати те ж ім'я, яке було в батьківському класі:
 ```php
-<?php 
-class MyClass 
-{ 
-public $prop1 = "Я метод класу!"; 
+<?php
+class MyClass
+{
+    public $prop1 = "Я метод класу!";
 
-public function __construct() 
-{ 
-echo 'Клас "', __CLASS__, '" було створено!'; 
-} 
+    public function __construct()
+    {
+        echo 'Клас "', __CLASS__, '" було створено!';
+    }
 
-public function __destruct() 
-{ 
-echo 'Клас "', __CLASS__, '" було знищено.'; 
-} 
+    public function __destruct()
+    {
+        echo 'Клас "', __CLASS__, '" було знищено.';
+    }
 
-public function __toString() 
-{ 
-echo "Використовуємо метод toString:"; 
-return $this->getProperty(); 
+    public function __toString()
+    {
+        echo "Використовуємо метод toString:";
+        return $this->getProperty();
+    }
+
+    public function setProperty($newval)
+    {
+        $this->prop1 = $newval;
+    }
+
+    public function getProperty()
+    {
+        return $this->prop1 . "";
+    }
 }
 
-public function setProperty($newval) 
-{ 
-$this->prop1 = $newval; 
+class MyOtherClass extends MyClass
+{
+    public function __construct()
+    {
+        echo "Новий конструктор в " . __CLASS__ . ".";
+    }
+
+    public function newMethod()
+    {
+        echo "Із нового методу " . __CLASS__ . ".";
+    }
 }
 
-public function getProperty() 
-{ 
-return $this->prop1. ""; 
-} 
-} 
+// Створення об'єкта
+$newobj = new MyOtherClass();
 
-class MyOtherClass extends MyClass 
-{ 
-public function __construct() 
-{ 
-echo "Новий конструктор в ". __CLASS__. ".";
-} 
+// Виводимо об'єкт
+echo $newobj->newMethod();
 
-public function newMethod() 
-{ 
-echo "Із нового методу ". __CLASS__. "."; 
-} 
-} 
-
-// Створення об'єкта 
-$newobj = new MyOtherClass; 
-
-// Виводимо об'єкт 
-echo $newobj->newMethod(); 
-
-// Використання методу батьківського класу 
-echo $newobj->getProperty(); 
+// Використання методу батьківського класу
+echo $newobj->getProperty();
 ?>
 ```
 У результаті ми отримаємо:
@@ -560,60 +561,60 @@ echo $newobj->getProperty();
 
 **Приклад:**
 ```php
-<?php 
-class MyClass 
-{ 
-public $prop1 = "Я властивість класу!"; 
+<?php
+class MyClass
+{
+    public $prop1 = "Я властивість класу!";
 
-public function __construct() 
-{ 
-echo 'Клас "', __CLASS__, '" було створено!'; 
-} 
+    public function __construct()
+    {
+        echo 'Клас "', __CLASS__, '" було створено!';
+    }
 
-public function __destruct() 
-{ 
-echo 'Клас "', __CLASS__, '" було знищено.'; 
-} 
+    public function __destruct()
+    {
+        echo 'Клас "', __CLASS__, '" було знищено.';
+    }
 
-public function __toString() 
-{ 
-echo "Using the toString method:";
-return $this->getProperty(); 
-} 
+    public function __toString()
+    {
+        echo "Using the toString method:";
+        return $this->getProperty();
+    }
 
-public function setProperty($newval) 
-{ 
-$this->prop1 = $newval; 
-} 
+    public function setProperty($newval)
+    {
+        $this->prop1 = $newval;
+    }
 
-public function getProperty() 
-{ 
-return $this->prop1. ""; 
-} 
-} 
+    public function getProperty()
+    {
+        return $this->prop1 . "";
+    }
+}
 
-class MyOtherClass extends MyClass 
-{ 
-public function __construct() 
-{ 
-parent::__construct(); // Виклик конструктора батьківського класу 
-echo "Новий конструктор". __CLASS__. "."; 
-} 
+class MyOtherClass extends MyClass
+{
+    public function __construct()
+    {
+        parent::__construct(); // Виклик конструктора батьківського класу
+        echo "Новий конструктор" . __CLASS__ . ".";
+    }
 
-public function newMethod() 
-{ 
-echo "З нового методу класу". __CLASS__. "."; 
-} 
-} 
+    public function newMethod()
+    {
+        echo "З нового методу класу" . __CLASS__ . ".";
+    }
+}
 
-// Створюємо об'єкт 
-$Newobj = new MyOtherClass; 
+// Створюємо об'єкт
+$Newobj = new MyOtherClass();
 
-// Виводимо об'єкт 
-echo $newobj->newMethod(); 
+// Виводимо об'єкт
+echo $newobj->newMethod();
 
-// Використання методу батьківського класу 
-echo $newobj->getProperty(); 
+// Використання методу батьківського класу
+echo $newobj->getProperty();
 ?>
 ```
 **У результаті у вікні браузера можна спостерігати:**
