@@ -20,12 +20,14 @@
 2. Перейти до каталогу `C:\xampp\htdocs\` та очистити його
 3. В каталогу `C:\xampp\htdocs\` створити файли з іменем `.htaccess` та `index.bat`
 4. Відкрити `.htaccess` та записати туди наступні налаштування серверу та зберегти файл
+
 ```htaccess
 ScriptInterpreterSource Registry-Strict 
 AddHandler cgi-script .bat 
 Options +ExecCGI +FollowSymlinks 
 ```
 5. Відкрити `index.bat` та записати туди наступний код інтерпритатору командного рядка та зберегти файл
+
 ```bat
 @echo off 
 
@@ -38,10 +40,13 @@ dir
 6. Перейти за адресою `http://127.0.0.1/index.bat` або `http://localhost/index.bat` та впевнитись, що завантажився результат роботи консольної команди `dir`
 7. Profit! Ви щойно налаштували виконання Batch-сценаріїв, як веб-застосування
 8. Відкрити `.htaccess` та додати туди наступні налаштування серверу:
+
 ```htaccess
 AddHandler cgi-script .exe
 ```
+
 9. Створити консольний проект на Delphi. Написати наступну програму \*
+
 ```delphi
 program Project1; 
 
@@ -65,6 +70,7 @@ except
 end; 
 end. 
 ```
+
 10. Зберегти проект та зкомпілювати виконуваний файл `project1.exe`
 11. Помістити файл `project1.exe` до каталогу `C:\xampp\htdocs\`
 12. Перейти за адресою `http://127.0.0.1/project1.exe` або `http://localhost/project1.exe` та впевнитись, що завантажився результат роботи консольної програми `project1.exe`
