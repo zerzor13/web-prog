@@ -8,7 +8,7 @@
 
 ## Обладнання
 
-Персональний комп'ютер. Текстовий редактор Sublime Text 3 або Notepad++. Пакет програм XAMPP. Web-браузер Chrome, Firefox, Opera, MS Edge
+Персональний комп'ютер. Редактори коду Visual Studio Code, Sublime Text 3 або Notepad++. Пакет програм XAMPP або OSPanel. Web-браузер Chrome, Firefox, Opera, MS Edge.
 
 ## Теоретичні відомості
 
