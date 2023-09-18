@@ -102,26 +102,19 @@ end.
 
 1.  Що таке CGI?
 2.  Як додати до веб-серверу можливість виконувати застосування на мові perl?
-3.  В яких випадках застосовують CGI
+3.  В яких випадках застосовують CGI?
+4.  Яка особливість роботи PHP в режимі CGI?
+5.  Чи можливо перенести CGI-застосування на мові С++ з платформи Windows на Linux. Коротко поясніть як і чому?
 
 
 
 ## Довідники та додаткові матеріали
 
 1.  [Комплексний довідник web-розробника](https://www.w3schools.com/)
-2.  [Довідник HTML та CSS](https://css.in.ua/)
-3.  [Справочник по HTML](http://htmlbook.ru/)
-4.  [Елемент section](https://developer.mozilla.org/ru/docs/Web/HTML/Element/section)
-5.  [Елемент header](https://developer.mozilla.org/ru/docs/Web/HTML/Element/header)
-6.  [Елемент footer](https://developer.mozilla.org/ru/docs/Web/HTML/Element/footer)
-7.  [Елемент article](https://developer.mozilla.org/ru/docs/Web/HTML/Element/article)
-8.  [Елемент nav](https://developer.mozilla.org/ru/docs/Web/HTML/Element/nav)
-9.  [Елемент aside](https://developer.mozilla.org/ru/docs/Web/HTML/Element/aside)
-10.  [Елемент img](https://developer.mozilla.org/ru/docs/Web/HTML/Element/img)
-11.  [Елемент figure](https://developer.mozilla.org/ru/docs/Web/HTML/Element/figure)
-12.  [Елемент audio](https://developer.mozilla.org/ru/docs/Web/HTML/Element/audio)
-13.  [Елемент video](https://developer.mozilla.org/ru/docs/Web/HTML/Element/video)
-14.  [Елемент a](https://developer.mozilla.org/ru/docs/Web/HTML/Element/a)
+2.  [CGI](https://lectureswww.readthedocs.io/5.web.server/cgi.html)
+3.  [Common Gateway Interface (CGI)](https://www.geeksforgeeks.org/common-gateway-interface-cgi/)
+4.  [Apache Tutorial: Dynamic Content with CGI](https://httpd.apache.org/docs/2.4/howto/cgi.html)
+
 
 ## Примітки
 * \* - код надано на мові Delphi 2010
