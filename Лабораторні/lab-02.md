@@ -103,19 +103,21 @@ end.
 1.  Що таке CGI?
 2.  Як додати до веб-серверу можливість виконувати застосування на мові perl?
 3.  В яких випадках застосовують CGI?
-4.  Яка особливість роботи PHP в режимі CGI?
-5.  Чи можливо перенести CGI-застосування на мові С++ з платформи Windows на Linux. Коротко поясніть як і чому?
+4.  Які режими роботи PHP ви можете назвати?
+5.  Яка особливість роботи PHP в режимі CGI?
+6.  Чи можливо перенести CGI-застосування на мові С++ з платформи Windows на Linux. Коротко поясніть як і чому?
 
 
 
 ## Довідники та додаткові матеріали
 
-1.  [Комплексний довідник web-розробника](https://www.w3schools.com/)
-2.  [CGI](https://lectureswww.readthedocs.io/5.web.server/cgi.html)
-3.  [Common Gateway Interface (CGI)](https://www.geeksforgeeks.org/common-gateway-interface-cgi/)
-4.  [Apache Tutorial: Dynamic Content with CGI](https://httpd.apache.org/docs/2.4/howto/cgi.html)
-5.  [How to run CGI on XAMPP?](https://community.apachefriends.org/f/viewtopic.php?p=123854)
-6.  [Apache HTTP Server Tutorial: .htaccess files](https://httpd.apache.org/docs/trunk/howto/htaccess.html)
+1.  [Режими роботи PHP](https://hostiq.ua/wiki/ukr/php-modes/)
+2.  [Комплексний довідник web-розробника](https://www.w3schools.com/)
+3.  [CGI](https://lectureswww.readthedocs.io/5.web.server/cgi.html)
+4.  [Common Gateway Interface (CGI)](https://www.geeksforgeeks.org/common-gateway-interface-cgi/)
+5.  [Apache Tutorial: Dynamic Content with CGI](https://httpd.apache.org/docs/2.4/howto/cgi.html)
+6.  [How to run CGI on XAMPP?](https://community.apachefriends.org/f/viewtopic.php?p=123854)
+7.  [Apache HTTP Server Tutorial: .htaccess files](https://httpd.apache.org/docs/trunk/howto/htaccess.html)
 
 
 ## Примітки
