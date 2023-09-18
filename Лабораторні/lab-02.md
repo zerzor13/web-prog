@@ -114,6 +114,8 @@ end.
 2.  [CGI](https://lectureswww.readthedocs.io/5.web.server/cgi.html)
 3.  [Common Gateway Interface (CGI)](https://www.geeksforgeeks.org/common-gateway-interface-cgi/)
 4.  [Apache Tutorial: Dynamic Content with CGI](https://httpd.apache.org/docs/2.4/howto/cgi.html)
+5.  [How to run CGI on XAMPP?](https://community.apachefriends.org/f/viewtopic.php?p=123854)
+6.  [Apache HTTP Server Tutorial: .htaccess files](https://httpd.apache.org/docs/trunk/howto/htaccess.html)
 
 
 ## Примітки
