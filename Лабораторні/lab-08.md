@@ -100,4 +100,10 @@ echo $dom_xml->save($path);
 3. За допомогою якого методу можна зберегти xml-дані в файл?
 
 
+## Довідники та додаткові матеріали
 
+1. [PHP Manual](https://www.php.net/manual/en/)
+2. [XAMPP](https://www.apachefriends.org/ru/index.html)
+3. [Apache HTTP server project](https://httpd.apache.org/)
+4. [OpenServer Panel](https://ospanel.io/)
+5. [EnginX](https://enginx.io/)
