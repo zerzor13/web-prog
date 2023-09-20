@@ -12,22 +12,17 @@
 
 ## Хід роботи
 
-1. Впевнитись, що пакет XAMPP встановлено та web-сервер Apache запущений
-2. Перейти до каталогу C:\xampp\htdocs\ та очистити його
-
-3.  Впевнитись, що всі вихідні HTML-сторінки є валідними, використавши валідатор HTML-коду [validator.w3.org](https://validator.w3.org/). За необхідності, виправити помилки та зауваження.
-4.  Для кожного етапу роботи зробити знімки екрану та додати їх у звіт з описом кожного скіншота
-5.  Додати програмний код завдання для самомтійного виконання
-6.  Дати відповіді на контрольні запитання
-7.  Зберегти звіт у форматі PDF
 
 ## Контрольні питання
-1. Які ще існують способи підключення файлів?
-2. Яка різниця між інструкціями include та require?
-3. Чи виникне помилка, якщо в коді зустрінеться декілька інструкцій require, які підключають однаковий файл?
+1. Для чого використовується програмний продукт Postman?
+2. Які програми, аналогічні Postman, ви знеаєте?
+3. Чим відрізняється запит POST від запиту GET?
+4. Які основні характеристики HTTP-запиту ви можете назвати?
+5. Назвіть заголовки запиту та заголовки відповіді які ви знаєте, опишіть їх призначення
 
 ## Довідники та матеріали
 
-1. [Учебник. Подписание и создание запросов с помощью Postman](https://learn.microsoft.com/ru-ru/azure/communication-services/tutorials/postman-tutorial)
+1. [Postman downloads](https://www.postman.com/downloads/)
 2. [Postman documentation](https://learning.postman.com/docs/introduction/overview/)
-3. [Введение в Postman](https://habr.com/ru/companies/kolesa/articles/351250/)
+3. [Учебник. Подписание и создание запросов с помощью Postman](https://learn.microsoft.com/ru-ru/azure/communication-services/tutorials/postman-tutorial)
+4. [Введение в Postman](https://habr.com/ru/companies/kolesa/articles/351250/)
