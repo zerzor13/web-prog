@@ -4,213 +4,437 @@
 
 ## Мета роботи
 
-Надбання навичок створення баз даних за допомогою СКБД MySQL
+Вивчити основи баз даних і навчитися їх створювати в СУБД MySQL
 
 ## Обладнання
 
-Персональний комп'ютер. Пакет програм XAMPP. Web-додаток phpMyAdmin. Текстовий редактор Sublime Text 3 або IDE NetBeans. Web-браузер Chrome, Firefox, Opera
+Персональний комп'ютер. Пакет програм XAMPP. Текстовий редактор Sublime Text 3 або IDE NetBeans. Web-браузер Chrome, Firefox, Opera
 
 ## Хід роботи
 
-1.  Сервер MySQL підтримує як інструкції SQL, так і службові команди MySQL, призначені для адміністрування і використання таблиць в базах даних MySQL.
-2.  Мова структурованих запитів SQL (Structure Query Language) дозволяє виконувати різні операції з базами даних:
-    * створювати бази даних і таблиці;
-    * додавати інформацію в таблиці;
-    * видаляти інформацію;
-    * модифікувати інформацію;
-    * отримувати потрібні дані.
-3.  Запустіть web-сервер Apache та СУБД MySQL у вікні прикладки XAMPP Control Panel.
-4.  Відкрийте браузер і в адресному рядку введіть наступну адресу: `http://localhost/phpmyadmin/`
-5.  У вікні авторизації phpMyAdmin в поле "Пользователь" вводимо root, а поле "Пароль" залиште пустим.
-6.  Після проходження авторизації ми потрапляємо на головне вікно
-7.  Створення нової бази даних:
-    * перейти до розділу «Базы данных» (рис. 1);
-    * у полі «Создать базу данных» додати назву нової бази, обрати кодування `utf-8 general ci` для коректного відображення даних та підтвердити кнопкою «Создать».
+1.  Запустіть web-сервер Apache та СУБД MySQL у вікні прикладки XAMPP Control Panel.
+2.  Відкрийте браузер і в адресному рядку введіть наступну адресу: `http://localhost/phpmyadmin/`
+3.  Створіть нову БД з ім'ям Products.
+4.  Зробити створену базу даних активною, вибравши її ім'я в списку баз даних.
+5.  Перейдіть на вкладку SQL та виконайте наступний скрипт.
 
-![](img/11-001.png)
+    ```SQL
+    CREATE TABLE IF NOT EXISTS `products` (
+    `id` int(11) NOT NULL AUTO_INCREMENT, `product_code` varchar(60) NOT NULL, `product_name` varchar(60) NOT NULL, `product_desc` tinytext NOT NULL, `price` decimal(10,2) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `product_code` (`product_code`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=33; INSERT INTO `products` (`id`, `product_code`, `product_name`, `product_desc`, `price`) VALUES (1, 'PD1001', 'Android Phone FX1', 'Di sertakan secara rambang yang lansung tidak munasabah. Jika anda ingin menggunakan Lorem Ipsum, anda perlu memastikan bahwa tiada apa yang', 200.50), (2, 'PD1002', 'Television DXT', 'Ia menggunakan kamus yang mengandungi lebih 200 ayat Latin, bersama model dan struktur ayat Latin, untuk menghasilkan Lorem Ipsum yang munasabah.', 500.85), (3, 'PD1003', 'External Hard Disk', 'Ada banyak versi dari mukasurat-mukasurat Lorem Ipsum yang sedia ada, tetapi kebanyakkannya telah diubahsuai, lawak jenaka diselitkan, atau ayat ayat yang', 100.00);
+    ```
+6.  Перейти до каталогу `C:\xampp\htdocs\` та очистити його
+7.  У зв'язку з припиненням підтримки PHP MySQL в 2011 році для роботи з базами даних все більш широке застосування знаходять PDO (PHP Data Objects) або MySqli.
+8.  MySqli пропонує два способи з'єднання з базою даних: процедурний і об'єктно-орієнтований. Рекомендовано використовувати об'єктно-орієнтований. Процедурний схожий на (старий) MySql, тому для новачків його використання, можливо, буде краще, але варто пам'ятати, що їм користуватися не рекомендується.
 
-Керування базами даних
+    `//процедурний стиль $mysqli = mysqli_connect('host','username','password','database_name'); //об'єктно-орієнтований стиль (рекомендується) $mysqli = new mysqli('host','username','password','database_name');`
+9.  Нижче показано відкриття з'єднання з базою даних об'єктно-орієнтованим способом. Цей спосіб буде використовуватися і в усіх наведених нижче прикладах.
 
-8.  Після натискання кнопки «Создать» база з новим ім’ям додається до списку баз даних на панелі ліворуч і до таблиці на центральному полі. Нова база даних обирається натисканням по її назві. Відкриється розділ створення та редагування таблиць
+    Отже, створіть файл config.php у який помістіть настпуний код:
 
-![](img/11-002.png)
+    ```php
+    <?php //Налаштування БД $database_host = 'localhost'; $database_username = 'root';
+    $database_password = '';
+    $database_name = 'Products';
+    //Відкриваємо нове з'єднання з MySQL сервером $mysqli = new mysqli($database_host,
+    $database_username,
+    $database_password,
+    $database_name);
+    //Виводимо помилку з'єднання if ($mysqli->connect_error) { die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error); } ?>
+    ```
+10. Створіть файл index.php у якому підключіть файл з настройками БД та виконуте представлені приклади.
+11. **Вибір (SELECT) результуючого ряду у вигляді асоціативного масиву.** `mysqli_fetch_assoc()`: в наведеному нижче коді відбувається вилучення результуючого ряду у вигляді асоціативного масиву. Масив, що повертається містить рядки, отримані з бази даних, де імена стовпців будуть ключем, що використовується для доступу до внутрішніх даних. Як показано нижче, дані відображаються у вигляді HTML таблиці.
 
-Створення таблиці
+    ```PHP
+    <?php $mysqli = new mysqli('host','username','password','database_name');
+    if ($mysqli->connect_error) { die('Error : ('. $mysqli->connect_errno .') '.
+    $mysqli->connect_error); }
+    $results = $mysqli->query("SELECT id, product_code, product_desc, price FROM products");
+    print '<table border="1">';
+    while($row = $results->fetch_assoc()) { print '<tr>';
+    print '<td>'.$row["id"].'</td>';
+    print '<td>'.$row["product_code"].'</td>';
+    print '<td>'.$row["product_name"].'</td>';
+    print '<td>'.$row["product_desc"].'</td>';
+    print '<td>'.$row["price"].'</td>';
+    print '</tr>'; } print '</table>';
+    $results->free();
+    $mysqli->close();
+    ?>
+    ```
+12. **Вибір (SELECT) результуючого ряду у вигляді масиву (асоціативний, звичайний, або в обидва).** Фукнція `fetch_array()`: повертає масив з об'єднаним функціоналом `mysqli_fetch_row` і `mysqli_fetch assoc`. Ця функція є розширеною версією функції `mysqli_fetch_row()`; для доступу до даних можна використовувати як рядок, так і числа.
 
-9.  Створення та редагування таблиць:
-    * назву таблиці необхідно додати до поля «Имя» та ввести кількість стовпців таблиці;
-    * у розділі редагування полів таблиці (рис. 3) додаються для кожного поля: назва, тип даних, розмір (якщо необхідно) та інші атрибути, такі як первинний ключ або авто-інкремент;
+    ```PHP
+    <?php $mysqli = new mysqli('host','username','password','database_name');
+    if ($mysqli->connect_error) { die('Error : ('. $mysqli->connect_errno .') '.
+    $mysqli->connect_error); }
+    $results = $mysqli->query("SELECT id, product_code, product_desc, price FROM products");
+    print '<table border="1"';
+    while($row = $results->fetch_array()) { print '<tr>';
+    print '<td>'.$row["id"].'</td>';
+    print '<td>'.$row["product_code"].'</td>';
+    print '<td>'.$row["product_name"].'</td>';
+    print '<td>'.$row["product_desc"].'</td>';
+    print '<td>'.$row["price"].'</td>';
+    print '</tr>'; } print '</table>';
+    $results->free(); $mysqli->close();
+    ?>
+    ```
+13. **Вибір (SELECT) результуючого ряду у вигляді об'єкта.** `fetch_object()`: щоб отримати результуючий набір у вигляді об'єкта, потрібно скористатися MySqli `fetch_object()`. Атрибути об'єкта будуть відображати імена полів, знайдених всередині результуючого набору.
 
-![](img/11-003.png)
+    ```PHP
+    <?php $mysqli = new mysqli('host','username','password','database_name');
+    if ($mysqli->connect_error) { die('Error : ('. $mysqli->connect_errno .') '.
+    $mysqli->connect_error); }
+    $results = $mysqli->query("SELECT id, product_code, product_desc, price FROM products");
+    print '<table border="1">';
+    while($row = $results->fetch_object()) { print '<tr>';
+    print '<td>'.$row->id.'</td>';
+    print '<td>'.$row->product_code.'</td>';
+    print '<td>'.$row->product_name.'</td>';
+    print '<td>'.$row->product_desc.'</td>';
+    print '<td>'.$row->price.'</td>';
+    print '</tr>'; } print '</table>'; $mysqli->close();
+    ?>
+    ```
+14. **Вибір (SELECT) одиночного значення.** Одиночне значення отримати з бази даних можна за допомогою `fetch_object()`
 
-Редагування полів таблиці
+    ```PHP
+    <?php $mysqli = new mysqli('host','username','password','database_name');
+    if ($mysqli->connect_error) { die('Error : ('.
+    $mysqli->connect_errno .') '.
+    $mysqli->connect_error); }
+    $product_name = $mysqli->query("SELECT product_name FROM products WHERE id = 1")->fetch_object()->product_name;
+    print $product_name; $mysqli->close();
+    ?>
+    ```
+15. **Витягуємо (SELECT COUNT) кількість рядків в таблиці.** Іноді потрібно дізнатися кількість рядків у таблиці, особливо при нумерації сторінок.
 
-    * таблиця з новим ім’ям додається до списку таблиць на панелі ліворуч. Якщо її відмітити, то на центральному полі з’являється структура даної таблиці, яку можна відредагувати
+    ```PHP
+    <?php $mysqli = new mysqli('host','username','password','database_name');
+    if ($mysqli->connect_error) { die('Error : ('.
+    $mysqli->connect_errno .') '. $mysqli->connect_error); }
+    $results = $mysqli->query("SELECT COUNT(*) FROM users");
+    $get_total_rows = $results->fetch_row(); $mysqli->close();
+    ?>
+    ```
+16. **Вибір (SELECT) за допомогою шаблонів (prepared statements).**
 
-![](img/11-004.png)
+    **prepared statements** \- спеціальний інструмент СУБД, що дозволяє прискорити послідовне виконання повторюваних запитів, побудованих за одним і тим же шаблоном.
 
-Редагування структури таблиці
+    Однією з особливостей MySqli є можливість використання вже написаних шаблонів: тобто запит досить написати один раз, після чого його можна багаторазово виконувати з різними параметрами. Використання вже написаних шаблонів покращує продуктивність для великих таблиць і складних запитів. Для запобігання попаданню шкідливого коду аналіз кожного запиту здійснюється сервером окремо.
 
-    * для додавання нового елементу до таблиці необхідно перейти на вкладку «Вставить». Заповніть усі поля (окрім поля id, воно буде заповнюватися автоматично);
+    Код нижче використовує шаблон (Prepared statement), щоб отримувати дані з бази даних. Заповнювач `?` в запиті SQL грає роль маркера і буде заміщений параметром, який, в свою чергу, може бути рядком, цілим числом, double або blob. У нашому випадку це рядок `$search_product`.
 
-![](img/11-005.png)
+    ```PHP
+    <?php $search_product = "PD1001";
+    //product id
+    //Створення prepared statement
+    $query = "SELECT id, product_code, product_desc, price FROM products WHERE product_code=?";
+    $statement = $mysqli->prepare($query);
+    //Параметри прив’язки для маркерів, де (s = string, i = integer, d = double, b = blob) $statement->bind_param('s', $search_product);
+    //Виконання запиту $statement->execute();
+    //Зв'язування результуючих змінних $statement->bind_result($id, $product_code, $product_desc, $price);
+    print '<table border="1">';
+    //Вивід записів while($statement->fetch()) { print '<tr>';
+    print '<td>'.$id.'</td>';
+    print '<td>'.$product_code.'</td>';
+    print '<td>'.$product_desc.'</td>';
+    print '<td>'.$price.'</td>';
+    print '</tr>'; } print '</table>';
+    //Закриття з'єднання $statement->close();
+    ?>
+    ```
+17. Той самий запит із декількома параметрами:
 
-Додавання елемента у таблицю
+    ```PHP
+    <?php $search_ID = 1;
+    $search_product = "PD1001";
+    $query = "SELECT id, product_code, product_desc, price FROM products WHERE ID=? AND product_code=?";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('is', $search_ID, $search_product);
+    $statement->execute();
+    $statement->bind_result($id, $product_code, $product_desc, $price);
+    print '<table border="1">';
+    while($statement->fetch()) { print '<tr>';
+    print '<td>'.$id.'</td>';
+    print '<td>'.$product_code.'</td>';
+    print '<td>'.$product_desc.'</td>';
+    print '<td>'.$price.'</td>';
+    print '</tr>'; } print '</table>';
+    $statement->close();
+    ?>
+    ```
+18. **Вставка (INSERT) запису.** Код нижче вставляє в таблицю новий запис.
 
-    * на вкладці «Обзор» можна переглянути новий елемент, доданий до таблиці
+    ```php
+    <?php //Значення, які потрібно вставити в таблицю бази даних
+    $product_code = '"'.
+    $mysqli->real_escape_string('P1234').'"';
+    $product_name = '"'.
+    $mysqli->real_escape_string('42 inch TV').'"';
+    $product_price = '"'.
+    $mysqli->real_escape_string('600').'"';
+    $insert_row = $mysqli->query("INSERT INTO products (product_code, product_name, price) VALUES($product_code, $product_name, $product_price)");
+    if($insert_row){ print 'Запит успішно виконаний! ID останнього вставленого запису: ' .$mysqli->insert_id .'<br />'; }
+    else{ die('Помилка: ('. $mysqli->errno .') '. $mysqli->error);
+    } ?>
+    ```
+19. Фрагмент коду нижче вставляє ті ж значення за допомогою шаблонів (prepared statement). Як ми вже говорили, шаблони надзвичайно ефективні проти SQL ін'єкцій. Для наведеного прикладу їх використання є оптимальним варіантом.
 
-![](img/11-006.png)
+    ```PHP
+    <?php $product_code = 'P1234';
+    $product_name = '42 inch TV';
+    $product_price = '600';
+    $query = "INSERT INTO products (product_code, product_name, price) VALUES(?, ?, ?)";
+    $statement = $mysqli->prepare($query);
+    $statement->bind_param('sss', $product_code, $product_name, $product_price);
+    if($statement->execute()){ print 'Запит успішно виконаний! ID останнього вставленого запису: ' .$statement->insert_id .'<br />';
+    }else{ die('Помилка: ('. $mysqli->errno .') '. $mysqli->error);
+    } $statement->close();
+    ?>
+    ```
+20. **Вставка (INSERT) декількох записів.** Вставка декількох рядків одночасно здійснюється шляхом включення ряду значень стовпців, де кожен ряд значень повинен бути у дужках і відділений від інших комою. Іноді потрібно дізнатися, скільки записів було вставлено, оновлено або видалено, для цього можна скористатися `$mysqli->affected_rows`.
 
-Огляд таблиці
+    ```PHP
+    <?php //product 1
+    $product_code1 = '"'.
+    $mysqli->real_escape_string('P1').'"';
+    $product_name1 = '"'.
+    $mysqli->real_escape_string('Google Nexus').'"';
+    $product_price1 = '"'.
+    $mysqli->real_escape_string('149').'"'; //product 2
+    $product_code2 = '"'.
+    $mysqli->real_escape_string('P2').'"';
+    $product_name2 = '"'.
+    $mysqli->real_escape_string('Apple iPad 2').'"';
+    $product_price2 = '"'.
+    $mysqli->real_escape_string('217').'"'; //product 3
+    $product_code3 = '"'.
+    $mysqli->real_escape_string('P3').'"';
+    $product_name3 = '"'.
+    $mysqli->real_escape_string('Samsung Galaxy Note').'"';
+    $product_price3 = '"'.
+    $mysqli->real_escape_string('259').'"'; //Insert multiple rows
+    $insert = $mysqli->query("INSERT INTO products(product_code, product_name, price) VALUES ($product_code1, $product_name1, $product_price1), ($product_code2, $product_name2, $product_price2), ($product_code3, $product_name3, $product_price3)");
+    if($insert){ print 'Запит успішно виконаний! Всього ' .
+    $mysqli->affected_rows .' рядків додано.';
+    }else{ die('Помилка: ('. $mysqli->errno .') '. $mysqli->error);
+    } ?>
+    ```
+21. **Оновлення (Update)/видалення (Delete) записів.** Принцип оновлення і видалення записів такий самий. Достатньо замінити рядок запиту на UPDATE або DELETE
 
-10. **Завдання 1.** Запустіть web-сервер Apache та СУБД MySQL у вікні прикладки XAMPP Control Panel.
-11. Відкрийте браузер і в адресному рядку введіть наступну адресу: `http://localhost/phpmyadmin/`
-12. Створіть базу даних, яка зберігає повідомлення форуму.
-13. Команда **CREATE DATABASE** створює нову базу даних:
+    ```PHP
+    <?php //Запит на оновлення
+    $results = $mysqli->query("UPDATE products SET product_name='52 inch TV', product_code='323343' WHERE ID=24"); //Запит на видалення
+    $results = $mysqli->query("DELETE FROM products WHERE ID=24");
+    if($results){ print 'Запит успішно виконаний! Запис оновлено/видалено';
+    }else{ print 'Помилка: ('. $mysqli->errno .') '. $mysqli->error;
+    } ?>
+    ```
+22. **Оновлення за допомогою шаблонів (prepared statements).** Приклад поновлення запису за допомогою шаблонів (prepared statements) наведено нижче.
 
-```sql
-CREATE DATABASE [IF NOT EXISTS] db_name;
-```
+    ```php
+    <?php $product_name = '52 inch TV';
+    $product_code = '9879798';
+    $find_id = 24;
+    $query = "UPDATE products SET product_name=?, product_code=? WHERE ID=?";
+    $statement = $mysqli->prepare($query);
+    $results = $statement->bind_param('ssi',
+    $product_name, $product_code, $find_id);
+    if($results){ print 'Запит успішно виконаний! Запис оновлено'; }else{ print 'Помилка: ('. $mysqli->errno .') '. $mysqli->error;
+    } ?>
+    ```
+23. **Видалення старих записів.** Видаленню піддаються всі записи, що знаходяться на сервері більше 1 дня; кількість днів можна задати самому.
+    ```php
+    <?php //Запит на видалення
+    $results = $mysqli-<query("DELETE FROM products WHERE added_timestamp > (NOW() - INTERVAL 1 DAY)");
+    if($results){ print 'Запит успішно виконаний! Видалено одноденні записи';
+    }else{ print 'Помилка: ('. $mysqli-<errno .') '. $mysqli-<error;
+    } ?>```
+24. Mysqli - ця бібліотека, яка за великим рахунком, не призначена для використання безпосередньо в коді. Вона може послужити доброю основою для створення бібліотеки вищого рівня. При роботі з mysqli слід також пам'ятати про забезпечення безпеки вашого застосування, зокрема про захист від SQL-ін'єкцій. У разі використання PDO (з його підготовленими запитами), такий захист йде вже "з коробки", головне правильно застосувати необхідні методи.
+25. Тестова база даних з таблицею
 
-    Тут db_name є ім'ям створюваної бази даних. Необов'язкова ключова фраза `IF NOT EXISTS` повідомляє, що базу даних слід створювати, тільки якщо бази з таким ім'ям немає, що дозволяє запобігти завершення запиту помилкою. Особливо це актуально при використанні SQL в РНР-скриптах
+    ```sql
+    CREATE DATABASE `pdo-test`
+    CHARACTER SET utf8 COLLATE utf8_general_ci;
+    USE pdo-test;
+    CREATE TABLE categories (
+    id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(id),
+    name VARCHAR(255) NOT NULL );
+    INSERT INTO `categories` (`name`)
+    VALUES ('Ноутбуки и планшеты'), ('Компьютеры и периферия'), ('Комплектующие для ПК'), ('Смартфоны и смарт-часы'), ('Телевизоры и медиа'), ('Игры и приставки'), ('Аудиотехника'), ('Фото-видеоаппаратура'), ('Офисная техника и мебель'), ('Сетевое оборудование'), ('Крупная бытовая техника'), ('Товары для кухни'), ('Красота и здоровье'), ('Товары для дома'), ('Инструменты'), ('Автотовары');```
+26. Процес роботи з PDO не надто відрізняється від традиційного. У загальному випадку, процес використання PDO виглядає так:
+    * підключення до бази даних;
+    * за необхідності, підготовка запиту і зв'язування параметрів;
+    * виконання запиту.
+27. З'єднання встановлюються автоматично при створенні об'єкта PDO від його базового класу.
+    ```PHP
+    <?php
+    $db = new PDO('mysql:host=localhost;dbname=pdo', 'root', 'password');
+    ?>```
 
-14. Для видалення бази даних використовується команда **DROP DATABASE**. Синтаксис:
+    При помилці підключення PHP видасть помилку: `Fatal error: Uncaught PDOException: ...`
+    ```PHP
+    <?php
+    try { $dbh = new PDO('mysql:host=localhost;dbname=pdo', 'root', 'password');
+    } catch (PDOException $e) { print "Помилка!: " . $e->getMessage();
+    die();
+    } ?>```
 
-```sql
-DROP DATABASE database_name;
-```
+    У цьому прикладі підключення ми використали конструкцію try ... catch.
 
-    де database_name - задає ім'я бази даних, яку необхідно видалити.
+28. Як і в mysqli, PDO дозволяє отримувати дані в різних режимах. Для визначення режиму, клас PDO містить відповідні константи.
 
-15. Зробити створену базу даних активною, вибравши її ім'я в списку баз даних. Перейти на вкладку SQL. Всі подальші завдання будуть виконуватися шляхом введення SQL команд
-16. Команда CREATE TABLE створює нову таблицю в обраній базі даних. У найпростішому випадку команда має наступний синтаксис:
+    * `PDO::FETCH_ASSOC` \- повертає масив, індексований по імені стовпця в таблиці бази даних;
+    * `PDO::FETCH_NUM` \- повертає масив, індексований за номером стовпця;
+    * `PDO::FETCH_OBJ` \- повертає анонімний об'єкт з іменами властивостей, відповідними іменами стовпців. Наприклад, `$row->id` буде містити значення із стовпця id.
+    * `PDO::FETCH_CLASS` \- повертає новий екземпляр класу, із значеннями властивостей, відповідними даними з рядка таблиці. У разі, якщо зазначений параметр `PDO::FETCH_CLASSTYPE`, ім'я класу буде визначено зі значення першого стовпчика.
+    * У PDO існує два способи виконання запитів:
+        * **Прямий** \- складається з одного кроку;
+        * **Підготовлений** \- складається з двох кроків.
+    * **Прямі запити.**
 
-```sql
-CREATE TABLE table_name(
-    column_name1 type, 
-    column_name2 type,...) [table_options];
-```
+        * `query()` використовується для операторів, які не вносять зміни, наприклад `SELECT`. Повертає об'єкт `PDOStatement`, з якого за допомогою методів `fetch()` або `fetchAll` витягуються результати запиту. Його можна порівняти з `mysql resource`, який повертала `mysql_query()`;
 
-table\_name - ім'я нової таблиці; column\_name - імена колонок (полів); type - визначає тип створюваної колонки; table_options - необов'язкова вказівка типу таблиці, наприклад TYPE = MyISAM.
+        * `exec()` використовується для операторів `INSERT, DELETE, UPDATE`. Повертає число оброблених запитом рядків.
 
-17. **Приклад 1.** Створення таблиці телефонних номерів друзів, яка буде складатися з трьох стовпців: ПІБ, адреса і телефон:
+        Прямі запити використовуються тільки в тому випадку, якщо в запиті відсутні змінні і є впевненість, що запит безпечний і правильно екранований.
 
-```sql
-CREATE TABLE tel_numb(
-    fio text, 
-    address text, 
-    tel text);
-```
-18. До типу даних можна додати модифікатори, які задають його властивості і ті операції, які можна (або, навпаки, заборонено) виконувати з відповідними стовпцями. Not null - означає, що поле не може містити невизначене значення, тобто поле обов'язково має бути ініційоване при вставці нового запису в таблицю (якщо не задано значення за замовчуванням).
-19. **Приклад 2.** Для таблиці з телефонами потрібно вказати, що поле fio та tel не може мати невизначене значення:
+        ```PHP
+        <?php
+        $stmt = $db->query("SELECT * FROM categories");
+        while ($row = $stmt->fetch()) { echo '<pre>';
+        print_r($row);
+        } ?>
+        ```
+    * **Підготовлені запити.** Якщо у запит передається хоча б одна змінна, то цей запит в обов'язковому порядку повинен виконуватися тільки через підготовлені вирази. Це звичайний SQL запит, в якому замість змінної ставиться спеціальний маркер - плейсхолдер. PDO підтримує позиційні плейсхолдери (?). Для яких важливий порядок переданих змінних, і іменовані (:name), для яких порядок не важливий. Приклади:
+        ```SQL
+        `$sql = "SELECT name FROM categories WHERE id = ?";
+        $sql = "SELECT name FROM categories WHERE name = :name";
+        ```
+    * Щоб виконати такий запит, спочатку його треба підготувати за допомогою методу `prepare()`. Він повертає PDO statement, але ще без даних. Щоб їх отримати, треба виконати цей запит, попередньо передавши в нього змінні. Передати можна за допомогою методу `execute()`, передавши йому масив зі змінними:
 
-```sql
-CREATE TABLE tel_numb(
-    fio text NOT NULL, 
-    address text, 
-    tel text NOT NULL);
-```
-20. **Приклад 3.** Primary key - відображає, що поле є первинним ключем, тобто ідентифікатором запису, на який можна посилатися.
+        Коли викликається `$connection->prepare()` створюється підготовлений запит. Підготовлені запити \- це здатність системи управління базами даних отримати шаблон запиту, скомпілювати його і виконати після отримання значень змінних, використаних в шаблоні. Схожим чином працюють шаблонизатори `Smarty` і `Twig`.
 
-```sql
-CREATE TABLE tel_numb(
-    fio text, 
-    address text, 
-    tel text, 
-    PRIMARY KEY (fio));
-```
-21. **Приклад 4.** Auto_increment - при вставці нового запису поле отримає унікальне значення, так що в таблиці ніколи не будуть існувати два поля з однаковими номерами.
+        ```PHP
+        <?php
+        $stmt = $pdo->prepare("SELECT `name` FROM categories WHERE `id` = ?");
+        $stmt->execute([$id]);
+        $stmt = $pdo->prepare("SELECT `name` FROM categories WHERE `name` = :name");
+        $stmt->execute(['name' => $name]);
+        ?>```
+    * Як видно, у випадку іменованих плейсхолдерів в `execute()` повинен передаватися масив, в якому ключі повинні збігатися з іменами цих плейсхолдерів. Після цього можна витягти результати запиту:
 
-```sql
-CREATE TABLE tel_numb(
-    id int AUTO_INCREMENT, 
-    fio text, 
-    tel text);
-```
-22. **Приклад 5.** Default - задає значення за замовчуванням для поля, яке буде використано, якщо при вставці запису для цього поля не було явно зазначено значення.
+        ```php
+        <?php $id = 1;
+        $stmt = $db->prepare("SELECT * FROM categories WHERE `id` = ?");
+        $stmt->execute([$id]);
+        $category = $stmt->fetch(PDO::FETCH_LAZY);
+        echo '<pre>';
+        print_r($category);
+        ?>```
+    * **Зауваження!** Підготовлені запити \- основна причина використовувати PDO, оскільки це єдиний безпечний спосіб виконання SQL запитів, в яких беруть участь змінні.
+    * **Отримання даних. Метод `fetch().`** Вище ми познайомилися з методом `fetch()`, який служить для послідовного отримання рядків з БД. Цей метод є аналогом функції `mysq_fetch_array()` і їй подібних, але діє по-іншому: замість безлічі функцій тут використовується одна, але її поведінка задається переданим параметром. Рекомендовано застосовувати `fetch()` в режимі `FETCH_LAZY`
 
-```sql
-CREATE TABLE tel_numb(
-    fio text, 
-    address text DEFAULT 'Не вказано', 
-    tel text)
-```
-23. **Завдання 2.** Створити першу таблицю бази даних forum, яка називається authors і містить різні дані про зареєстрованих відвідувачів форуму: ім'я (name), пароль (passw), email (email), web-адреса сайту відвідувача (url), відомості про відвідувача (about), рядок, що містить шлях до файлу фотографії відвідувача (photo), останній час відвідування форуму (lasttime), статус користувача - є він модератором, адміністратором або звичайним відвідувачем (statususer). Крім перерахованих полів в таблиці є поле id_author, що є первинним ключем таблиці._ `CREATE TABLE authors ( id_author INT(6) NOT NULL AUTO_INCREMENT, name TINYTEXT, passw TINYTEXT, email TINYTEXT, url TINYTEXT, about TINYTEXT, photo TINYTEXT, last_time DATETIME DEFAULT NULL, themes INT(10) DEFAULT NULL, statususer INT(2) DEFAULT NULL, PRIMARY KEY (id_author) )`
-24. **Завдання 3.** Створити другу таблицю, яка містить дані про розділи форуму і називається forums. У таблиці forums присутні наступні поля: первинний ключ (`id_forum`), назва розділу (`name`), правила форуму (`rule`), короткий опис форуму (`logo`), порядковий номер (`pos`), прапор, який приймає значення 1, якщо форум прихований, і 0, якщо загальнодоступний (`hide`).
+        ```php
+        <?php $id = 1;
+        $stmt = $db->prepare("SELECT * FROM categories WHERE `id` = ?"); $stmt->execute([$id]);
+        while ($row = $stmt->fetch(PDO::FETCH_LAZY)) { echo 'Category name: '.$row->name;
+        } ?>```
 
-```sql
-CREATE TABLE forums (
-    id_forum INT(6) NOT NULL AUTO_INCREMENT, 
-    name TINYTEXT, 
-    rule TEXT, 
-    logo TEXT, 
-    pos INT(6) DEFAULT NULL, 
-    hide TINYINT(1) DEFAULT NULL, 
-    PRIMARY KEY (id_forum) )
-```
-25. **Завдання 4.** Створити таблицю themes, що містить список тем. У таблиці присутні наступні поля: первинний ключ (id\_theme); назва теми (name); автор теми (author); зовнішній ключ до таблиці authors (id\_author); прапор, що приймає значення 1, якщо тема прихована, і 0, якщо тема відображається (hide); час додавання теми (time); зовнішній ключ до таблиці форумів (id_forum), щоб визначити, до якого розділу форуму стосується ця тема.
+        У цьому режимі не витрачається зайва пам'ять, і до того ж до колонок можна звертатися будь\-яким з трьох способів \- через індекс, ім'я, або властивість (через `->`). Недоліком же даного режиму є те, що він не працює з `fetchAll()`
 
-У таблиці themes нормалізація проведена частково, вона містить два зовнішніх ключа: id\_author і id\_forum - для таблиць відвідувачів і списку форумів, в той же час в ній дублюється ім'я автора author, присутнє в таблиці відвідувачів authors під ім'ям name. Цей випадок є прикладом денормалізації, призначеної для того, щоб не запитувати кожного разу імена з таблиці authors при виведенні списку тем і їх авторів і забезпечити прийнятну швидкість роботи форуму.
+    * **Отримання даних. Метод `fetchColumn().`** Також у `PDO statement` є метод для отримання значення єдиної колонки. Дуже зручно, якщо ми запитуємо тільки одне поле \- в цьому випадку значно скорочується кількість коду:
 
-```sql
-CREATE TABLE themes ( 
-    id_theme INT(11) NOT NULL AUTO_INCREMENT, 
-    name TEXT, 
-    author TEXT, 
-    id_author INT(6) DEFAULT NULL, 
-    hide TINYINT(1) DEFAULT NULL, 
-    time DATETIME DEFAULT NULL, 
-    id_forum TINYINT(2) DEFAULT NULL, 
-    PRIMARY KEY (id_theme) )
-```
-26. **Завдання 5.** Створити таблицю posts, в якій зберігаються повідомлення відвідувачів. У таблиці присутні наступні поля: первинний ключ (id\_post); текст повідомлення (name); необов'язкове посилання на ресурс, яке автор повідомлення може ввести при додаванні повідомлення (url); шлях до файлу, що буде приєднано до повідомлення (file); ім'я автора (author); зовнішній ключ до таблиці authors (id\_author); прапор (hide), що приймає значення 1, якщо повідомлення зазначено як приховане, і 0, якщо воно відображається, - необхідний для моделювання; час додавання повідомлення (time); повідомлення, відповіддю на яке є дане повідомлення (parent\_post), це поле дорівнює 0, якщо дане повідомлення - перший по цій темі; зовнішній ключ до таблиці тем (id\_theme), для того щоб визначити, до якої теми відноситься повідомлення.
+        ```php
+        <?php $id = 1;
+        $stmt = $db->prepare("SELECT `name` FROM categories WHERE `id` = ?");
+        $stmt->execute([$id]);
+        $name = $stmt->fetchColumn();
+        echo 'Category name: '.$name;
+        ?>```
+    * **Отримання даних. Метод `fetchAll().`** Також у `PDO statement` є метод для отримання значення єдиної колонки. Дуже зручно, якщо ми запитуємо тільки одне поле \- в цьому випадку значно скорочується кількість коду:
 
-```sql
-CREATE TABLE posts ( 
-    id_post INT(11) NOT NULL AUTO_INCREMENT, 
-    name TEXT, 
-    url TINYTEXT, 
-    file TINYTEXT, 
-    author TINYTEXT, 
-    id_author INT(6) DEFAULT NULL, 
-    hide TINYINT(1) DEFAULT NULL, 
-    time DATETIME DEFAULT NULL, 
-    parent_post INT(11) DEFAULT NULL, 
-    id_theme int(11) DEFAULT NULL, 
-    PRIMARY KEY (id_post) )
-```
-27. Команда `SHOW TABLES` призначена для перегляду переліку таблиць в поточній базі даних.
-28. **Завдання 6.** Переконайтеся, що всі таблиці успішно створені, виконавши команду `SHOW TABLES`.
+        ```php
+        <?php
+        $data = $db->query("SELECT * FROM categories")->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($data as $k => $v){ echo 'Category name: '.$v['name'].'<br>';
+        } ?>```
+    * **PDO и оператор LIKE.**Працюючи з підготовленими запитами, слід розуміти, що плейсхолдер може замінювати тільки рядок або число. Ні ключове слово, ні ідентифікатор, ні частину рядка або набір рядків через плейсхолдер підставити можна. Тому для LIKE необхідно спочатку підготувати рядок пошуку цілком, а потім її підставляти в запит:
 
-29. Команда `DESCRIBE` показує структуру створених таблиць і має наступний синтаксис:
+        ```php
+        <?php
+        $search = 'комп';
+        $query = "SELECT * FROM categories WHERE `name` LIKE ?";
+        $params = ["%$search%"];
+        $stmt = $db->prepare($query);
+        $stmt->execute($params);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $i = 1;
+        foreach ($data as $category){ echo $i++ . '. ' .
+        $category['name'].'<br>';
+        } ?>```
 
-```sql
-DESCRIBE table_name
-```
+        **Зауваження!** Пошук може не працювати, тому що з БД приходять дані у неправильному кодуванні. Необхідно додати кодування до підключення, якщо воно там не вказано!
 
-де table_name - ім'я таблиці, структура якої запитується. Команда `DESCRIBE` не входить в стандарт SQL і є внутрішньою командою СУБД MySQL.
+        `$db = new PDO('mysql:host=localhost;dbname=pdo;charset=utf8', 'root', '');`
+    * **PDO и оператор LIMIT.**Зауваження! Коли PDO працює в режимі емуляції, всі дані, які були передані безпосередньо в `execute()`, форматуються як рядки, тобто, беруться у лапки. Тому `LIMIT ?,?` перетворюється в `LIMIT '10', '10'` і очевидним чином викликає помилку синтаксису і, відповідно, порожній масив даних.
 
-30. **Приклад 6.** Перегляд структури таблиці tel_numb з виконанням команди:
+        _Рішення 1_: Вийти з режиму емуляції:
 
-```sql
-DESCRIBE tel_numb;
-```
-31. **Завдання 7.** Перевірте правильність створення таблиць, переглянувши структуру кожної таблиці (виконувати кожну команду необхідно окремо):
+        `$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);`
 
-```sql
-DESCRIBE authors; 
-DESCRIBE forums; 
-DESCRIBE posts; 
-DESCRIBE themes;
-```
-32. Для кожного етапу роботи зробити знімки екрану та додати їх у звіт з описом кожного скіншота
-33. Додати програмний код завдання для самомтійного виконання
-34. Дати відповіді на контрольні запитання
-35. Зберегти звіт у форматі PDF
+        _Рішення 2_: Обробляти ці цифри через `bindValue()`, примусово встановлюючи їм тип `PDO::PARAM_INT`
+
+        `$limit = 3; $stm = $db->prepare('SELECT * FROM categories LIMIT ?'); $stm->bindValue(1, $limit, PDO::PARAM_INT); $stm->execute(); $data = $stm->fetchAll(); echo '<pre>'; print_r($data);`
+    * **PDO и оператор IN**При вибірці з таблиці необхідно діставати записи, які відповідають усім значенням масиву.
+        ```php
+        <?php
+        $arr = [1,3,6];
+        $in = str_repeat('?,', count($arr) - 1) . '?';
+        $sql = "SELECT * FROM categories WHERE `id` IN ($in)";
+        $stm = $db->prepare($sql);
+        $stm->execute($arr);
+        $data = $stm->fetchAll();
+        echo '<pre>';
+        print_r($data);
+        ?>```
+    * **Додавання записів**
+        ```php
+        <?php
+        $name = 'Нова категорія';
+        $query = "INSERT INTO `categories` (`name`) VALUES (:name)";
+        $params = [ ':name' => $name ];
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+        ?>```
+    * **Зміна записів**
+        ```php
+        <?php $id = 1;
+        $name = 'Змінений запис';
+        $query = "UPDATE `categories` SET `name` = :name WHERE `id` = :id";
+        $params = [ ':id' => $id, ':name' => $name ];
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+        ?>```
+    * **Видалення записів**
+        ```php
+        <?php
+        $id = 1;
+        $query = "DELETE FROM `categories` WHERE `id` = ?";
+        $params = [$id];
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+        ?>```
+    * Виконати індивідуальне завдання
+
+    * Впевніться, що всі вихідні HTML-сторінки є валідними, використавши валідатор HTML-коду `https://validator.w3.org/`. За необхідності, виправити помилки та зауваження
+    * Для кожного етапу роботи зробити знімки екрану та додати їх у звіт з описом кожного скіншота
+    * Додати програмний код завдання для самомтійного виконання
+    * Дати відповіді на контрольні запитання
+    * Зберегти звіт у форматі PDF
 
 ## Контрольні питання
 
-1.  Як відредагувати існуючу базу даних?
-2.  Як створити нову таблицю у БД (різними способами)?
-3.  Як відредагувати існуючу таблицю, структуру таблиці?
-4.  Які альтернативни методи створення баз даних існують?
+1.  Який спосіб з'єднання з базою даних є більш безпечним?
