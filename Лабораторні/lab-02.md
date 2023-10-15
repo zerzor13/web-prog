@@ -45,14 +45,12 @@ Options +ExecCGI +FollowSymlinks
 5. Відкрити `index.bat` та записати туди наступний код інтерпритатору командного рядка та зберегти файл
 
 ```bat
-@echo off 
-
-echo Content-Type: text/plain 
-
-echo. 
-
+@echo off
+echo Content-type: text/plain
+echo.
 dir
 ```
+
 6. Перейти за адресою `http://127.0.0.1/index.bat` або `http://localhost/index.bat` та впевнитись, що завантажився результат роботи консольної команди `dir`
 7. Profit! Ви щойно налаштували виконання Batch-сценаріїв, як веб-застосування
 8. Відкрити `.htaccess` та додати туди наступні налаштування серверу:
