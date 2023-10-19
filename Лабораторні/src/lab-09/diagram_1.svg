@@ -1,0 +1,23 @@
+<svg width="500" height="300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Стовпчата діаграма -->
+  <rect x="100" y="110" width="50" height="100" fill="blue" />
+  <rect x="160" y="140" width="50" height="70" fill="red" />
+  <rect x="220" y="170" width="50" height="40" fill="green" />
+  
+  <!-- Вісі координат та підписи -->
+  <line x1="80" y1="10" x2="80" y2="280" stroke="black" stroke-width="2" />
+  <line x1="80" y1="280" x2="280" y2="280" stroke="black" stroke-width="2" />
+  
+  <text x="30" y="300" font-family="Arial" font-size="14" fill="black">Продукти</text>
+  <text x="300" y="295" font-family="Arial" font-size="14" fill="black">Категорії</text>
+  
+  <!-- Легенда -->
+  <rect x="350" y="10" width="20" height="20" fill="blue" />
+  <text x="380" y="25" font-family="Arial" font-size="12" fill="black">Категорія A</text>
+  
+  <rect x="350" y="40" width="20" height="20" fill="red" />
+  <text x="380" y="55" font-family="Arial" font-size="12" fill="black">Категорія B</text>
+  
+  <rect x="350" y="70" width="20" height="20" fill="green" />
+  <text x="380" y="85" font-family="Arial" font-size="12" fill="black">Категорія C</text>
+</svg>

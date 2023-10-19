@@ -173,6 +173,7 @@ imagedestroy($image);
 2. [Створення діаграми GD2 2](src/lab-09/diagram_png_2.php)
 3. [Створення діаграми SVG](src/lab-09/diagram_svg.php)
 4. [Накладання водяного знаку](src/lab-09/watermark.php)
+5. [Стовчтата діаграма в SVG](src/lab-09/diagram_1.svg)
 
 ## Довідники та додаткові матеріали
 1. [Офіційний сайт розробників PHP (англійська)](https://www.php.net/)
