@@ -89,7 +89,7 @@ AddHandler cgi-script .exe
 
 11. Створити консольний проект на Delphi. Написати наступну програму \*
 
-```delphi
+```pascal
 program Project1; 
 
 {$APPTYPE CONSOLE} 
@@ -133,7 +133,14 @@ end.
 5.  Яка особливість роботи PHP в режимі CGI?
 6.  Чи можливо перенести CGI-застосування на мові С++ з платформи Windows на Linux. Коротко поясніть як і чому?
 
+## Приклади
 
+1. [Приклад CGI .bat 1](src/lab-02/dir.bat)
+2. [Приклад CGI .bat 2](src/lab-02/html.bat)
+3. [Приклад CGI .bat 3](src/lab-02/datetime.bat)
+4. [Приклад CGI Freepascal](src/lab-02/datetime.pas)
+5. [Приклад CGI C++](src/lab-02/datetime.cpp)
+6. [Зкомпільований файл CGI Delphi](src/lab-02/cgi.exe)
 
 ## Довідники та додаткові матеріали
 
