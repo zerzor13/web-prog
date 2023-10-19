@@ -122,6 +122,14 @@ echo $dom_xml->save($path);
 5. За допомогою якого методу можна зберегти xml-дані в файл?
 6. Для чого використовуть функції `json_encode()` та `json_decode()`?
 
+## Приклади
+
+1. [Читання файлу XML](src/lab-08/read_persons_xml.php)
+2. [Записування у файл XML](src/lab-08/write_persons_xml.php)
+3. [Файл XML](src/lab-08/persons.xml)
+4. [Читання файлу JSON](src/lab-08/read_persons_json.php)
+2. [Записування у файл JSON](src/lab-08/write_persons_json.php)
+3. [Файл JSON](src/lab-08/persons.json)
 
 ## Довідники та додаткові матеріали
 
