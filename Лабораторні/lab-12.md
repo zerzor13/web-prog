@@ -71,3 +71,5 @@ PDO та MySQLi - це два основних способи взаємодії
 2. [PHP + PDO. Работа с MySQL](https://www.youtube.com/watch?v=a9l3QPMqZ1Q)
 3. [PHP md5()](https://www.php.net/manual/ru/function.md5.php)
 4. [Функции Hash](https://www.php.net/manual/ru/ref.hash.php)
+5. [Session Handling](https://www.php.net/manual/en/book.session.php)
+6. [PHP Sessions](https://www.w3schools.com/php/php_sessions.asp)
