@@ -27,7 +27,9 @@ class Model
             }
         }
     }
-
+    protected static function createInstance(PDO $pdo, $table) {
+        return new static($pdo, $table);
+    }
     public static function all(PDO $pdo, $table = null)
     {
         if (!static::$pdo)
@@ -39,7 +41,7 @@ class Model
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $models = [];
         foreach ($rows as $row) {
-            $model = new Model(static::$pdo, static::$table);
+            $model = static::createInstance(static::$pdo, static::$table);
             foreach ($row as $key => $value) {
                 $model->columns->$key = $value;
             }
@@ -59,7 +61,7 @@ class Model
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            $model = new Model(static::$pdo, static::$table);
+            $model = static::createInstance(static::$pdo, static::$table);
             foreach ($stmt->fetch(PDO::FETCH_ASSOC) as $key => $value) {
                 $model->columns->$key = $value;
             }
@@ -113,6 +115,29 @@ class Model
         return $stmt->execute();
     }
 
+    public function belongsTo($className, $fkn){
+        $model = $className::find(static::$pdo, $this->columns->$fkn);
+        if ($model) return $model;
+        else return false;  
+    }
+
+    public function hasMany($className, $fkn){
+        
+        $sql = "SELECT * FROM " . static::$table." where :fkn = :fkv";
+        $stmt = static::$pdo->query($sql);
+        $stmt->bindParam(':fkn', $fkn);
+        $stmt->bindParam(':fkv', $this->columns->id);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $models = [];
+        foreach ($rows as $row) {
+            $model = new Model(static::$pdo, static::$table);
+            foreach ($row as $key => $value) {
+                $model->columns->$key = $value;
+            }
+            $models[] = $model;
+        }
+        return $models;
+        }
 
 
 }
