@@ -79,7 +79,7 @@ class Model
         $columns = implode(', ', array_keys($data));
         $values = ':' . implode(', :', array_keys($data));
 
-        $sql = "INSERT INTO static::$table ($columns) VALUES ($values)";
+        $sql = "INSERT INTO ".static::$table." ($columns) VALUES ($values)";
         $stmt = static::$pdo->prepare($sql);
         foreach ($data as $key => $value) {
             $stmt->bindValue(':' . $key, $value);

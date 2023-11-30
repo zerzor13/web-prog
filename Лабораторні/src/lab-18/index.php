@@ -17,7 +17,10 @@ if (isset($_GET["action"])) {
     }
 } else {
     die("Немає дії");
-} ?>
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="ua">
 
@@ -30,7 +33,20 @@ if (isset($_GET["action"])) {
     if (isset($_GET["id"])) {
         $controller->show($_GET["id"]);
     } else {
-        $controller->index();
+        if (isset($_GET["subaction"])) {
+            switch ($_GET["subaction"]) {
+                case "create":
+                    $controller->create();
+                    break;
+                case "store":
+                    $controller->store();
+                    break;
+                default:
+                    $controller->index();
+            }
+        } else {
+            $controller->index();
+        }
     }
     ?>
 </body>
