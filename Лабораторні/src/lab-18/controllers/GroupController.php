@@ -5,8 +5,7 @@ class GroupController extends Controller
 {
     public function index()
     {
-        global $pdo;
-        $groups = Group::all($pdo);
+        $groups = Group::all($this->pdo);
         echo "<h1>Список груп</h1>";
         echo "<table border='1'>";
         echo "<tr><th>ID</th><th>Група</th></tr>";
@@ -24,8 +23,7 @@ class GroupController extends Controller
 
     public function show($id)
     {
-        global $pdo;
-        $group = Group::find($pdo, $id);
+        $group = Group::find($this->pdo, $id);
         echo "<h1>Список груп</h1>";
         echo "<table border='1'>";
         echo "<tr><th>ID</th><th>Група</th></tr>";

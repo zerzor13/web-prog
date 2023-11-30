@@ -4,13 +4,13 @@ include "bootstrap.php";
 if (isset($_GET["action"])) {
     switch ($_GET["action"]) {
         case "users":
-            $controller = new UserController();
+            $controller = new UserController($pdo);
             break;
         case "students":
-            $controller = new StudentController();
+            $controller = new StudentController($pdo);
             break;
         case "groups":
-            $controller = new GroupController();
+            $controller = new GroupController($pdo);
             break;
         default:
             die("Невірна дія");

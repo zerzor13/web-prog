@@ -5,8 +5,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        global $pdo;
-        $users = Student::all($pdo);
+        $users = Student::all($this->pdo);
         echo "<h1>Список користувачів</h1>";
         echo "<table border='1'>";
         echo "<tr><th>ID</th><th>Ім'я користувача</th><th>Група</th></tr>";
@@ -24,8 +23,7 @@ class StudentController extends Controller
 
     public function show($id)
     {
-        global $pdo;
-        $user = Student::find($pdo, $id);
+        $user = Student::find($this->pdo, $id);
         echo "<h1>Список користувачів</h1>";
         echo "<table border='1'>";
         echo "<tr><th>ID</th><th>Ім'я користувача</th><th>Група</th></tr>";

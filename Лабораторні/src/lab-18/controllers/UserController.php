@@ -5,8 +5,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        global $pdo;
-        $users = User::all($pdo);
+        $users = User::all($this->pdo);
         echo "<h1>Список користувачів</h1>";
         echo "<table border='1'>";
         echo "<tr><th>ID</th><th>Ім'я користувача</th><th>Email</th></tr>";
@@ -24,8 +23,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        global $pdo;
-        $user = User::find($pdo, $id);
+        $user = User::find($this->pdo, $id);
         echo "<h1>Список користувачів</h1>";
         echo "<table border='1'>";
         echo "<tr><th>ID</th><th>Ім'я користувача</th><th>Email</th></tr>";
