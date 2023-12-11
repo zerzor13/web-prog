@@ -2,17 +2,6 @@
 include "bootstrap.php";
 
 
-?>
-<!DOCTYPE html>
-<html lang="ua">
-
-<head>
-
-</head>
-
-<body>
-    <?php
-
 $router = new Router();
 //
 
@@ -32,7 +21,3 @@ $router->addRoute('GET', '/users/{id}/show', [UserController::class,$pdo,'show']
 $router->handleRequest();
 
 
-    ?>
-</body>
-
-</html>
