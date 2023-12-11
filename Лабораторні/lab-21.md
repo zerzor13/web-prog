@@ -163,7 +163,7 @@ composer create-project --prefer-dist laravel/laravel .
 
 ## Приклади
 
-1. [Приклад 1. Папка проекту](src/lab-20/)
+1. [Папка порожнього проекту (без підкаталога vendor)](src/lab-21/)
 
 
 ## Контрольні питання
