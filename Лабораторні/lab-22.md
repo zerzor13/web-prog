@@ -152,6 +152,13 @@ php artisan migrate --rollback
 php artisan make:model Product -mc
 ```
 
+![](img/lab-22/22-050.png)
+
+
+Повний перелік ключів до команди `make:model` виглядає наступним чином:
+
+![](img/lab-22/22-060.png)
+
 ### Обмеження MySQL
 
 під час запуску стокової міграції на СКБД MySQL буде помилка:
