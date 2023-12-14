@@ -218,6 +218,7 @@ php artisan make:model Product -mc
 2. [COMPOSER A Dependency Manager for PHP](https://getcomposer.org/)
 3. [Packagist](https://packagist.org/)
 4. [Laravel installation](https://laravel.com/docs/4.2)
+5. [Migrations: Creating Columns](https://laravel.com/docs/10.x/migrations#creating-columns)
 
 
 ## Альтернатвні теми за варіантами
