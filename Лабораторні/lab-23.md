@@ -116,7 +116,7 @@ npm install && npm run dev
 1. [Laravel](https://laravel.com/)
 2. [Eloquent: Getting Started](https://laravel.com/docs/10.x/eloquent)
 3. [Eloquent: Relationships](https://laravel.com/docs/10.x/eloquent-relationships)
-4. [npm - a JavaScript package manager][(https://laravel.com/docs/10.x/eloquent](https://www.npmjs.com/package/npm))
+4. [npm - a JavaScript package manager](https://www.npmjs.com/package/npm)
 5. [Laravel UI](https://github.com/laravel/ui)
 
 
