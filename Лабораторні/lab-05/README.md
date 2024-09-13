@@ -60,34 +60,41 @@ echo "Ваш логін: $login <br> Ваш пароль: $password";
 
 ```php
 <!DOCTYPE html>
-<html>
-    <head> 
-        <meta charset="utf-8"> 
-        <title>LR 5</title>
-    </head> 
-    <body>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LR 5</title>
+</head>
+<body>
+
+    <h1>Вхід на сайт</h1>
+
+    <div>
+        <?php
+        $login = isset($_POST['login']) ? htmlspecialchars($_POST['login']) : "";
+        $password = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : "";
+
+        if ($login || $password) {
+            echo "<p>Ваш логін: $login</p>";
+            echo "<p>Ваш пароль: $password</p>";
+        }
+        ?>
+    </div>
+
+    <form method="POST">
         <div>
-<?php
-$login = "";
-$password = "";
-    if(isset($_POST['login'])) $login = $_POST['login'];
-    if (isset($_POST['password'])) $password = $_POST['password'];    
-echo "Ваш логін: $login <br> Ваш пароль: $password"; 
-?>
+            Логін: <input type="text" name="login" required>
         </div>
-        <h1>Вхід на сайт</h1>
-        <form method="POST">
-            <div>
-                Логін: <input type="text" name="login">
-            </div>
-            <div>
-                Пароль: <input type="text" name="password">
-            </div>
-            <div>
-                <input type="submit" value="Увійти">
-            </div>
-        </form>
-    </body>
+        <div>
+            Пароль: <input type="text" name="password" required>
+        </div>
+        <div>
+            <input type="submit" value="Увійти">
+        </div>
+    </form>
+
+</body>
 </html>
 ```
 
