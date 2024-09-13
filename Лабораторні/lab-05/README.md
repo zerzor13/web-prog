@@ -18,21 +18,26 @@
 
 ```html   
 <!DOCTYPE html>
- <html>
- <head> 
- <meta charset="utf-8"> 
- </head> 
- <body> 
- <h3>Вхід</h3> 
- <form action="login.php" method="POST">
-     Логін: <input type="text" name="login">
-     Пароль: <input type="text" name="password">
-     <input type="submit" value="Увійти">
- </form>
- </body> 
- </html> 
- </body> 
- </html>
+<html>
+    <head> 
+        <meta charset="utf-8"> 
+        <title>LR 5</title>
+    </head> 
+    <body> 
+        <h1>Вхід</h1> 
+        <form action="login.php" method="POST">
+            <div>
+                Логін: <input type="text" name="login">
+            </div>
+            <div>
+                Пароль: <input type="text" name="password">
+            </div>
+            <div>
+                <input type="submit" value="Увійти">
+            </div>
+        </form>
+    </body> 
+</html> 
 ```
 
 
@@ -56,11 +61,12 @@ echo "Ваш логін: $login <br> Ваш пароль: $password";
 ```php
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-</head>
-<body>
-<div>
+    <head> 
+        <meta charset="utf-8"> 
+        <title>LR 5</title>
+    </head> 
+    <body>
+        <div>
 <?php
 $login = "";
 $password = "";
@@ -68,21 +74,28 @@ $password = "";
     if (isset($_POST['password'])) $password = $_POST['password'];    
 echo "Ваш логін: $login <br> Ваш пароль: $password"; 
 ?>
-</div>
-<h3>Вхід на сайт</h3>
-<form method="POST">
-    Логін: <input type="text" name="login">
-    Пароль: <input type="text" name="password">
-    <input type="submit" value="Увійти">
-</form>
-</body>
+        </div>
+        <h1>Вхід на сайт</h1>
+        <form method="POST">
+            <div>
+                Логін: <input type="text" name="login">
+            </div>
+            <div>
+                Пароль: <input type="text" name="password">
+            </div>
+            <div>
+                <input type="submit" value="Увійти">
+            </div>
+        </form>
+    </body>
 </html>
 ```
 
 7. Модифікувати сценарій наступним чином: 
    - Створити асоціативний масив, що містить дані про користувачів (логін, пароль, ім'я користувача) і заповнити його кількома наборами даних
    - У разі успішної авторизації, повідомити користувача
-   - Зробити рефакторінг коду наступним чином: форму входу та конфігурації з логінами та паролями зберегти в окремомих файлах та під'єднати їх у файл `index.php` за допомогою інструкції `include` або `require`.
+   - Зробити рефакторінг коду наступним чином: форму входу та конфігурації з логінами та паролями зберегти в окремомих файлах та під'єднати їх у файл `index.php` за допомогою інструкції `include` або `require`
+   - Вдосконалити систему авторизації: зберегти паролі у хешованому вигляді. Для хешування паролів використати алгоритм bcrypt або md5. Для хешування паролів використати онлайн-сервіс [Bcrypt-generator](https://bcrypt-generator.com/) або будь-який інший.
 8.  Виконати завдання самостійно:
     - Створити форму зворотнього зв'язку, де вказати ім'я, почту та текст повідомлення. Вивести дані отримані із форми.
     - Додати до форми поле завантаження файлу. Вивести на екран основні параметри файлу, отримані із глобальної змінної `$_FILES`.
@@ -101,6 +114,8 @@ echo "Ваш логін: $login <br> Ваш пароль: $password";
 3.  Для чого слугує функція `isset()`?
 4.  Які дані знаходяться в суперглобальних змінних?
 5.  Що міститься в змінних `$_GET`, `$_POST`, `$_REQUEST`?
+6.  Для чого потрібно зберігати пароль у вигляді хешу?
+7.  Який недолік в збереженні облікових даних входу у масиві?
 
 ## Довідники та додаткові матеріали
 
